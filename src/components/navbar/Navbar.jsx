@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 const Header = () => {
   return (
-    <section className='navbar-section w-full max-w-screen-2xl sticky flex justify-center backdrop-blur-3xl z-[99] top-0 left-0'>
+    <section className='hidden navbar-section w-full max-w-screen-2xl sticky lg:flex justify-center backdrop-blur-3xl z-[99] top-0 left-0'>
       <div className="navigation-container container w-full flex justify-between items-center px-5 py-2">
         <LeftNav />
         <div className="logo uppercase text-[1.5rem]"><NavLink to='/'>Kickster</NavLink></div>

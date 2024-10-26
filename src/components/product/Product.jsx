@@ -300,17 +300,17 @@ const Product = () => {
       ]
 
     return (
-        <section className='product-page w-full pt-[12vh] relative flex flex-col items-center bg-[#fff]'>
-            <div className="product-details w-full flex px-10">
+        <section className='product-page w-full pt-5 lg:pt-[12vh] relative flex flex-col items-center bg-[#fff]'>
+            <div className="product-details w-full lg:flex lg:flex-row flex-col px-4 lg:px-10">
                 <ProductImage product={product} />
                 <ProductDescription product={product} />
             </div>
-            <section className="product-wearing-section w-full mt-5 px-10">
+            <section className="product-wearing-section w-full mt-10 lg:mt-5 px-5 lg:px-10">
                 <h2 className='product-wearing-heading capitalize font-semibold text-[1.45rem]'>How others are wearing it</h2>
                 <p className='text-[0.95rem] mt-2'>Upload your photo or mension @kickster on instagram for a chance to be featured</p>
-                <button className='rounded-full bg-[#fff] px-4 py-1 mt-4 border border-zinc-600'>Upload Your Photo</button>
+                <button className='rounded-full bg-[#fff] px-6 lg:px-4 py-2 lg:py-1 mt-4 border border-zinc-600'>Upload Your Photo</button>
             </section>
-            <section className="recommendation-section w-full py-5 px-10 relative mt-[10vh]">
+            <section className="recommendation-section w-full py-5 px-5 lg:px-10 relative mt-[10vh]">
                 <ProductCards heading={"you might also like"} cards={recommendations} />
             </section>
         </section>
