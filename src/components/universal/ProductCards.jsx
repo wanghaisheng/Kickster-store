@@ -20,8 +20,8 @@ const ProductCards = ({heading, cards}) => {
             <h2 className="text-[1.6rem] font-medium text-zinc-900 mb-[5vh] border-b-[2px] border-zinc-700 w-fit leading-none capitalize">{heading}</h2>
             <Swiper
                 modules={[Navigation, Autoplay]}
-                spaceBetween={30}
-                slidesPerView={`${screenX < 640 ? "1" : "3.5"}`}
+                spaceBetween={`${screenX < 640 ? "10" : "30"}`}
+                slidesPerView={`${screenX < 640 ? "1.3" : "3.5"}`}
                 navigation={{
                     nextEl: '.next-btn',
                     prevEl: '.prev-btn',
@@ -36,9 +36,9 @@ const ProductCards = ({heading, cards}) => {
             >
                 {
                     cards.map(item => (
-                        <SwiperSlide key={item.id} className="new-arrival-card w-[340px] h-[480px]">
+                        <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "h-[380px]" : "h-[480px]"}`}>
                             <Link to={`/product/${item.id}`} className="w-full h-full">
-                                <div className="new-arrival-img-container h-[390px] w-full overflow-hidden">
+                                <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[360px]"} w-full overflow-hidden`}>
                                     <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
                                 </div>
                                 <span className="block mt-3 text-[1.1rem] font-semibold text-zinc-800">{item.title}</span>
@@ -49,7 +49,7 @@ const ProductCards = ({heading, cards}) => {
                     ))
                 }
             </Swiper>
-            <div className="navigations px-14 flex gap-5 absolute bottom-[-5vh] lg:bottom-[50%] lg:-translate-y-[50%] lg:w-full lg:justify-between left-[50%] -translate-x-[50%] z-10">
+            <div className="navigations px-8 flex gap-5 lg:gap-0 absolute bottom-[-7vh] lg:bottom-[50%] lg:-translate-y-[50%] lg:w-full lg:justify-between left-[50%] lg:left-0 -translate-x-[50%] lg:-translate-x-0 z-10">
                 <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
                 <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
             </div>

@@ -40,7 +40,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className='w-full px-5 pb-0 mt-[15vh] lg:mt-20'>
+    <footer className='w-full px-5 pb-0 mt-[18vh] lg:mt-20'>
       <div className="footer-links flex flex-col gap-7 lg:grid lg:grid-cols-5 pb-14 lg:pb-20 pt-14 border-t-[1px] border-t-zinc-300">
         <div className="the-app lg:col-span-2 flex flex-col lg:justify-between gap-4">
           <h1 className='logo uppercase text-[3rem] mb-1 leading-none'><Link to="/">Kickster</Link></h1>

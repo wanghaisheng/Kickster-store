@@ -41,7 +41,7 @@ const Hero = () => {
                     }
                 </h1>
             </div>
-            <img className='shoeImg absolute bottom-[8vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[800px] z-10' src="../../../../assets/images/shoeNobgL.png" alt="Nike Shoe Img"/>
+            <img className='shoeImg absolute bottom-[8vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px] z-10' src="../../../../assets/images/shoeNobgL.png" alt="Nike Shoe Img"/>
         </header>
     )
 }

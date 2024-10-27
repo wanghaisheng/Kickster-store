@@ -250,7 +250,7 @@ const NewArrivals = () => {
     },
   ]
   return (
-    <section className='new-arrivals-section w-full mt-[5vh] lg:mt-[15vh] py-10 px-5 relative z-10 bg-[#fff]'>
+    <section className='new-arrivals-section w-full mt-[5vh] py-10 px-5 relative z-10 bg-[#fff]'>
       <ProductCards heading={"New Arrivals"} cards={newProducts} />
     </section>
   )

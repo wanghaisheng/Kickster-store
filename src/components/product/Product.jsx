@@ -310,7 +310,7 @@ const Product = () => {
                 <p className='text-[0.95rem] mt-2'>Upload your photo or mension @kickster on instagram for a chance to be featured</p>
                 <button className='rounded-full bg-[#fff] px-6 lg:px-4 py-2 lg:py-1 mt-4 border border-zinc-600'>Upload Your Photo</button>
             </section>
-            <section className="recommendation-section w-full py-5 px-5 lg:px-10 relative mt-[10vh]">
+            <section className="recommendation-section w-full py-5 px-5 relative mt-[10vh]">
                 <ProductCards heading={"you might also like"} cards={recommendations} />
             </section>
         </section>
