@@ -33,7 +33,7 @@ const Hero = () => {
                 <p className='w-[25ch]'>Discover branded footwear to kickstart your wardrobe, one step at a time —</p>
             </div>
             <div className="main-heading flex-shrink-0 w-full">
-                <h1 className='w-full bg-[#fff] mix-blend-lighten flex justify-center text-[6.8rem] lg:text-[22rem] leading-none tracking-[-5px] lg:tracking-[-10px]'>
+                <h1 className='w-full bg-[#fff] mix-blend-lighten flex justify-center text-[6.8rem] lg:text-[22rem] 2xl:text-[25rem] leading-none tracking-[-5px] lg:tracking-[-10px]'>
                     {
                         "Kickster".split("").map((item, index) => (
                             <span key={item} className={`${index === 0 && "uppercase"} main-heading-txt`}>{item}</span>

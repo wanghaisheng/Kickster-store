@@ -300,7 +300,7 @@ const Product = () => {
       ]
 
     return (
-        <section className='product-page w-full pt-5 lg:pt-[12vh] relative flex flex-col items-center bg-[#fff]'>
+        <section className='product-page w-full pt-5 lg:pt-[4.5rem] relative flex flex-col items-center bg-[#fff]'>
             <div className="product-details w-full lg:flex lg:flex-row flex-col px-4 lg:px-10">
                 <ProductImage product={product} />
                 <ProductDescription product={product} />

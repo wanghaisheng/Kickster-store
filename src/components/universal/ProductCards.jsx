@@ -36,9 +36,9 @@ const ProductCards = ({heading, cards}) => {
             >
                 {
                     cards.map(item => (
-                        <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "h-[380px]" : "h-[480px]"}`}>
+                        <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "h-[380px]" : "h-[480px] 2xl:h-[600px]"}`}>
                             <Link to={`/product/${item.id}`} className="w-full h-full">
-                                <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[360px]"} w-full overflow-hidden`}>
+                                <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
                                     <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
                                 </div>
                                 <span className="block mt-3 text-[1.1rem] font-semibold text-zinc-800">{item.title}</span>

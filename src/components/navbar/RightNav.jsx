@@ -23,9 +23,9 @@ const RightNav = () => {
         }
     ]
     return (
-        <div className='flex gap-[1rem] items-center'>
+        <div className='w-[40%] flex gap-[1rem] items-center justify-end'>
             <div className="searchbar relative">
-                <input className='w-[35ch] py-1.5 px-3 pr-[2rem] rounded border-none outline-none bg-[#d6d6d6] placeholder:text-[0.90rem] placeholder:text-[#525252] text-[#525252] text-[0.90rem]' type="text" placeholder='Find your next step here...' />
+                <input className='w-[35ch] py-1.5 px-3 pr-[2rem] rounded border-none outline-none bg-[#e0e0e0] placeholder:text-[0.90rem] placeholder:text-[#525252] text-[#525252] text-[0.90rem]' type="text" placeholder='Find your next step here...' />
                 <TfiSearch className='absolute top-[50%] -translate-y-[50%] right-0 text-[1.1rem] text-[#383838] mr-[0.5rem]' />
             </div>
             <nav className='flex gap-[1rem]'>

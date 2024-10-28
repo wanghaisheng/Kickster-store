@@ -21,7 +21,7 @@ const LeftNav = () => {
         }
     ]
     return (
-        <nav className='flex gap-[2rem] uppercase text-[0.95rem]'>
+        <nav className='w-[40%] flex gap-[2rem] uppercase text-[0.95rem]'>
             {
                 navItems.map(item => (
                     <NavLink

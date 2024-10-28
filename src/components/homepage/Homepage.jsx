@@ -1,5 +1,5 @@
 import Hero from './sections/Hero'
-import Brands from './sections/Brands'
+import Brands from './sections/brands/Brands'
 import NewArrivals from './sections/NewArrivals'
 
 const Homepage = () => {

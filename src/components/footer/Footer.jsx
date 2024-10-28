@@ -46,7 +46,7 @@ const Footer = () => {
           <h1 className='logo uppercase text-[3rem] mb-1 leading-none'><Link to="/">Kickster</Link></h1>
           <p className='w-[28ch] text-[0.9rem]'>Discover branded footwear to kickstart your wardrobe, one step at a time —</p>
           <div className="footer-heading creator-dets flex flex-col">
-            <div className="creator-links text-zinc-500 lg:text-zinc-700 flex items-center gap-5 lg:gap-3 mt-1 text-[1.125rem]">
+            <div className="creator-links text-zinc-500 lg:text-zinc-700 flex items-center gap-5 lg:gap-3 mt-1 text-[1rem] lg:text-[1.125rem]">
               <Link>My Portfolio</Link>
               <span>|</span>
               {
@@ -60,11 +60,11 @@ const Footer = () => {
         {
           footerLinks.map(item => (
             <div key={item.heading} className="footer-heading">
-              <h2 className='font-semibold capitalize text-[1.4rem] lg:text-[0.95rem]'>{item.heading}</h2>
+              <h2 className='font-semibold capitalize text-[1.1rem] lg:text-[0.95rem]'>{item.heading}</h2>
               <ul className="flex flex-col gap-1 lg:gap-3 mt-1 lg:mt-3">
                 {
                   item.links.map(({ label, path }) => (
-                    <li key={label}><Link className='capitalize text-zinc-500 lg:text-zinc-700 text-[1.025rem] lg:text-[0.95rem]' to={path}>{label}</Link></li>
+                    <li key={label}><Link className='capitalize text-zinc-500 lg:text-zinc-700 text-[0.9rem] lg:text-[0.95rem]' to={path}>{label}</Link></li>
                   ))
                 }
               </ul>
