@@ -27,7 +27,7 @@ const App = () => {
       <span className="mouseFollower hidden absolute lg:block opacity-0 w-[12px] h-[12px] rounded-full bg-[#3d3d3d] top-0 left-0 z-[100] pointer-events-none"></span>
       <div className="outer-container w-full h-full overflow-y-auto flex flex-col items-center bg-[#fff]">
         <Navbar />
-        <div className='container w-full'>
+        <div className='container w-full pb-[5vh]'>
           <main>
             <Router />
           </main>

@@ -1,18 +1,32 @@
-import React from 'react'
-import LeftNav from './LeftNav'
-import RightNav from './RightNav'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from "react";
+import LeftNav from "./LeftNav";
+import RightNav from "./RightNav";
+import { NavLink } from "react-router-dom";
+import MobileLeftNav from "./MobileLeftNav";
+import MobileNavRight from "./MobileNavRight";
+import MobileNavMenu from "./MobileNavMenu";
 
 const Header = () => {
+  const [ reveal, setReveal ] = useState(false)
+  const mobileNavRevealer = () =>{
+    setReveal(prev => !prev)
+    console.log("hello");
+    
+  }
   return (
-    <section className='hidden bg-[#fff] navbar-section w-full max-w-screen-2xl sticky lg:flex justify-center backdrop-blur-3xl z-[99] top-0 left-0'>
-      <div className="navigation-container container w-full flex justify-between items-center px-5 py-2">
+    <section className="bg-[#fff] navbar-section w-full max-w-screen-2xl fixed bottom-0 lg:sticky lg:flex justify-center backdrop-blur-3xl z-[99] lg:top-0 left-0 shadow-lg lg:shadow-none shadow-black">
+      <div className="navigation-container h-[6.5vh] relative lg:h-fit container w-full flex justify-between items-center px-5 py-2">
         <LeftNav />
-        <div className="logo uppercase text-[1.5rem] text-zinc-800"><NavLink to='/'>Kickster</NavLink></div>
+        <MobileLeftNav />
+        <div className="logo uppercase text-[1.2rem] font-medium lg:text-[1.5rem] text-zinc-800">
+          <NavLink to="/">Kickster</NavLink>
+        </div>
         <RightNav />
+        <MobileNavRight mobileNavRevealer={mobileNavRevealer} />
+        <MobileNavMenu reveal={reveal} />
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
