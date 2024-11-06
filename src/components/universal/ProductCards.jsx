@@ -49,7 +49,11 @@ const ProductCards = ({heading, cards}) => {
                     ))
                 }
             </Swiper>
-            <div className="navigations px-8 flex gap-5 lg:gap-0 absolute bottom-[-7vh] lg:bottom-[50%] lg:-translate-y-[50%] lg:w-full lg:justify-between left-[50%] lg:left-0 -translate-x-[50%] lg:-translate-x-0 z-10">
+            {/* <div className="navigations px-8 flex gap-5 lg:gap-0 absolute bottom-[-7vh] lg:bottom-[50%] lg:-translate-y-[50%] lg:w-full lg:justify-between left-[50%] lg:left-0 -translate-x-[50%] lg:-translate-x-0 z-10">
+                <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
+                <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
+            </div> */}
+            <div className="navigations px-8 flex gap-5 absolute bottom-[-7vh] lg:bottom-[-1.5vh] left-[50%] -translate-x-[50%] z-10">
                 <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
                 <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
             </div>

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import BrandItem from './BrandItem'
 
 const Brands = () => {
@@ -59,9 +58,12 @@ const Brands = () => {
       path: "shop/brands/ck"
     }
   ]
+
   return (
-    <section className='brands-section w-full px-5 mt-[18vh] lg:mt-20'>
-      <h2 className="text-[1.6rem] font-medium text-zinc-900 mb-[5vh] border-b-[2px] border-zinc-700 w-fit leading-none capitalize">Pupular Brands</h2>
+    <section className='brands-section w-full px-5 mt-[18vh]'>
+      <h2 className="section-heading text-[1.6rem] font-medium text-zinc-900 mb-[5vh] border-b-[2px] border-zinc-700 w-fit h-fit overflow-hidden leading-none">
+        <span className='sec-heading-txt block'>Pupular Brands</span>
+      </h2>
       <div className="brand-list w-full h-[80vh] max-h-[600px] grid grid-cols-8 grid-rows-6 lg:gap-5 gap-3">
         {
           brands.map(item => (

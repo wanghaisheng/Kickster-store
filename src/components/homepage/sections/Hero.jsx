@@ -13,7 +13,6 @@ const Hero = () => {
             ease: "power1.out",
         })
         gsap.from(".shoeImg", {
-            y: "10vh",
             opacity: 0,
             duration: 0.5,
             delay: 1.5,
@@ -37,7 +36,7 @@ const Hero = () => {
                         }
                     </h1>
                 </div>
-                <img className='shoeImg absolute bottom-[8vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px]' src="../../../../assets/images/shoeNobgL.png" alt="Nike Shoe Img" />
+                <img className='shoeImg absolute bottom-[8vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px] z-10' src="../../../../assets/images/shoeNobgL.png" alt="Nike Shoe Img" />
             </div>
         </header>
     )
