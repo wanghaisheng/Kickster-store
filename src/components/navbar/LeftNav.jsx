@@ -4,8 +4,12 @@ import { NavLink } from 'react-router-dom'
 const LeftNav = () => {
     const navItems = [
         {
-            label: 'Shop',
-            path: '/shop'
+            label: 'Men',
+            path: '/shop/men'
+        },
+        {
+            label: "Women",
+            path: "/shop/women"
         },
         {
             label: "Collectons",
@@ -14,10 +18,6 @@ const LeftNav = () => {
         {
             label: "Brands",
             path: "/brands"
-        },
-        {
-            label: "Trends",
-            path: "/trends"
         }
     ]
     return (

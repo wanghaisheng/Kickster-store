@@ -1,6 +1,7 @@
 import React from 'react'
 import { TfiSearch } from "react-icons/tfi";
 import {CiUser ,CiHeart, CiShoppingCart } from "react-icons/ci";
+import { LiaUserShieldSolid } from "react-icons/lia";
 import { NavLink } from 'react-router-dom';
 
 
@@ -20,6 +21,11 @@ const RightNav = () => {
             name: "cart",
             icon: CiShoppingCart,
             path: "/user/cart"
+        },
+        {
+            name: "dashboard",
+            icon: LiaUserShieldSolid,
+            path: "/admin"
         }
     ]
     return (
