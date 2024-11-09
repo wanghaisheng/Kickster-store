@@ -9,9 +9,9 @@ import {
 } from "firebase/firestore"
 
 const db = getFirestore(app);
-const colRef = collection(db, "data");
+const colRef = collection(db, "users");
 
-export const getProducts = createAsyncThunk("products", async () => {
+export const getUsers = createAsyncThunk("users", async () => {
     try {
         const response = await getDocs(colRef);
         return response.docs.map(doc => doc.data());
@@ -21,26 +21,26 @@ export const getProducts = createAsyncThunk("products", async () => {
     }
 })
 
-const productSlice = createSlice({
-    name: "products",
+const userSlice = createSlice({
+    name: "users",
     initialState : {
-        products: [],
+        users: [],
         loading: false,
         error: null,
     },
     extraReducers : (builder) => {
-        builder.addCase(getProducts.pending, (state) => {
+        builder.addCase(getUsers.pending, (state) => {
             state.loading = true;
         })
-        builder.addCase(getProducts.fulfilled, (state, action) => {
+        builder.addCase(getUsers.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = action.payload;
+            state.users = action.payload;
         })
-        builder.addCase(getProducts.rejected, (state, action) => {
+        builder.addCase(getUsers.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
         })
     }
 })
 
-export default productSlice.reducer;
+export default userSlice.reducer;

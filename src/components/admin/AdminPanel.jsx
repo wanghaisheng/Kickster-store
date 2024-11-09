@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 
 const AdminPanel = () => {
 
+  
   return (
     <div className='dashboard-section w-full'>
         <AdminNav />
