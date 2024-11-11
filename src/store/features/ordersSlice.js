@@ -24,7 +24,7 @@ export const getOrders = createAsyncThunk("orders", async () => {
 const orderSlice = createSlice({
     name: "orders",
     initialState : {
-        orders: [],
+        data: [],
         loading: false,
         error: null,
     },
@@ -34,7 +34,7 @@ const orderSlice = createSlice({
         })
         builder.addCase(getOrders.fulfilled, (state, action) => {
             state.loading = false;
-            state.orders = action.payload;
+            state.data = action.payload;
         })
         builder.addCase(getOrders.rejected, (state, action) => {
             state.loading = false;

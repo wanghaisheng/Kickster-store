@@ -3,8 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import Homepage from "../components/homepage/Homepage";
 import Product from "../components/product/Product";
 import AdminPanel from "../components/admin/AdminPanel";
-import AdminContent from "../components/admin/AdminContent";
 import Dashboard from "../components/admin/Dashboard";
+import AdminContent from "../components/admin/adminContents/AdminContent";
 
 const Router = () => {
   return (

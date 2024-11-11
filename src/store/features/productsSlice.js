@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore"
 
 const db = getFirestore(app);
-const colRef = collection(db, "data");
+const colRef = collection(db, "products");
 
 export const getProducts = createAsyncThunk("products", async () => {
     try {
@@ -24,7 +24,7 @@ export const getProducts = createAsyncThunk("products", async () => {
 const productSlice = createSlice({
     name: "products",
     initialState : {
-        products: [],
+        data: [],
         loading: false,
         error: null,
     },
@@ -34,7 +34,7 @@ const productSlice = createSlice({
         })
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = action.payload;
+            state.data = action.payload;
         })
         builder.addCase(getProducts.rejected, (state, action) => {
             state.loading = false;
