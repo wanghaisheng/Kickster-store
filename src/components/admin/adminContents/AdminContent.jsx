@@ -18,7 +18,7 @@ const AdminContent = () => {
     }
 
   return (
-    <section className='admin-content-section w-full'>
+    <section className='admin-content-section relative w-full px-5'>
       {
         section === "products" ? <AdminContentProducts /> :
         section === "users" ? <AdminContentUsers /> :
