@@ -24,7 +24,6 @@ const AddProduct = () => {
   const [productCategory, setProductCategory] = useState("Select");
   const [newProduct, setNewProduct] = useState(false);
   // const [ productImg, setProductImg ] = useState(null);
-  let productImg = [];
   const [ imgReveal, setImgReveal ] = useState(false)
   const { 
     register,
@@ -50,8 +49,8 @@ const AddProduct = () => {
   // const storage = getStorage(app);
 
 
-  const productsPageNavigator = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const cancellationHandler = () => {
     navigate("/admin/products");
   }
 
@@ -114,7 +113,7 @@ const AddProduct = () => {
 
           {/* Title */}
           <div className="input-container col-span-4">
-            <label htmlFor="#product-title">Title</label>
+            <label htmlFor="#product-title">Title (min: 10 characters)</label>
             <input {...register("title")} required type="text" id="#product-title" />
           </div>
 
@@ -122,7 +121,7 @@ const AddProduct = () => {
           <div className="input-container col-span-2">
             <label htmlFor="#product-price">Price</label>
             <div className="price-inp-container w-full relative overflow-hidden">
-              <input {...register("price")} className="w-full" required type="text" id="#product-price" />
+              <input {...register("price")} className="w-full" required type="number" id="#product-price" />
               <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
                 <LiaRupeeSignSolid />
               </span>
@@ -131,7 +130,7 @@ const AddProduct = () => {
 
           {/* Description */}
           <div className="input-container col-span-6">
-            <label htmlFor="#product-desc">Description</label>
+            <label htmlFor="#product-desc">Description (min: 20 characters)</label>
             <input {...register("description")} required type="text" id="#product-desc" />
           </div>
 
@@ -164,7 +163,7 @@ const AddProduct = () => {
           <div className="input-container col-span-2">
             <label htmlFor="#product-dis">Discount</label>
             <div className="dis-inp-container w-full relative overflow-hidden">
-              <input {...register("discount")} className="w-full" required type="text" id="#product-dis" />
+              <input {...register("discount")} className="w-full" required type="number" id="#product-dis" />
               <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
                 %
               </span>
@@ -174,7 +173,7 @@ const AddProduct = () => {
           {/* Product Stock */}
           <div className="input-container col-span-2">
             <label htmlFor="#product-stock">Stock</label>
-            <input {...register("stock")} required type="text" id="#product-stock" />
+            <input {...register("stock")} required type="number" id="#product-stock" />
           </div>
 
           {/* Product Images */}
@@ -215,7 +214,7 @@ const AddProduct = () => {
 
           {/* Product Buttons */}
           <div className="add-product-btns col-span-6">
-          <button onClick={()=> productsPageNavigator} className="w-[10vw] min-w-[150px] py-[5px] rounded border border-zinc-800 mr-[24px]" type="button">Cancel</button>
+          <button onClick={cancellationHandler} className="w-[10vw] min-w-[150px] py-[5px] rounded border border-zinc-800 mr-[24px]" type="button">Cancel</button>
           <button className="w-[10vw] min-w-[150px] py-[5px] bg-zinc-800 rounded text-zinc-100" type="submit" disabled={isSubmitting}>{isSubmitting ? "Adding..." : "Add Product"}</button>
           </div>
         </form>
