@@ -71,8 +71,13 @@ html, body{
     font-size: 0.95rem;
     border-radius: 5px;
 }
-.form-container .image-inp {
+.form-container .product-img-inp {
     padding: 2px 10px;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid #999;
+    background: transparent;
+    padding: 5px 10px;
 }
 .form-container .price-inp-container input, .dis-inp-container input{
     padding-left: 35px;
