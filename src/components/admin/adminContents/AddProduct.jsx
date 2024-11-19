@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { MdDone } from "react-icons/md";
@@ -13,6 +13,10 @@ const AddProduct = () => {
   const [productCategory, setProductCategory] = useState("Select");
   const [newProduct, setNewProduct] = useState(false);
   const [imgReveal, setImgReveal] = useState(false);
+  const [id, setId] = useState(uuid());
+  const categoryRef = useRef(null);
+  const imageRef = useRef(null);
+
   const {
     register,
     handleSubmit,
@@ -23,11 +27,11 @@ const AddProduct = () => {
       images: ["", "", "", "", ""],
     },
   });
+
   const productCategorySetter = (option) => {
     setProductCategory(option);
     setReveal(false);
   };
-  const [id, setId] = useState(uuid());
 
   // Firestore database initialization
   const db = getFirestore(app);
@@ -47,6 +51,7 @@ const AddProduct = () => {
     priceArray.splice(commaPos, 0, ",");
     return priceArray.join("");
   };
+
   //  FORM HANDLER
   const formHandler = async (data) => {
     const price = priceCorrection(data.price);
@@ -62,7 +67,7 @@ const AddProduct = () => {
       discount: parseInt(data.discount),
       new: newProduct,
       brand: data.brand,
-      price: price,
+      price,
       reviews: [],
       sales: 0,
       sizes: data.sizes.split(",").map((size) => size.trim()),
@@ -74,20 +79,21 @@ const AddProduct = () => {
     reset();
   };
 
-  document.addEventListener("click", (e) => {
-    if (
-      e.target.id !== "category-dropdown-trigger" ||
-      e.target.id !== "img-dropdown-trigger" ||
-      e.target.id !== "img0-url-inp" ||
-      e.target.id !== "img1-url-inp" ||
-      e.target.id !== "img2-url-inp" ||
-      e.target.id !== "img3-url-inp" ||
-      e.target.id !== "img4-url-inp"
-    ) {
-      setReveal(false);
-      setImgReveal(false);
-    }
-  });
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+        setReveal(false);
+      }
+      if (imageRef.current && !imageRef.current.contains(event.target)) {
+        setImgReveal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="w-full h-[84vh] bg-white flex justify-center py-5">
@@ -146,11 +152,10 @@ const AddProduct = () => {
           {/* Category */}
           <div className="col-span-2">
             <label>Category</label>
-            <div className="category relative w-full">
+            <div className="category relative w-full" ref={categoryRef}>
               <span
                 onClick={() => setReveal((prev) => !prev)}
                 className="flex justify-between items-center w-full border border-zinc-400  rounded py-1 px-3"
-                id="category-dropdown-trigger"
               >
                 {productCategory}
                 <RiArrowDownSLine className="text-[1.2rem]" />
@@ -160,18 +165,15 @@ const AddProduct = () => {
                   !reveal && "hidden"
                 } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px]`}
               >
+                {["Men's Shoes", "Women's Shoes"].map(category => (
                 <span
-                  onClick={() => productCategorySetter("Men's Shoes")}
+                  key={category}
+                  onClick={() => productCategorySetter(category)}
                   className="block p-3 font-medium hover:bg-white duration-300 transition-all"
                 >
-                  Men's Shoe
+                  {category}
                 </span>
-                <span
-                  onClick={() => productCategorySetter("Women's Shoes")}
-                  className="block p-3 font-medium mt-2 hover:bg-white duration-300 transition-all"
-                >
-                  Women's Shoe
-                </span>
+                ))}
               </div>
             </div>
           </div>
@@ -218,11 +220,10 @@ const AddProduct = () => {
           {/* Product Images */}
           <div className="col-span-4">
             <label>Images</label>
-            <div className="productImg relative w-full">
+            <div className="productImg relative w-full" ref={imageRef}>
               <span
                 onClick={() => setImgReveal((prev) => !prev)}
                 className="flex justify-between items-center w-full border border-zinc-400 rounded py-1 px-3"
-                id="img-dropdown-trigger"
               >
                 <span>Select Images</span>
                 <RiArrowDownSLine className="text-[1.2rem]" />
@@ -231,7 +232,6 @@ const AddProduct = () => {
                 className={`image-url-inputs ${
                   !imgReveal && "hidden"
                 } w-full border-2 p-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md absolute left-0 top-[40px] flex flex-col gap-1 rounded`}
-                id="img-dropdown"
               >
                 {["", "", "", "", ""].map((item, index) => (
                   <input
@@ -243,7 +243,6 @@ const AddProduct = () => {
                       index !== 4 ? `Image ${index + 1}` : "Model"
                     }`}
                     required
-                    id={`img${index}-url-inp`}
                   />
                 ))}
               </div>
@@ -271,7 +270,7 @@ const AddProduct = () => {
               className="check"
             >
               <span className="check w-[25px] h-[25px] flex justify-center items-center border border-zinc-400 rounded text-green-600 text-[1.2rem]">
-                {newProduct ? <MdDone /> : ""}
+                {newProduct && <MdDone />}
               </span>
             </div>
           </div>
