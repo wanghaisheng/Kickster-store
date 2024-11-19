@@ -4,19 +4,22 @@ import ProductReviews from './ProductReviews';
 
 const ProductDescription = ({ product }) => {
     const sizeChart = [
-        "uk 2.5",
-        "uk 3",
-        "uk 3.5",
-        "uk 4",
-        "uk 4.5",
-        "uk 5",
-        "uk 5.5",
-        "uk 6",
-        "uk 6.5",
-        "uk 7",
-        "uk 7.5",
-        "uk 8.5",
-        "uk 9.5"
+        "2.5",
+        "3",
+        "3.5",
+        "4",
+        "4.5",
+        "5",
+        "5.5",
+        "6",
+        "6.5",
+        "7",
+        "7.5",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10"
     ]
     const [productSize, setProductSize] = useState('');
 
@@ -34,7 +37,7 @@ const ProductDescription = ({ product }) => {
                 <div className="sizes grid grid-cols-4 w-full lg:w-[80%] gap-3">
                     {
                         sizeChart.map((size) => (
-                            <span onClick={()=> sizeAdder(size)} key={`size-${size}`} className={`size ${product.sizes.includes(size)? 'opacity-100' : 'opacity-60 bg-zinc-200 border-zinc-300'} ${productSize === size ? "border-zinc-900" : "border-zinc-300"} py-2 border rounded uppercase font-medium text-center`}>{size}</span>
+                            <span onClick={()=> sizeAdder(size)} key={`size-${size}`} className={`size ${product.sizes.includes(size)? 'opacity-100' : 'opacity-60 bg-zinc-200 border-zinc-300'} ${productSize === size ? "border-zinc-900" : "border-zinc-300"} py-2 border rounded uppercase font-medium text-center`}>uk {size}</span>
                         ))
                     }
                 </div>

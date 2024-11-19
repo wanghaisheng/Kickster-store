@@ -7,7 +7,7 @@ const AdminPanel = () => {
 
   
   return (
-    <div className='dashboard-section w-full'>
+    <div className='dashboard-section w-full relative'>
         <AdminNav />
         <Outlet />
     </div>

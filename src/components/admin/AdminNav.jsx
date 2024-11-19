@@ -27,7 +27,7 @@ const AdminNav = () => {
   ];
 
   return (
-    <nav className="action-menu w-full flex gap-10 py-3 border-b-[1.5px] border-zinc-200 px-5">
+    <nav className="action-menu sticky top-[54px] w-full flex gap-10 py-3 border-b-[1.5px] border-zinc-200 bg-white z-10 px-5">
       <NavLink
         to="/admin"
         className="flex gap-1 items-center capitalize text-zinc-900 hover:text-zinc-600 transition-all duration-300 text-[0.9rem]"
