@@ -3,21 +3,23 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { MdDone } from "react-icons/md";
 import { useForm } from "react-hook-form";
-import app from "../../../utils/firebaseConfigures";
-import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
-import { uuid } from "../../../utils/uuid";
-import { useNavigate } from "react-router-dom";
+import app from "../../../../utils/firebaseConfigures";
+import { collection, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { uuid } from "../../../../utils/uuid";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddProduct = () => {
+const AddUpdateProduct = () => {
   const [reveal, setReveal] = useState(false);
   const [productCategory, setProductCategory] = useState("Select");
   const [newProduct, setNewProduct] = useState(false);
   const [imgReveal, setImgReveal] = useState(false);
-  const [id, setId] = useState(uuid());
+  const [uid, setUid] = useState(uuid());
   const categoryRef = useRef(null);
   const imageRef = useRef(null);
   const [categoryError, setCategoryError] = useState("");
-
+  const { id } = useParams();
+  // Product data for updating
+  const [product, setProduct] = useState(null);
   const {
     register,
     handleSubmit,
@@ -60,31 +62,63 @@ const AddProduct = () => {
       setCategoryError("Please select a category");
       return;
     }
-
     const price = priceCorrection(data.price);
 
-    // Adding the data to Firestore Collection with the Data ID as the document ID
-    await setDoc(doc(colRef, `${id}`), {
-      id: id,
-      title: data.title,
-      images: [...data.images],
-      category: productCategory,
-      description: data.description,
-      stock: parseInt(data.stock),
-      discount: parseInt(data.discount),
-      new: newProduct,
-      brand: data.brand,
-      price,
-      reviews: [],
-      sales: 0,
-      sizes: data.sizes.split(",").map((size) => size.trim()),
-    });
-    console.log("Success!");
-    setId(uuid());
-    setProductCategory("Select");
-    setNewProduct(false);
-    reset();
+    if (id) {
+      // Updating the data to Firestore Collection with the Data ID as the document ID
+      await setDoc(doc(colRef, `${id}`), {
+        title: data.title,
+        images: [...data.images],
+        category: productCategory,
+        description: data.description,
+        stock: parseInt(data.stock),
+        discount: parseInt(data.discount),
+        new: newProduct,
+        brand: data.brand,
+        price,
+        sizes: data.sizes.split(",").map((size) => size.trim()),
+      });
+      console.log("Success Updating!");
+
+    }
+    else {
+      // Adding the data to Firestore Collection with the Data ID as the document ID
+      await setDoc(doc(colRef, `${uid}`), {
+        id: uid,
+        title: data.title,
+        images: [...data.images],
+        category: productCategory,
+        description: data.description,
+        stock: parseInt(data.stock),
+        discount: parseInt(data.discount),
+        new: newProduct,
+        brand: data.brand,
+        price,
+        reviews: [],
+        rating : 0,
+        sales: 0,
+        sizes: data.sizes.split(",").map((size) => size.trim()),
+      });
+      console.log("Success Adding!");
+      setUid(uuid());
+      setProductCategory("Select");
+      setNewProduct(false);
+      reset();
+    }
   };
+
+  // Fetching product data for updating
+  const updateProductFetcher = async (productId) => {
+    const docRef = doc(colRef, productId);
+    const docSnap = await getDoc(docRef);
+
+    setProduct(docSnap.data());
+  };
+
+  const stringToInt = (value) => {
+    const intArray = value.split(",").map((price) => parseInt(price));
+    return intArray.join("");
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -95,6 +129,9 @@ const AddProduct = () => {
         setImgReveal(false);
       }
     };
+
+    // Calling productFetcher function for updating if ID is provided in the URL
+    id && updateProductFetcher(id);
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -107,7 +144,9 @@ const AddProduct = () => {
       <div className="form-container w-1/2 rounded-md p-5">
         {/* Form Header */}
         <h2 className="font-semibold text-[24px] pb-[2vmax] border-b-2 border-b-zinc-400">
-          Add Product
+          {
+            id ? "Update Product" : "Add Product"
+          }
         </h2>
 
         {/* ....................... FORM ........................ */}
@@ -131,6 +170,7 @@ const AddProduct = () => {
               type="text"
               id="#product-title"
               autoFocus
+              defaultValue={`${product ? product.title : ""}`}
             />
             {errors.title && (
               <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -156,6 +196,7 @@ const AddProduct = () => {
                 className="w-full"
                 type="number"
                 id="#product-price"
+                defaultValue={`${product ? stringToInt(product.price) : ""}`}
               />
               <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
                 <LiaRupeeSignSolid />
@@ -183,6 +224,7 @@ const AddProduct = () => {
               })}
               type="text"
               id="#product-desc"
+              defaultValue={`${product ? product.description : ""}`}
             />
             {errors.description && (
               <p className="text-red-500 text-sm">
@@ -203,9 +245,8 @@ const AddProduct = () => {
                 <RiArrowDownSLine className="text-[1.2rem]" />
               </span>
               <div
-                className={`category-options ${
-                  !reveal && "hidden"
-                } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10`}
+                className={`category-options ${!reveal && "hidden"
+                  } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10`}
               >
                 {["Men's Shoes", "Women's Shoes"].map((category) => (
                   <span
@@ -234,6 +275,7 @@ const AddProduct = () => {
               })}
               type="text"
               id="#product-brand"
+              defaultValue={`${product ? product.brand : ""}`}
             />
             {errors.brand && (
               <p className="text-red-500 text-sm">{errors.brand.message}</p>
@@ -263,6 +305,7 @@ const AddProduct = () => {
                 className="w-full"
                 type="number"
                 id="#product-dis"
+                defaultValue={`${product ? parseInt(product.discount) : ""}`}
               />
               <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
                 %
@@ -290,6 +333,7 @@ const AddProduct = () => {
               })}
               type="number"
               id="#product-stock"
+              defaultValue={`${product ? parseInt(product.stock) : ""}`}
             />
             {errors.stock && (
               <p className="text-red-500 text-sm">{errors.stock.message}</p>
@@ -308,9 +352,8 @@ const AddProduct = () => {
                 <RiArrowDownSLine className="text-[1.2rem]" />
               </span>
               <div
-                className={`image-url-inputs ${
-                  !imgReveal && "hidden"
-                } w-full border-2 p-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md absolute left-0 top-[40px] flex flex-col gap-1 rounded`}
+                className={`image-url-inputs ${!imgReveal && "hidden"
+                  } w-full border-2 p-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md absolute left-0 top-[40px] flex flex-col gap-1 rounded`}
               >
                 {["", "", "", "", ""].map((item, index) => (
                   <input
@@ -329,9 +372,9 @@ const AddProduct = () => {
                     key={`product_image_${index}${item}`}
                     className="product-img-inp placeholder:text-zinc-600 placeholder:text-[0.9rem]"
                     type="url"
-                    placeholder={`${
-                      index !== 4 ? `Image ${index + 1}` : "Model"
-                    }`}
+                    placeholder={`${index !== 4 ? `Image ${index + 1}` : "Model"
+                      }`}
+                    defaultValue={product ? product.images[0] : ""}
                   />
                 ))}
               </div>
@@ -360,6 +403,7 @@ const AddProduct = () => {
               })}
               type="text"
               id="#product-sizes"
+              defaultValue={`${product? product.sizes.join(",") : ""}`}
             />
             {errors.sizes && (
               <p className="text-red-500 text-sm">{errors.sizes.message}</p>
@@ -393,7 +437,7 @@ const AddProduct = () => {
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Adding..." : "Add Product"}
+              {isSubmitting ? id ? "Updating..." : "Adding" : id ? "Update Product" : "Add Product"}
             </button>
           </div>
         </form>
@@ -402,4 +446,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AddUpdateProduct;

@@ -5,8 +5,7 @@ import Product from "../components/product/Product";
 import AdminPanel from "../components/admin/AdminPanel";
 import Dashboard from "../components/admin/Dashboard";
 import AdminContent from "../components/admin/adminContents/AdminContent";
-import AddProduct from "../components/admin/adminContents/AddProduct";
-import UpdateProduct from "../components/admin/adminContents/UpdateProduct";
+import AddUpdateProduct from "../components/admin/adminContents/products/AddUpdateProduct";
 
 const Router = () => {
   return (
@@ -16,8 +15,8 @@ const Router = () => {
       <Route path="/admin" element={<AdminPanel />}>
         <Route index element={<Dashboard />}/>
         <Route path="/admin/:section" element={<AdminContent />} />
-        <Route path="/admin/products/add product" element={<AddProduct />} />
-        <Route path="/admin/products/update product/:id" element={<UpdateProduct />} />
+        <Route path="/admin/products/add" element={<AddUpdateProduct />} />
+        <Route path="/admin/products/update/:id" element={<AddUpdateProduct />} />
       </Route>
     </Routes>
   );
