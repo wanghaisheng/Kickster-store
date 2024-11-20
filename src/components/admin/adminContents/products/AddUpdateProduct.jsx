@@ -7,6 +7,8 @@ import app from "../../../../utils/firebaseConfigures";
 import { collection, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { uuid } from "../../../../utils/uuid";
 import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddUpdateProduct = () => {
   const [reveal, setReveal] = useState(false);
@@ -80,8 +82,7 @@ const AddUpdateProduct = () => {
         price,
         sizes: data.sizes.split(",").map((size) => size.trim()),
       });
-      console.log("Success Updating!");
-
+      toast("✔️ Updated successfully!");
     }
     else {
       // Adding the data to Firestore Collection with the Data ID as the document ID
@@ -101,12 +102,13 @@ const AddUpdateProduct = () => {
         sales: 0,
         sizes: data.sizes.split(",").map((size) => size.trim()),
       });
-      console.log("Success Adding!");
       setUid(uuid());
       setProductCategory("Select");
       setNewProduct(false);
       reset();
+      toast.success("Added successfully!");
     }
+    location.reload();
   };
 
   // Fetching product data for updating
@@ -161,6 +163,18 @@ const AddUpdateProduct = () => {
 
   return (
     <div className="w-full min-h-[84vh] bg-white flex justify-center py-5">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+         />
       <div className="form-container w-1/2 rounded-md p-5">
         {/* Form Header */}
         <h2 className="font-semibold text-[24px] pb-[2vmax] border-b-2 border-b-zinc-400">
