@@ -68,6 +68,7 @@ const AddUpdateProduct = () => {
     if (id) {
       // Updating the data to Firestore Collection with the Data ID as the document ID
       await setDoc(doc(colRef, `${id}`), {
+        ...product,
         title: data.title,
         images: [...data.images],
         category: productCategory,
@@ -122,6 +123,13 @@ const AddUpdateProduct = () => {
       });
       setProductCategory(productData.category);
       setNewProduct(productData.new);
+      setValue("title", productData.title);
+      setValue("description", productData.description);
+      setValue("stock", productData.stock);
+      setValue("discount", productData.discount);
+      setValue("brand", productData.brand);
+      setValue("price", stringToInt(productData.price));
+      setValue("sizes", productData.sizes.join(", "));
     }
   };
 
@@ -182,7 +190,6 @@ const AddUpdateProduct = () => {
               type="text"
               id="#product-title"
               autoFocus
-              defaultValue={`${product ? product.title : ""}`}
             />
             {errors.title && (
               <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -208,7 +215,6 @@ const AddUpdateProduct = () => {
                 className="w-full"
                 type="number"
                 id="#product-price"
-                defaultValue={`${product ? stringToInt(product.price) : ""}`}
               />
               <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
                 <LiaRupeeSignSolid />
@@ -236,7 +242,6 @@ const AddUpdateProduct = () => {
               })}
               type="text"
               id="#product-desc"
-              defaultValue={`${product ? product.description : ""}`}
             />
             {errors.description && (
               <p className="text-red-500 text-sm">
@@ -287,7 +292,6 @@ const AddUpdateProduct = () => {
               })}
               type="text"
               id="#product-brand"
-              defaultValue={`${product ? product.brand : ""}`}
             />
             {errors.brand && (
               <p className="text-red-500 text-sm">{errors.brand.message}</p>
@@ -317,7 +321,6 @@ const AddUpdateProduct = () => {
                 className="w-full"
                 type="number"
                 id="#product-dis"
-                defaultValue={`${product ? parseInt(product.discount) : ""}`}
               />
               <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
                 %
@@ -345,7 +348,6 @@ const AddUpdateProduct = () => {
               })}
               type="number"
               id="#product-stock"
-              defaultValue={`${product ? parseInt(product.stock) : ""}`}
             />
             {errors.stock && (
               <p className="text-red-500 text-sm">{errors.stock.message}</p>
@@ -414,7 +416,6 @@ const AddUpdateProduct = () => {
               })}
               type="text"
               id="#product-sizes"
-              defaultValue={`${product? product.sizes.join(",") : ""}`}
             />
             {errors.sizes && (
               <p className="text-red-500 text-sm">{errors.sizes.message}</p>
