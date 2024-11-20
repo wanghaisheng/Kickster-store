@@ -24,6 +24,7 @@ const AddUpdateProduct = () => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -111,8 +112,17 @@ const AddUpdateProduct = () => {
   const updateProductFetcher = async (productId) => {
     const docRef = doc(colRef, productId);
     const docSnap = await getDoc(docRef);
-
-    setProduct(docSnap.data());
+    const productData = docSnap.data();
+    setProduct(productData);
+    
+    // Set form values when product data is fetched
+    if (productData) {
+      productData.images.forEach((url, index) => {
+        setValue(`images.${index}`, url);
+      });
+      setProductCategory(productData.category);
+      setNewProduct(productData.new);
+    }
   };
 
   const stringToInt = (value) => {
@@ -131,13 +141,15 @@ const AddUpdateProduct = () => {
     };
 
     // Calling productFetcher function for updating if ID is provided in the URL
-    id && updateProductFetcher(id);
+    if (id) {
+      updateProductFetcher(id);
+    }
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div className="w-full min-h-[84vh] bg-white flex justify-center py-5">
@@ -374,7 +386,6 @@ const AddUpdateProduct = () => {
                     type="url"
                     placeholder={`${index !== 4 ? `Image ${index + 1}` : "Model"
                       }`}
-                    defaultValue={product ? product.images[0] : ""}
                   />
                 ))}
               </div>

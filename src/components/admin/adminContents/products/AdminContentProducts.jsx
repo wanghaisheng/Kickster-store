@@ -3,10 +3,34 @@ import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
+import * as XLSX from 'xlsx';
 
 const AdminContentProducts = () => {
   const { loading, data, error } = useSelector((state) => state.products);
 
+  const exportToExcel = () => {
+    // Prepare data for Excel
+    const excelData = data.map(item => ({
+      Title: item.title,
+      Brand: item.brand,
+      Stock: item.stock,
+      Price: item.price,
+      Category: item.category,
+      Description: item.description,
+      Rating: item.rating,
+      Sales: item.sales
+    }));
+
+    // Create worksheet
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    
+    // Create workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Products");
+    
+    // Generate Excel file and trigger download
+    XLSX.writeFile(wb, "products.xlsx");
+  };
   
   return (
     loading ? <div className="w-full h-[80vh] flex justify-center items-center"><img className="h-[80px]" src="../../../../../assets/images/loading.gif" alt="" /></div> :
@@ -15,7 +39,10 @@ const AdminContentProducts = () => {
         <Link to="/admin/products/add" className="min-w-[150px] w-[10vw] flex justify-center items-center bg-zinc-800 text-white py-2 rounded-md text-[0.9rem]">
           Add Product
         </Link>
-        <button className="min-w-[150px] w-[10vw] flex justify-center items-center bg-white py-2 rounded-md text-[0.9rem] border border-zinc-800">
+        <button 
+          onClick={exportToExcel}
+          className="min-w-[150px] w-[10vw] flex justify-center items-center bg-white py-2 rounded-md text-[0.9rem] border border-zinc-800"
+        >
           Export as Excel
         </button>
       </div>
