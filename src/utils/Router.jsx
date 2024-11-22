@@ -6,12 +6,15 @@ import AdminPanel from "../components/admin/AdminPanel";
 import Dashboard from "../components/admin/Dashboard";
 import AdminContent from "../components/admin/adminContents/AdminContent";
 import AddUpdateProduct from "../components/admin/adminContents/products/AddUpdateProduct";
+import Login from "../components/login/Login";
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/product/:id" element={<Product />} />
+      <Route path="/user/:action" element={<Login />} />
       <Route path="/admin" element={<AdminPanel />}>
         <Route index element={<Dashboard />}/>
         <Route path="/admin/:section" element={<AdminContent />} />
