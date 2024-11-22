@@ -10,6 +10,8 @@ import {
   getFirestore
 } from "firebase/firestore"
 import app from "../../../../utils/firebaseConfigures";
+import Loader from "../../../loader/Loader";
+import ErrorPage from "../../../errorPage/ErrorPage";
 
 const AdminContentProducts = () => {
   const { loading, data, error } = useSelector((state) => state.products);
@@ -21,10 +23,11 @@ const AdminContentProducts = () => {
       Brand: item.brand,
       Stock: item.stock,
       Price: item.price,
+      Discount: item.discount,
       Category: item.category,
-      Description: item.description,
       Rating: item.rating,
-      Sales: item.sales
+      Sales: item.sales,
+      Sizes: item.sizes.join(", ")
     }));
 
     // Create worksheet
@@ -48,7 +51,8 @@ const AdminContentProducts = () => {
   }
 
   return (
-    loading ? <div className="w-full h-[80vh] flex justify-center items-center"><img className="h-[80px]" src="../../../../../assets/images/loading.gif" alt="" /></div> :
+    loading ? <Loader /> :
+    error ? <ErrorPage/> :
       <>
         <div className="table-btns w-full flex justify-end gap-[24px] py-4">
           <Link to="/admin/products/add" className="min-w-[150px] w-[10vw] flex justify-center items-center bg-zinc-800 text-white py-2 rounded-md text-[0.9rem]">

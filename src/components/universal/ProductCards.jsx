@@ -11,10 +11,10 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const ProductCards = ({heading, cards}) => {
+const ProductCards = ({ heading, cards }) => {
 
     const screenX = screen.width;
-    
+
     return (
         <>
             <h2 className="text-[1.6rem] font-medium text-zinc-900 mb-[5vh] border-b-[2px] border-zinc-700 w-fit leading-none capitalize">{heading}</h2>
@@ -36,7 +36,7 @@ const ProductCards = ({heading, cards}) => {
             >
                 {
                     cards.map(item => (
-                        <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "h-[380px]" : "h-[480px] 2xl:h-[600px]"}`}>
+                        <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "min-h-[380px]" : "min-h-[480px] 2xl:min-h-[600px]"}`}>
                             <Link to={`/product/${item.id}`} className="w-full h-full">
                                 <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
                                     <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
@@ -53,7 +53,7 @@ const ProductCards = ({heading, cards}) => {
                 <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
                 <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
             </div> */}
-            <div className="navigations px-8 flex gap-5 absolute bottom-[-7vh] lg:bottom-[-1.5vh] left-[50%] -translate-x-[50%] z-10">
+            <div className="navigations px-8 flex justify-center gap-5 mt-3">
                 <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
                 <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
             </div>

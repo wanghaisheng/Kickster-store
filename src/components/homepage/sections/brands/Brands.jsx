@@ -67,7 +67,7 @@ const Brands = () => {
       <div className="brand-list w-full h-[80vh] max-h-[600px] grid grid-cols-8 grid-rows-6 lg:gap-5 gap-3">
         {
           brands.map(item => (
-            <BrandItem item={item} />
+            <BrandItem key={`${item.label.trim()}_brand`} item={item} />
           ))
         }
       </div>

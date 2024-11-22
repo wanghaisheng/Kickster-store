@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { GoChevronDown } from "react-icons/go";
 
 const ProductReviews = ({ reviews }) => {
-    const [reviewExpand, setReviewExpand] = useState(false);
+    const [reviewExpand, setReviewExpand] = useState(reviews.length > 0 ? false : true);
     return (
         <section className='product-review-section w-full lg:w-[80%] mt-[7vh]'>
             <button onClick={()=> setReviewExpand(!reviewExpand)} className="review-btn w-full flex justify-between items-center px-2 py-4 border-b border-b-zinc-500 text-[1.25rem]">
@@ -10,6 +10,7 @@ const ProductReviews = ({ reviews }) => {
             </button>
             <div className={`product-reviews mt-3 w-full ${reviewExpand ? "h-fit" : "h-0"} overflow-hidden transition-all duration-300`}>
                 {
+                    reviews.length > 0 ?
                     reviews.map(item => (
                         <div key={`${item.name}'s review`} className="review w-full pb-3 border-b border-b-zinc-400 mb-5">
                             <div className="review-details flex justify-left items-center gap-3 mb-1">
@@ -30,7 +31,8 @@ const ProductReviews = ({ reviews }) => {
                             </div>
                             <p className="review text-[0.9rem]">{item.comment}</p>
                         </div>
-                    ))
+                    )) :
+                    <p className='py-5 text-[1.1rem]'>Be the first reviewer...</p>
                 }
                 <div className="addReview flex w-full gap-3">
                     <input type="text" className="new-review-msg w-full border border-zinc-500 rounded outline-0 px-3" autoFocus />

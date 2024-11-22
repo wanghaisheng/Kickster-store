@@ -279,13 +279,15 @@ const AddUpdateProduct = () => {
                 className={`category-options ${!reveal && "hidden"
                   } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10`}
               >
-                {["Men's Shoes", "Women's Shoes"].map((category) => (
+                {["Men's Shoes", "Women's Shoes", "Unisex Shoes"].map((category) => (
                   <span
                     key={category}
                     onClick={() => productCategorySetter(category)}
-                    className="block p-3 font-medium text-[0.95rem] hover:bg-white duration-300 transition-all"
+                    className="block px-3 py-2 font-medium hover:bg-white duration-300 transition-all"
                   >
-                    {category}
+                    {
+                      category === "Men's Shoes" ? "Men's" : category === "Women's Shoes" ? "Women's" : "Unisex"
+                    }
                   </span>
                 ))}
               </div>
@@ -388,10 +390,8 @@ const AddUpdateProduct = () => {
                     {...register(`images.${index}`, {
                       required: "All image URLs are required",
                       pattern: {
-                        value:
-                          /^(http|https):\/\/.+\.(jpg|jpeg|png|gif|webp)$/i,
-                        message:
-                          "Please enter a valid image URL (.jpg, .png, .gif, .webp)",
+                        value: /^(http|https):\/\/.+$/i,
+                        message: "Please enter a valid URL",
                       },
                       validate: (value) =>
                         value.trim() !== "" ||
