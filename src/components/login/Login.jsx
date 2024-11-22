@@ -5,7 +5,9 @@ import { useForm } from 'react-hook-form';
 import {
     getAuth,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GoogleAuthProvider
 } from "firebase/auth";
 import app from '../../utils/firebaseConfigures';
 import {
@@ -36,9 +38,9 @@ const Login = () => {
                     phone: parseInt(data.phone)
                 });
                 await signInWithEmailAndPassword(auth, data.email, data.password)
-                .then(userData => {
-                    console.log(userData.user);
-                })
+                    .then(userData => {
+                        console.log(userData.user);
+                    })
                 toast.success("Signed Up successfully!");
             }
             catch (error) {
@@ -48,19 +50,38 @@ const Login = () => {
         else {
             try {
                 await signInWithEmailAndPassword(auth, data.email, data.password)
-                .then(userData => {
-                    console.log(userData.user);
-                })
+                    .then(userData => {
+                        console.log(userData.user);
+                    })
                 toast.success("Signed In successfully!");
             }
             catch (error) {
                 if (error.code === "auth/invalid-credential") {
                     toast.error("Invalid Credentials!");
                 }
-                else{
+                else {
                     toast.error("Some error occured!");
                 }
             }
+        }
+    }
+
+    const loginWithGoogle = async() => {
+        const provider = new GoogleAuthProvider();
+        try{
+            await signInWithPopup(auth, provider)
+            .then(async (userData) => {
+                console.log(userData.user);
+                await setDoc(doc(userCol, `${userData.user.email}`), {
+                    id: userData.user.email,
+                    name: userData.user.displayName,
+                    phone: userData.user.phoneNumber && userData.user.phoneNumber
+                });
+                toast.success("Signed In successfully!");
+            })
+        }
+        catch (error) {
+            toast.error(error.code);
         }
     }
 
@@ -158,7 +179,7 @@ const Login = () => {
                         <Link to="/password reset" className='underline text-[0.95rem]'>Forgot Password?</Link>
                     </div>
                     <div className='form-group w-full mt-3'>
-                        <button type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
+                        <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
                             <span className='inline-block'>Sign in with</span>
                             <img className='h-[20px]' src="../../../assets/logo/google.png" alt="" />
                         </button>
