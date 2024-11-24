@@ -5,6 +5,11 @@ import gsap from 'gsap'
 import Footer from './components/footer/Footer'
 import { useDispatch } from 'react-redux'
 import { getProducts } from './store/features/productsSlice'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import { doc, getDoc } from 'firebase/firestore'
+import { setUser } from './store/features/loggedInSlice'
+import { auth, db } from './utils/firebaseConfigures'
 
 const App = () => {
 
@@ -18,6 +23,20 @@ const App = () => {
     })
   }, [])
 
+  //CHECKING USER LOGIN
+  const fetchUser = () => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const docRef = doc(db, "users", `${user.uid}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          dispatch(setUser(docSnap.data()))
+          console.log(docSnap.data());
+        }
+      }
+    })
+  }
+
   // Adding event listener for MOUSE MOVE to follow the mouse cursor
   useEffect(() => {
     const handleMouseMove = (e) => mouseFollower(e)
@@ -29,8 +48,9 @@ const App = () => {
 
   // Fetching products data using Redux
   const dispatch = useDispatch();
-  useEffect(()=> {
+  useEffect(() => {
     dispatch(getProducts())
+    fetchUser();
   }, [dispatch])
 
   return (
@@ -41,6 +61,18 @@ const App = () => {
         <div className='container w-full pb-[5vh]'>
           <main>
             <Router />
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={true}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
           </main>
           <Footer />
         </div>

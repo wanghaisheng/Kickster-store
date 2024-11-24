@@ -104,6 +104,9 @@ body {
   font-size: 1.12rem;
   width: 100%;
 }
+.form-container #login-password{
+  padding-right: 3.5ch;
+}
 
 @media (min-width: 640px) {
 }

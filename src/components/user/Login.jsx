@@ -1,47 +1,46 @@
 import React, { useState } from 'react'
 import Logo from '../logo/Logo'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
-    getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signInWithPopup,
     GoogleAuthProvider
 } from "firebase/auth";
-import app from '../../utils/firebaseConfigures';
+import { auth, db } from '../../utils/firebaseConfigures';
 import {
-    getFirestore,
     collection,
     setDoc,
     doc
-
 } from 'firebase/firestore';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [passwordFlag, showPasswordFlag] = useState(false);
     const { action } = useParams();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
-    const db = getFirestore(app);
     const userCol = collection(db, "users");
-    const auth = getAuth(app);
     const submitHandler = async (data) => {
         if (action === "signup") {
             try {
                 await createUserWithEmailAndPassword(auth, data.email, data.password);
-                await setDoc(doc(userCol, `${data.email}`), {
-                    id: data.email,
+                const user = auth.currentUser;
+                console.log(user);
+                await setDoc(doc(userCol, `${user.uid}`), {
                     name: data.name,
-                    phone: parseInt(data.phone)
+                    phone: parseInt(data.phone),
+                    email: data.email,
+                    role: "user",
+                    cart: [],
+                    wishlist: [],
+                    orders: []
                 });
                 await signInWithEmailAndPassword(auth, data.email, data.password)
-                    .then(userData => {
-                        console.log(userData.user);
-                    })
                 toast.success("Signed Up successfully!");
+                navigate("/user/account");
             }
             catch (error) {
                 toast.error(error.code);
@@ -50,10 +49,10 @@ const Login = () => {
         else {
             try {
                 await signInWithEmailAndPassword(auth, data.email, data.password)
-                    .then(userData => {
-                        console.log(userData.user);
-                    })
+                const user = auth.currentUser;
+                console.log(user);
                 toast.success("Signed In successfully!");
+                navigate("/user/account");
             }
             catch (error) {
                 if (error.code === "auth/invalid-credential") {
@@ -66,19 +65,24 @@ const Login = () => {
         }
     }
 
-    const loginWithGoogle = async() => {
+    const loginWithGoogle = async () => {
         const provider = new GoogleAuthProvider();
-        try{
+        try {
             await signInWithPopup(auth, provider)
-            .then(async (userData) => {
-                console.log(userData.user);
-                await setDoc(doc(userCol, `${userData.user.email}`), {
-                    id: userData.user.email,
-                    name: userData.user.displayName,
-                    phone: userData.user.phoneNumber && userData.user.phoneNumber
-                });
-                toast.success("Signed In successfully!");
-            })
+            const user = auth.currentUser;
+            console.log(user);
+            await setDoc(doc(userCol, `${user.uid}`), {
+                name: user.displayName,
+                phone: user.phoneNumber && user.phoneNumber,
+                email: user.email,
+                role: "user",
+                cart: [],
+                wishlist: [],
+                orders: []
+            });
+            toast.success("Signed In successfully!");
+            navigate("/user/account");
+
         }
         catch (error) {
             toast.error(error.code);
@@ -87,18 +91,6 @@ const Login = () => {
 
     return (
         <div className='login-page h-fit rounded-2xl mt-8 py-5 pb-20 flex flex-col justify-center items-center'>
-            <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={true}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
             <div className={`sign-up-btn-container w-full text-right px-10 mb-5 text-zinc-800`}>
                 {action === "login" ? "Don't" : "Already"} have an account?
                 <Link to={`/user/${action === "login" ? "signup" : "login"}`} className='underline font-semibold'> {action === "login" ? "Sign Up" : "Sign In"}</Link>

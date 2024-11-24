@@ -10,7 +10,7 @@ const RightNav = () => {
         {
             name: "user",
             icon: CiUser,
-            path: '/user/login'
+            path: '/user'
         },
         {
             name: "wishlist",
