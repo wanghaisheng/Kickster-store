@@ -84,7 +84,7 @@ const MobileNavMenu = ({ reveal }) => {
             <NavLink
             key={label + "MobileNav"}
             to={path}
-            className="hidden lg:flex flex-col justify-center items-center text-zinc-800"
+            className={`${user ? user.role === "admin" ? "hidden" :  "flex" : "flex"} flex-col justify-center items-center text-zinc-800`}
             >
             <IconBase className="text-[1.5rem] mb-1" />
             <span className="text-[0.9rem]">{label}</span>
