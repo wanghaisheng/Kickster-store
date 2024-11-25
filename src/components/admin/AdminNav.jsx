@@ -3,11 +3,15 @@ import { TfiDashboard } from "react-icons/tfi";
 import { PiPackage } from "react-icons/pi";
 import { PiUsers } from "react-icons/pi";
 import { PiShoppingBag } from "react-icons/pi";
-import { TbSettings } from "react-icons/tb";
+import { LiaPowerOffSolid } from "react-icons/lia";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
+import signOut from "../signOut";
 
 const AdminNav = () => {
+
+  const screen = window.innerWidth;
+  
   const adminNavs = [
     {
       label: "products",
@@ -27,6 +31,7 @@ const AdminNav = () => {
   ];
 
   return (
+    screen > 600 &&
     <nav className="action-menu sticky top-[54px] w-full flex gap-10 py-3 border-b-[1.5px] border-zinc-200 bg-white z-10 px-5">
       <NavLink
         to="/admin"
@@ -47,10 +52,9 @@ const AdminNav = () => {
           <RiArrowDownSLine className="text-[1rem]" />
         </NavLink>
       ))}
-      <div className="flex gap-1 items-center capitalize text-zinc-900 hover:text-zinc-600 transition-all duration-300 text-[0.9rem]">
-        <TbSettings className="text-[1.2rem]" />
-        <span>Settings</span>
-        <RiArrowDownSLine className="text-[1rem]" />
+      <div onClick={signOut} className="flex gap-1 items-center capitalize text-zinc-900 hover:text-zinc-600 transition-all duration-300 text-[0.9rem]">
+        <LiaPowerOffSolid className="text-[1.2rem]" />
+        <span>Sign Out</span>
       </div>
     </nav>
   );

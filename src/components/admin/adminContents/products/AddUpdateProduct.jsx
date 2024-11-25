@@ -175,7 +175,7 @@ const AddUpdateProduct = () => {
         pauseOnHover
         theme="light"
          />
-      <div className="form-container w-1/2 rounded-md p-5">
+      <div className="form-container w-full lg:w-1/2 rounded-md p-5">
         {/* Form Header */}
         <h2 className="font-semibold text-[24px] pb-[2vmax] border-b-2 border-b-zinc-400">
           {
@@ -189,7 +189,7 @@ const AddUpdateProduct = () => {
           className="grid grid-cols-8 gap-[16px] mt-[24px]"
         >
           {/* Title */}
-          <div className="input-container col-span-6">
+          <div className="input-container col-span-8 lg:col-span-6">
             <label htmlFor="#product-title">Title (min: 10 characters)</label>
             <input
               {...register("title", {
@@ -211,7 +211,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Price */}
-          <div className="input-container col-span-2">
+          <div className="input-container col-span-8 lg:col-span-2">
             <label htmlFor="#product-price">Price</label>
             <div className="price-inp-container w-full relative overflow-hidden">
               <input
@@ -265,7 +265,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Category */}
-          <div className="col-span-2">
+          <div className="col-span-4 lg:col-span-2">
             <label>Category</label>
             <div className="category relative w-full" ref={categoryRef}>
               <span
@@ -298,7 +298,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Brand */}
-          <div className="input-container col-span-2">
+          <div className="input-container col-span-4 lg:col-span-2">
             <label htmlFor="#product-brand">Brand</label>
             <input
               {...register("brand", {
@@ -315,7 +315,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Discount */}
-          <div className="input-container col-span-2">
+          <div className="input-container col-span-4 lg:col-span-2">
             <label htmlFor="#product-dis">Discount</label>
             <div className="dis-inp-container w-full relative overflow-hidden">
               <input
@@ -348,7 +348,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Product Stock */}
-          <div className="input-container col-span-2">
+          <div className="input-container col-span-4 lg:col-span-2">
             <label htmlFor="#product-stock">Stock</label>
             <input
               {...register("stock", {
@@ -414,7 +414,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Shoe Sizes */}
-          <div className="input-container col-span-4">
+          <div className="input-container col-span-8 lg:col-span-4">
             <label htmlFor="#product-sizes">
               Shoe Sizes "2 - 10" (comma-separated)
             </label>
@@ -437,7 +437,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* New Checkbox */}
-          <div className="input-container product-new-input col-span-1 mt-[18px]">
+          <div className="input-container product-new-input col-span-2 lg:col-span-1 mt-[18px]">
             <label htmlFor="#product-brand inline-block">New</label>
             <div
               onClick={() => setNewProduct((prev) => !prev)}
