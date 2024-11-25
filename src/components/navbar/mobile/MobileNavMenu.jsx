@@ -110,7 +110,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
         user && user.role === "admin" &&
         <div
             onClick={()=> {
-              signOut;
+              signOut();
               setReveal(prev => !prev);
             }}
             className="flex flex-col justify-center items-center text-zinc-800"
