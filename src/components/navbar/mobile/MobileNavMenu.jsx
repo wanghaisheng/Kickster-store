@@ -16,7 +16,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import signOut from "../../signOut";
 
-const MobileNavMenu = ({ reveal }) => {
+const MobileNavMenu = ({ reveal, setReveal }) => {
   const user = useSelector((state) => state.loggedInUser.user);
 
   const navs = [
@@ -82,6 +82,7 @@ const MobileNavMenu = ({ reveal }) => {
       {
         navs.map(({ icon: IconBase, label, path }) => (
             <NavLink
+            onClick={()=> setReveal(prev => !prev)}
             key={label + "MobileNav"}
             to={path}
             className={`${user ? user.role === "admin" ? "hidden" :  "flex" : "flex"} flex-col justify-center items-center text-zinc-800`}
@@ -95,6 +96,7 @@ const MobileNavMenu = ({ reveal }) => {
         user && user.role === "admin" &&
         adminNavs.map(({ icon: IconBase, label, path }) => (
             <NavLink
+            onClick={()=> setReveal(prev => !prev)}
             key={label + "MobileNav"}
             to={path}
             className="flex flex-col justify-center items-center text-zinc-800 capitalize"
@@ -107,7 +109,10 @@ const MobileNavMenu = ({ reveal }) => {
       {
         user && user.role === "admin" &&
         <div
-            onClick={signOut}
+            onClick={()=> {
+              signOut;
+              setReveal(prev => !prev);
+            }}
             className="flex flex-col justify-center items-center text-zinc-800"
             >
             <LiaPowerOffSolid className="text-[1.5rem] mb-1" />

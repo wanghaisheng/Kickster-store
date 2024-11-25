@@ -23,7 +23,7 @@ const Header = () => {
         </div>
         <RightNav />
         <MobileNavRight mobileNavRevealer={mobileNavRevealer} />
-        <MobileNavMenu reveal={reveal} />
+        <MobileNavMenu reveal={reveal} setReveal={setReveal} />
       </div>
     </section>
   );
