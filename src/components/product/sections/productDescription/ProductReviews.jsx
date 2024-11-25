@@ -35,7 +35,7 @@ const ProductReviews = ({ reviews }) => {
                     <p className='py-5 text-[1.1rem]'>Be the first reviewer...</p>
                 }
                 <div className="addReview flex w-full gap-3">
-                    <input type="text" className="new-review-msg w-full border border-zinc-500 rounded outline-0 px-3" autoFocus />
+                    <input type="text" className="new-review-msg w-full border border-zinc-500 rounded outline-0 px-3" />
                     <button className="flex-shrink-0 add-new-msg-btn text-[0.9rem] py-1.5 px-3 bg-zinc-800 text-white rounded">Add Review</button>
                 </div>
             </div>
