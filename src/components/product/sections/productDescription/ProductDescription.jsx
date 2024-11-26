@@ -27,6 +27,7 @@ const ProductDescription = ({ product }) => {
         product.sizes.includes(size) && setProductSize(size)
     }
     return (
+        product &&
         <section className='product-description w-full lg:w-[52%] lg:pl-14'>
             <h1 className='product-title text-[1.3rem] text-zinc-900 font-medium'>{product.title}</h1>
             <span className="product-category block text-[1rem] text-zinc-600 font-medium">{product.category}</span>

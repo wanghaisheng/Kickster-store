@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FiEdit2 } from "react-icons/fi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -7,18 +7,20 @@ import * as XLSX from 'xlsx';
 import {
   doc,
   deleteDoc,
-  getFirestore
+  getDocs,
+  collection,
 } from "firebase/firestore"
-import app from "../../../../utils/firebaseConfigures";
+import { db } from "../../../../utils/firebaseConfigures";
 import Loader from "../../../loader/Loader";
-import ErrorPage from "../../../errorPage/ErrorPage";
+import { toast } from "react-toastify";
 
 const AdminContentProducts = () => {
-  const { loading, data, error } = useSelector((state) => state.products);
+
+  const [ products, setProducts ] = useState(null)
 
   const exportToExcel = () => {
     // Prepare data for Excel
-    const excelData = data.map(item => ({
+    const excelData = products.map(item => ({
       Title: item.title,
       Brand: item.brand,
       Stock: item.stock,
@@ -41,25 +43,34 @@ const AdminContentProducts = () => {
     XLSX.writeFile(wb, "products.xlsx");
   };
 
+  const productsFetcher = async () => {
+    try {
+      const response = await getDocs(collection(db, "products"));
+      setProducts(response.docs.map( doc => doc.data()))
+      
+    } catch (error) {
+      toast.error("Error getting documents: ", error);
+    }
+  }
+  useEffect(() => {
+    productsFetcher();
+  }, []);
   const productDeleter = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      // Firestore database initialization
-      const db = getFirestore(app);
       await deleteDoc(doc(db, "products", `${productId}`));
       location.reload();
     }
   }
 
   return (
-    loading ? <Loader /> :
-    error ? <ErrorPage/> :
+    !products ? <Loader /> :
       <>
         <div className="table-btns w-full flex justify-end gap-[24px] py-4">
           <Link to="/admin/products/add" className="min-w-[150px] w-[10vw] flex justify-center items-center bg-zinc-800 text-white py-2 rounded-md text-[0.9rem]">
             Add Product
           </Link>
           <button
-            onClick={exportToExcel}
+            onClick={products && exportToExcel}
             className="min-w-[150px] w-[10vw] flex justify-center items-center bg-white py-2 rounded-md text-[0.9rem] border border-zinc-800"
           >
             Export as Excel
@@ -75,8 +86,8 @@ const AdminContentProducts = () => {
           <span className="col-heading">Delete</span>
         </div>
         <div className="table-content-container w-full">
-          {data.map((item) => (
-            <div className="table-content-list grid grid-cols-[1fr_2.5fr_1fr_1fr_1fr_1fr_1fr] place-items-center py-2 border-b border-b-zinc-300">
+          {products.map((item) => (
+            <div key={item.id} className="table-content-list grid grid-cols-[1fr_2.5fr_1fr_1fr_1fr_1fr_1fr] place-items-center py-2 border-b border-b-zinc-300">
               <img className="h-[80px]" src={item.images[0]} alt="" />
               <span>{item.title}</span>
               <span className="capitalize">{item.brand}</span>

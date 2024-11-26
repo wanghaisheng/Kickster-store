@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import Logo from '../logo/Logo'
-import { toast } from 'react-toastify'
-import { auth, db } from '../../utils/firebaseConfigures'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { collection, doc, setDoc } from 'firebase/firestore'
-import { GoogleAuthProvider } from 'firebase/auth/web-extension'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import Logo from '../logo/Logo';
+import { toast } from 'react-toastify';
+import { auth, db } from '../../utils/firebaseConfigures';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { GoogleAuthProvider } from 'firebase/auth/web-extension';
 
 const SignUp = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -44,15 +44,20 @@ const SignUp = () => {
         await signInWithPopup(auth, provider)
         const user = auth.currentUser;
         console.log(user);
-        await setDoc(doc(userCol, `${user.uid}`), {
-            name: user.displayName,
-            phone: user.phoneNumber && user.phoneNumber,
-            email: user.email,
-            role: "user",
-            cart: [],
-            wishlist: [],
-            orders: []
-        });
+        const userCol = collection(db, "users");
+        const docRef = doc(userCol, `${user.uid}`);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+            await setDoc(docRef, {
+                name: user.displayName,
+                phone: user.phoneNumber && user.phoneNumber,
+                email: user.email,
+                role: "user",
+                cart: [],
+                wishlist: [],
+                orders: []
+            });
+        }
         toast.success("Signed In successfully!");
         navigate("/user");
 
@@ -63,8 +68,8 @@ const SignUp = () => {
 }
 
   return (
-    <div className='login-page h-fit rounded-2xl mt-8 py-5 pb-20 flex flex-col justify-center items-center'>
-            <div className="form-container w-1/3 h-full">
+    <div className='login-page h-fit rounded-2xl lg:mt-8 py-10 flex flex-col justify-center items-center'>
+            <div className="form-container w-full lg:w-1/3 h-full px-5 lg:p-0">
                 <div className='logo mx-auto w-fit'>
                     <Logo />
                 </div>
@@ -136,16 +141,14 @@ const SignUp = () => {
                         <button type='submit' className='login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800'>Sign Up</button>
                     </div>
                 </form>
-            </div>
-            <div className={`sign-up-btn-container w-full text-right px-10 mb-5 text-zinc-800 mt-5`}>
-                Already have an account?
-                <Link to="/user/login" className='underline font-semibold'> Sign In</Link>
-            </div>
-            <div className='form-group w-full mt-3'>
+            <div className='form-group grid grid-cols-2 gap-3 sign-in-btn-container w-full mt-5'>
+            <span className='col-span-2'>Already have an account?</span>
+            <Link to="/login" className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'> Sign In</Link>
                 <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
                     <span className='inline-block'>Sign in with</span>
                     <img className='h-[20px]' src="../../../assets/logo/google.png" alt="" />
                 </button>
+            </div>
             </div>
         </div>
   )

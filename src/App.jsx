@@ -31,7 +31,6 @@ const App = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           dispatch(setUser(docSnap.data()))
-          console.log(docSnap.data());
         }
       }
     })

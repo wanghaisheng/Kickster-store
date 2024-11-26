@@ -1,18 +1,10 @@
-import { getAuth } from 'firebase/auth'
-import React from 'react'
-import app from '../../utils/firebaseConfigures'
-import { useDispatch } from 'react-redux'
-import { setUser } from '../../store/features/loggedInSlice'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { auth } from '../../utils/firebaseConfigures';
 
 const UserAccount = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
     const signOut = async() => {
-        const auth = getAuth(app);
         await auth.signOut();
-        dispatch(setUser(null))
-        navigate("/user/login")
+        location.reload();
     }
 
   return (
