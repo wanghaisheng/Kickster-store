@@ -7,6 +7,8 @@ import { auth, db } from '../../utils/firebaseConfigures';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { GoogleAuthProvider } from 'firebase/auth/web-extension';
+import googleLogo from '../../../assets/logo/google.png';
+
 
 const SignUp = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -146,7 +148,7 @@ const SignUp = () => {
             <Link to="/login" className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'> Sign In</Link>
                 <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
                     <span className='inline-block'>Sign in with</span>
-                    <img className='h-[20px]' src="../../../assets/logo/google.png" alt="" />
+                    <img className='h-[20px]' src={googleLogo} alt="" />
                 </button>
             </div>
             </div>

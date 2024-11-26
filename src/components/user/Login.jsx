@@ -15,6 +15,7 @@ import {
     getDoc
 } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import googleLogo from '../../../assets/logo/google.png';
 
 const Login = () => {
     const [passwordFlag, showPasswordFlag] = useState(false);
@@ -116,7 +117,7 @@ const Login = () => {
                     <div className='form-group w-full mt-3'>
                         <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
                             <span className='inline-block'>Sign in with</span>
-                            <img className='h-[20px]' src="../../../assets/logo/google.png" alt="" />
+                            <img className='h-[20px]' src={googleLogo} alt="" />
                         </button>
                     </div>
                     <div className='form-group w-full mt-3'>
