@@ -3,8 +3,8 @@ import ProductImage from './sections/ProductImage'
 import ProductDescription from './sections/productDescription/ProductDescription'
 import ProductCards from '../universal/ProductCards'
 import { useParams } from 'react-router-dom'
-import { collection, doc, getDoc, getFirestore } from 'firebase/firestore'
-import app, { db } from '../../utils/firebaseConfigures'
+import { collection, doc, getDoc } from 'firebase/firestore'
+import { db } from '../../utils/firebaseConfigures'
 import Loader from '../loader/Loader'
 
 const Product = () => {

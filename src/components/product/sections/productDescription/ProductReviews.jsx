@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { GoChevronDown } from "react-icons/go";
 
 const ProductReviews = ({ reviews }) => {
-    const [reviewExpand, setReviewExpand] = useState(reviews.length > 0 ? false : true);
+    const [reviewExpand, setReviewExpand] = useState(reviews && reviews.length > 0 ? false : true);
     return (
+        reviews &&
         <section className='product-review-section w-full lg:w-[80%] mt-[7vh]'>
             <button onClick={()=> setReviewExpand(!reviewExpand)} className="review-btn w-full flex justify-between items-center px-2 py-4 border-b border-b-zinc-500 text-[1.25rem]">
                 <span className='block'>Reviews({reviews.length})</span><GoChevronDown />
