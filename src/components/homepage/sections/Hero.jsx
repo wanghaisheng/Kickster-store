@@ -34,13 +34,13 @@ const Hero = () => {
             </div>
             <div className="heading-container w-full h-fit lg:overflow-hidden pb-[1.5vh]">
                 <div className="main-heading flex-shrink-0 w-full">
-                    <h1 className='w-full h-fit bg-[#fff] mix-blend-lighten flex flex-wrap justify-center text-[6.8rem] lg:text-[22rem] 2xl:text-[25rem] leading-none tracking-[-5px] lg:tracking-[-10px]'>
+                    <h1 className='w-full h-fit bg-[#fff] mix-blend-lighten flex flex-wrap justify-center text-[6.8rem] lg:text-[20rem] 2xl:text-[23rem] leading-none tracking-[-5px] lg:tracking-[-10px]'>
                         {
                             screen = 1024 ?
-                            "Kickster".split("").map((item, index) => (
+                            "Kickstep".split("").map((item, index) => (
                                 <span key={item} className={`${index === 0 && "uppercase"} main-heading-txt`}>{item}</span>
                             )) :
-                            <span className='block'>KICK<br />STER</span>
+                            <span className='block'>KICK<br />STEP</span>
                         }
                     </h1>
                 </div>
