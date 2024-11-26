@@ -1,7 +1,8 @@
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap';
 import { useEffect } from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import shoe from '../../../../assets/images/shoeNobgL-min.png'
 
 const Hero = () => {
     gsap.registerPlugin(useGSAP);
@@ -44,7 +45,7 @@ const Hero = () => {
                         }
                     </h1>
                 </div>
-                <img className='shoeImg absolute bottom-[9vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px] z-10' src="../../../../assets/images/shoeNobgL-min.png" alt="Nike Shoe Img" fetchPriority='highest' />
+                <img className='shoeImg absolute bottom-[9vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px] z-10' src={shoe} alt="Nike Shoe Img" fetchPriority='highest' />
             </div>
         </header>
     )
