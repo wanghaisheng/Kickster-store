@@ -230,7 +230,7 @@ Integrated Razorpay for secure 🔐 and seamless transactions.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/kickster.git
+   git clone https://github.com/falguni-mondal/kickster.git
    cd kickster
    ```
 2. Install dependencies:
