@@ -4,9 +4,8 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 ---
 
 
-## 🚀 Getting Started
-
-1. Clone the repository:
+## 🚀 **Getting Started** 
+1. Clone the repository:  
    ```bash
    git clone https://github.com/falguni-mondal/kickster.git
    cd kickster
