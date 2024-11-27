@@ -7,7 +7,7 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 ## 🎯 Features
 
 ### 🔍 Product Filtering and Sorting
-- **Filter Options**: Gender (👨 Men/👩 Women), Size (Specific sizes), Brands (🐆 Puma, ✔️ Nike, 🅰️ Adidas, etc.), Purpose (🏋️‍♂️ Training, ⚽ Football, 🏀 Basketball, 🏋️‍♀️ Gym, etc.).
+- **Filter Options**: Gender (👨 Men/👩 Women), Size (Specific sizes), Brands (Puma, Nike, Adidas, etc.), Purpose (Training, Football, Basketball, Gym, etc.).
 - **Sorting Options**: 💰 Price (⬇️ Low to High, ⬆️ High to Low), ⭐ Ratings.
 - **Collections Section**: View products tailored for specific purposes.
 
