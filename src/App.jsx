@@ -13,6 +13,7 @@ import { auth, db } from './utils/firebaseConfigures'
 
 const App = () => {
 
+  const dispatch = useDispatch();
   //Initializing the MOUSE FOLLOWER
   const mouseFollower = useCallback((e) => {
     gsap.to(".mouseFollower", {
@@ -22,19 +23,6 @@ const App = () => {
       duration: 0.2
     })
   }, [])
-
-  //CHECKING USER LOGIN
-  const fetchUser = () => {
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        const docRef = doc(db, "users", `${user.uid}`);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          dispatch(setUser(docSnap.data()))
-        }
-      }
-    })
-  }
 
   // Adding event listener for MOUSE MOVE to follow the mouse cursor
   useEffect(() => {
@@ -46,11 +34,31 @@ const App = () => {
   }, [mouseFollower])
 
   // Fetching products data using Redux
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProducts())
-    fetchUser();
   }, [dispatch])
+
+  useEffect(() => {
+    if(localStorage.getItem("user")){
+      dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+    }
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if(user){
+        const docRef = doc(db, "users", `${user.uid}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          localStorage.setItem("user", JSON.stringify(docSnap.data()))
+          dispatch(setUser(docSnap.data()))
+        }
+      }
+      else{
+        localStorage.removeItem("user");
+        dispatch(setUser(null));
+      }
+    })
+
+    return () => unsubscribe();
+  }, [])
 
   return (
     <div className='w-screen h-[100svh] relative overflow-hidden'>

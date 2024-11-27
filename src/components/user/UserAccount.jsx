@@ -1,11 +1,7 @@
 import React from 'react';
-import { auth } from '../../utils/firebaseConfigures';
+import signOut from '../signOut';
 
 const UserAccount = () => {
-    const signOut = async() => {
-        await auth.signOut();
-        location.reload();
-    }
 
   return (
     <div>
