@@ -3,7 +3,9 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 
 ---
 
+
 ## 🚀 Getting Started
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/falguni-mondal/kickster.git
@@ -23,10 +25,11 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
    ```
 5. Enjoy building and exploring Kickster!
 
-
 ---
 
+
 ## ✨ Features
+
 ### 🔍 Product Filtering and Sorting
 - Browse a diverse range of shoes with detailed product listings.  
 - **Sort by**:  
@@ -71,6 +74,7 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 
 ---
 
+
 ## 🛠️ Technical Details
 
 ### **Libraries Used**  
@@ -83,7 +87,7 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 - **Razorpay**: Payment gateway integration.  
 
 
-#### 🏗️ Setting Up React + Vite
+### 🏗️ Setting Up Vite Project
 1. Install Vite:
    ```bash
    npm create vite@latest kickster --template react
