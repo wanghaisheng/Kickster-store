@@ -19,7 +19,7 @@ const Header = () => {
         <LeftNav />
         <MobileLeftNav />
         <div className="logo uppercase text-[1.2rem] font-medium lg:text-[1.5rem] text-zinc-800">
-          <NavLink to="/">Kickstep</NavLink>
+          <NavLink to="/">Kickster</NavLink>
         </div>
         <RightNav />
         <MobileNavRight mobileNavRevealer={mobileNavRevealer} />

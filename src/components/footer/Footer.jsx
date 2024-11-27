@@ -42,7 +42,7 @@ const Footer = () => {
     <footer className='w-full px-5 pb-0 mt-[18vh]'>
       <div className="footer-links flex flex-col gap-7 lg:grid lg:grid-cols-5 pb-14 lg:pb-20 pt-14 border-t-[1px] border-t-zinc-300">
         <div className="the-app lg:col-span-2 flex flex-col lg:justify-between gap-4">
-          <h1 className='logo uppercase text-[3rem] mb-1 leading-none'><Link to="/">Kickstep</Link></h1>
+          <h1 className='logo uppercase text-[3rem] mb-1 leading-none'><Link to="/">Kickster</Link></h1>
           <p className='w-[28ch] text-[0.9rem]'>Discover branded footwear to kickstart your wardrobe, one step at a time —</p>
           <div className="footer-heading creator-dets flex flex-col">
             <div className="creator-links text-zinc-500 lg:text-zinc-700 flex items-center gap-5 lg:gap-3 mt-1 text-[1rem] lg:text-[1.125rem]">
@@ -71,7 +71,7 @@ const Footer = () => {
           ))
         }
       </div>
-      <span className='block py-5 lg:py-8 border-t border-t-zinc-400 text-zinc-700 text-[0.95rem]'>©2024 Kickstep. All rights reserved.</span>
+      <span className='block py-5 lg:py-8 border-t border-t-zinc-400 text-zinc-700 text-[0.95rem]'>©2024 Kickster. All rights reserved.</span>
     </footer>
   )
 }
