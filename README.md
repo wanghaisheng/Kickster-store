@@ -13,8 +13,8 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 
 ### 🔒 Authentication
 - **🔥 Firebase Integration**: Email/password ✉️ sign-up, Google 🌐 sign-in.
-- **User Role**: Browsing 🖥️ and viewing details is open to everyone. To add items to the cart 🛍️ or wishlist, or to make purchases, users must log in 🔑.
-- **Admin Role**: Admins must log in to access a dashboard 📊. Signup is restricted to regular users.
+- **User Role**: Browsing 🖥️ and viewing product details is open to everyone. To add items to the cart 🛍️ or wishlist, or to make purchases, users must log in 🔑 to a user account.
+- **Admin Role**: Admins must log in to a admin account to access a dashboard 📊, and the admin panel. Admin signup is restricted.
 
 ### 🛠️ Admin Panel
 - **Admin Capabilities**:
@@ -24,8 +24,8 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 - **Role-Based Access**: Admin panel is protected and accessible only to logged-in admin accounts.
 
 ### 🚪 Protected Routes
-- Role-based routing ensures that users can only access content relevant to their role (e.g., 🛍️ cart and 💖 wishlist for users, admin 🖥️ dashboard for admins).
-- Unauthorized attempts to access restricted paths are blocked 🚫.
+- Role-based routing ensures that users can only access content relevant to their role (e.g., 🛍️ cart and 💖 wishlist for users, admin panel, and 🖥️ dashboard for admins).
+- Unauthorized attempts to access restricted paths with redirect to the login page 🚫.
 
 ### 💳 Payment Gateway
 - **Razorpay Integration**: Users can proceed with payments seamlessly after finalizing their cart items 🛒.
