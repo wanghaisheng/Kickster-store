@@ -3,18 +3,56 @@
 Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that allows users to explore a variety of 👟 shoe brands. Users can browse, filter, and sort through a diverse collection of shoes, and enjoy seamless shopping 🛒 features. The app integrates 🔒 authentication, protected 🚪 routes, and an admin 🧑‍💻 panel for enhanced user experience and management.
 
 ---
+## 🚀 Getting Started
 
-## 🎯 Features
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/falguni-mondal/kickster.git
+   cd kickster
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   - Create a `.env` file in the root directory.
+   - Add Firebase and Razorpay keys.
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+5. Enjoy building and exploring Kickster!
+
+
+---
+
+## ✨ Features
 
 ### 🔍 Product Filtering and Sorting
-- **Filter Options**: Gender (👨 Men/👩 Women), Size (Specific sizes), Brands (Puma, Nike, Adidas, etc.), Purpose (Training, Football, Basketball, Gym, etc.).
-- **Sorting Options**: 💰 Price (⬇️ Low to High, ⬆️ High to Low), ⭐ Ratings.
-- **Collections Section**: View products tailored for specific purposes.
+- Browse a diverse range of shoes with detailed product listings.  
+- **Sort by**:  
+  - Price (⬇️ Low to High, ⬆️ High to Low).  
+  - Ratings ⭐.  
+- **Filter by**:  
+  - Gender (👨 Men / 👩 Women).  
+  - Size (e.g., 7, 8, 9).  
+  - Brands (🏷️ Nike, Adidas, Puma, etc.).  
+  - Collections (🏋️ Training, ⚽ Football, 🏀 Basketball, etc.).
+ 
+### 🛒 **Cart & Wishlist Management**  
+- Add your favorite products to the **Wishlist 💖** or **Cart 🛒** for later purchase.  
 
 ### 🔒 Authentication
-- **🔥 Firebase Integration**: Email/password ✉️ sign-up, Google 🌐 sign-in.
-- **User Role**: Browsing 🖥️ and viewing product details is open to everyone. To add items to the cart 🛍️ or wishlist, or to make purchases, users must log in 🔑 to a user account.
-- **Admin Role**: Admins must log in to a admin account to access a dashboard 📊, and the admin panel. Admin signup is restricted.
+- Powered by **🔥 Firebase Auth** for secure login.  
+- Supports:  
+  - **Sign up** with name 👤, email ✉️, passsword 🔐, contact 📞 details.  
+  - **Traditional Sign-in** using email 📨 and password 🗝️.  
+  - **Google Sign-in** 🔗.  
+- Visitors 👣 can browse products and view details without logging in.  
+- **👥 Role-based access**:  
+  - **Users**: Access cart 🛒, wishlist ❤️, and purchase 🛍️ options.  
+  - **Admins**: Manage the app 📱 via the admin panel 📊.  
 
 ### 🛠️ Admin Panel
 - **Admin Capabilities**:
@@ -24,11 +62,14 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 - **Role-Based Access**: Admin panel is protected and accessible only to logged-in admin accounts.
 
 ### 🚪 Protected Routes
-- Role-based routing ensures that users can only access content relevant to their role (e.g., 🛍️ cart and 💖 wishlist for users, admin panel, and 🖥️ dashboard for admins).
-- Unauthorized attempts to access restricted paths with redirect to the login page 🚫.
+- Ensures secure navigation based on roles:  
+  - 👣 Visitors: Can browse only.  
+  - 👤 Users: Access cart, wishlist, and purchases.  
+  - 🔑 Admins: Access admin functionalities.  
+- **Outlet-based navigation** ensures flexible routing. 
 
 ### 💳 Payment Gateway
-- **Razorpay Integration**: Users can proceed with payments seamlessly after finalizing their cart items 🛒.
+- **Razorpay Integration**: Users can proceed with payments 💳 seamlessly after finalizing their cart items 🛒.
 
 ---
 
@@ -53,52 +94,110 @@ Kickster is powered by React and Vite for fast ⚡️ development and optimized 
 Used Tailwind CSS for modern, utility-first styling 🎨.
 
 #### ✨ Setting Up Tailwind CSS
-1. Install Tailwind CSS:
-   ```bash
-   npm install -D tailwindcss postcss autoprefixer
-   npx tailwindcss init
-   ```
-2. Configure Tailwind in `tailwind.config.js` and import styles in `index.css`.
+1. Install Tailwind CSS:  
+   ```bash  
+   npm install -D tailwindcss postcss autoprefixer  
+   npx tailwindcss init  
+   ```  
+2. Configure `tailwind.config.js`:  
+   ```javascript  
+   module.exports = {  
+     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],  
+     theme: {  
+       extend: {},  
+     },  
+     plugins: [],  
+   };  
+   ```  
+3. Add Tailwind to `index.css`:  
+   ```css  
+   @tailwind base;  
+   @tailwind components;  
+   @tailwind utilities;  
+   ```  
+
+---
 
 ### 🛠️ State Management: Redux Toolkit
 Managed app-wide state with Redux Toolkit for efficiency ⚙️ and scalability 📈.
 
 #### 🔧 Setting Up Redux Toolkit
-1. Install Redux Toolkit:
-   ```bash
-   npm install @reduxjs/toolkit react-redux
-   ```
-2. Create slices and setup the store 🏬.
-   Example slice for products:
-   ```javascript
-   import { createSlice } from '@reduxjs/toolkit';
+1. Install Redux Toolkit:  
+   ```bash  
+   npm install @reduxjs/toolkit react-redux  
+   ```  
+2. Create `store.js`:  
+   ```javascript  
+   import { configureStore } from '@reduxjs/toolkit';  
+   import productsReducer from './features/productsSlice';  
 
-   const productsSlice = createSlice({
-       name: 'products',
-       initialState: [],
-       reducers: {
-           setProducts: (state, action) => action.payload,
-       },
-   });
+   const store = configureStore({  
+     reducer: {  
+       products: productsReducer,  
+     },  
+   });  
 
-   export const { setProducts } = productsSlice.actions;
-   export default productsSlice.reducer;
-   ```
+   export default store;  
+   ```  
+3. Define `productSlice`:  
+   ```javascript  
+   import { createSlice } from '@reduxjs/toolkit';  
+
+   const initialState = {  
+     products: [],  
+   };  
+
+   const productsSlice = createSlice({  
+     name: 'products',  
+     initialState,  
+     reducers: {  
+       setProducts: (state, action) => {  
+         state.products = action.payload;  
+       },  
+     },  
+   });  
+
+   export const { setProducts } = productsSlice.actions;  
+   export default productsSlice.reducer;  
+   ```  
+
+---
 
 ### 🌀 Interactions: GSAP
 Used GSAP for smooth animations 🎥 and interactive UI.
 
 #### 🔄 Setting Up GSAP
-1. Install GSAP:
-   ```bash
-   npm install gsap
-   ```
-2. Import and use animations:
-   ```javascript
-   import gsap from 'gsap';
+1. Install GSAP:  
+   ```bash  
+   npm install gsap  
+   ```  
+2. Example GSAP animation with hooks:  
+   ```javascript  
+   import { useEffect } from 'react';  
+   import { gsap } from 'gsap';  
 
-   gsap.to(".box", { x: 100, duration: 1 });
-   ```
+   const useGsap = (target, animationProps) => {  
+     useEffect(() => {  
+       if (target.current) {  
+         gsap.to(target.current, animationProps);  
+       }  
+     }, [target, animationProps]);  
+   };  
+
+   export default useGsap;  
+
+   // Usage in a component  
+   import { useRef } from 'react';  
+
+   const AnimatedComponent = () => {  
+     const boxRef = useRef(null);  
+     useGsap(boxRef, { duration: 2, x: 100, opacity: 1 });  
+
+     return <div ref={boxRef} className="box">I Animate! 🚀</div>;  
+   };  
+   ```  
+
+---
 
 ### 🔥 Backend: Firebase
 Used Firebase for backend functionality including 🔒 authentication, Firestore database 📚, and CRUD operations.
@@ -108,19 +207,30 @@ Used Firebase for backend functionality including 🔒 authentication, Firestore
    ```bash
    npm install firebase
    ```
-2. Configure Firebase in `firestoreConfig.js`:
+   
+2. Add `.env` variables starting with `VITE_`:  
+   ```env  
+   VITE_API_KEY=your_api_key  
+   VITE_AUTH_DOMAIN=your_auth_domain  
+   VITE_PROJECT_ID=your_project_id  
+   VITE_STORAGE_BUCKET=your_storage_bucket  
+   VITE_MESSAGING_SENDER_ID=your_messaging_sender_id  
+   VITE_APP_ID=your_app_id  
+   ```
+   
+3. Configure Firebase in `firestoreConfig.js`:
    ```javascript
    import { initializeApp } from 'firebase/app';
    import { getFirestore } from 'firebase/firestore';
    import { getAuth } from 'firebase/auth';
 
    const firebaseConfig = {
-       apiKey: process.env.REACT_APP_API_KEY,
-       authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-       projectId: process.env.REACT_APP_PROJECT_ID,
-       storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-       messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-       appId: process.env.REACT_APP_APP_ID,
+       apiKey: import.meta.env.VITE_API_KEY,
+       authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+       projectId: import.meta.env.VITE_PROJECT_ID,
+       storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+       messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+       appId: import.meta.env.VITE_APP_ID,
    };
 
    const app = initializeApp(firebaseConfig);
@@ -128,7 +238,7 @@ Used Firebase for backend functionality including 🔒 authentication, Firestore
    export const auth = getAuth(app);
    ```
 
-3. Use a `.env` file to store sensitive keys 🔑.
+   ---
 
 #### 📚 CRUD Operations with Firestore
 - **Add Data**:
@@ -166,11 +276,16 @@ Used Firebase for backend functionality including 🔒 authentication, Firestore
 #### 🔐 Firebase Auth
 - Sign up/Login:
    ```javascript
-   import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+   import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
    createUserWithEmailAndPassword(auth, email, password);
    signInWithEmailAndPassword(auth, email, password);
+   const provider = new GoogleAuthProvider();
+   signInWithPopup(auth, provider);
    ```
+   You can use ```async``` ```await``` function to perform user login, signup, and google signin.
+
+  ---
 
 ### 🗺️ Routing: React Router
 Used `react-router-dom` for multi-page functionality 🗺️.
@@ -195,11 +310,11 @@ Used `react-router-dom` for multi-page functionality 🗺️.
 #### 🚧 Protected Routes
 Implement role-based access:
 ```javascript
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';  
 
-const ProtectedRoute = ({ children, isAuth }) => {
-    return isAuth ? children : <Navigate to="/login" />;
-};
+const ProtectedRoute = ({ isAuthenticated }) => {  
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;  
+};  
 ```
 
 ### 💳 Payment Gateway: Razorpay
@@ -211,35 +326,23 @@ Integrated Razorpay for secure 🔐 and seamless transactions.
    npm install razorpay
    ```
 2. Implement payment logic:
-   ```javascript
-   const handlePayment = async () => {
-       const options = {
-           key: 'RAZORPAY_KEY',
-           amount: totalAmount,
-           currency: 'INR',
-       };
-
-       const paymentObject = new window.Razorpay(options);
-       paymentObject.open();
-   };
-   ```
+   ```javascript  
+   const handlePayment = () => {  
+     const options = {  
+       key: import.meta.env.VITE_RAZORPAY_KEY_ID,  
+       amount: 50000,  
+       currency: 'INR',  
+       name: 'Kickster',  
+       description: 'Purchase Shoes',  
+       handler: function (response) {  
+         alert(response.razorpay_payment_id);  
+       },  
+     };  
+     const rzp = new Razorpay(options);  
+     rzp.open();  
+   };  
+   ```  
 
 ---
-
-## 🖥️ Setup Instructions
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/falguni-mondal/kickster.git
-   cd kickster
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file and add Firebase and Razorpay keys.
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-5. Enjoy building and exploring Kickster!
+### With Kickster, step into a seamless shoe shopping experience! 🛍️✨
+### One step 👣 at a time.
