@@ -39,7 +39,7 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
 
 ## ✨ Features
 
-### 🔍 Product Filtering and Sorting
+### 1. 🔍 Product Filtering and Sorting
 - Browse a diverse range of shoes with detailed product listings.  
 - **Sort by**:  
   - Price (⬇️ Low to High, ⬆️ High to Low).  
@@ -50,10 +50,10 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
   - Brands (🏷️ Nike, Adidas, Puma, etc.).  
   - Collections (🏋️ Training, ⚽ Football, 🏀 Basketball, etc.).
  
-### 🛒 **Cart & Wishlist Management**  
+### 2. 🛒 **Cart & Wishlist Management**  
 - Add your favorite products to the **Wishlist 💖** or **Cart 🛒** for later purchase.  
 
-### 🔒 Authentication
+### 3. 🔒 Authentication
 - Powered by **🔥 Firebase Auth** for secure login.  
 - Supports:  
   - **Sign up** with name 👤, email ✉️, passsword 🔐, contact 📞 details.  
@@ -64,21 +64,21 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
   - **Users**: Access cart 🛒, wishlist ❤️, and purchase 🛍️ options.  
   - **Admins**: Manage the app 📱 via the admin panel 📊.  
 
-### 🛠️ Admin Panel
+### 4. 🛠️ Admin Panel
 - **Admin Capabilities**:
   - Review app metrics 📈, products 🛒, users 👥, and orders 📦.
   - Add ➕, update ✏️, or delete ❌ products.
   - Delete 🗑️ or disable 🚫 users.
 - **Role-Based Access**: Admin panel is protected and accessible only to logged-in admin accounts.
 
-### 🚪 Protected Routes
+### 5. 🚪 Protected Routes
 - Ensures secure navigation based on roles:  
   - 👣 Visitors: Can browse only.  
   - 👤 Users: Access cart, wishlist, and purchases.  
   - 🔑 Admins: Access admin functionalities.  
 - **Outlet-based navigation** ensures flexible routing. 
 
-### 💳 Payment Gateway
+### 6. 💳 Payment Gateway
 - **Razorpay Integration**: Users can proceed with payments 💳 seamlessly after finalizing their cart items 🛒.
 
 
