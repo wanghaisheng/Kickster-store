@@ -4,36 +4,36 @@ import { useForm } from 'react-hook-form';
 import Logo from '../logo/Logo';
 import { toast } from 'react-toastify';
 import { auth, db } from '../../utils/firebaseConfigures';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { GoogleAuthProvider } from 'firebase/auth/web-extension';
 import googleLogo from '../../../assets/logo/google.png';
 
 
 const SignUp = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm()
   const [passwordFlag, showPasswordFlag] = useState(false)
   const navigate = useNavigate();
 
 
   const submitHandler = async (data) => {
-    const userCol = collection(db, "users")
     try {
         await createUserWithEmailAndPassword(auth, data.email, data.password);
         const user = auth.currentUser;
         console.log(user);
-        await setDoc(doc(userCol, `${user.uid}`), {
+        await setDoc(doc(db, "users", `${user.uid}`), {
             name: data.name,
             phone: parseInt(data.phone),
             email: data.email,
             role: "user",
             cart: [],
             wishlist: [],
-            orders: []
+            orders: [],
+            isVerified : false
         });
-        await signInWithEmailAndPassword(auth, data.email, data.password)
-        toast.success("Signed Up successfully!");
-        navigate("/user");
+        await sendEmailVerification(user);
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        navigate("/verify");
     }
     catch (error) {
         toast.error(error.code);
@@ -45,9 +45,7 @@ const SignUp = () => {
     try {
         await signInWithPopup(auth, provider)
         const user = auth.currentUser;
-        console.log(user);
-        const userCol = collection(db, "users");
-        const docRef = doc(userCol, `${user.uid}`);
+        const docRef = doc(db, "users", `${user.uid}`);
         const docSnap = await getDoc(docRef);
         if (!docSnap.exists()) {
             await setDoc(docRef, {
@@ -57,12 +55,12 @@ const SignUp = () => {
                 role: "user",
                 cart: [],
                 wishlist: [],
-                orders: []
+                orders: [],
+                isVerified: true
             });
         }
         toast.success("Signed In successfully!");
         navigate("/user");
-
     }
     catch (error) {
         toast.error(error.code);
@@ -140,7 +138,7 @@ const SignUp = () => {
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                     </div>
                     <div className='form-group w-full'>
-                        <button type='submit' className='login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800'>Sign Up</button>
+                        <button type='submit' className={`login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800 ${isSubmitting ? 'cursor-not-allowed' : ''}`} disabled={isSubmitting}>Sign Up</button>
                     </div>
                 </form>
             <div className='form-group grid grid-cols-2 gap-3 sign-in-btn-container w-full mt-5'>

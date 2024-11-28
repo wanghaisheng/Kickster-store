@@ -9,7 +9,6 @@ import {
 } from "firebase/auth";
 import { auth, db } from '../../utils/firebaseConfigures';
 import {
-    collection,
     setDoc,
     doc,
     getDoc
@@ -19,10 +18,9 @@ import googleLogo from '../../../assets/logo/google.png';
 
 const Login = () => {
     const [passwordFlag, showPasswordFlag] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
     const navigate = useNavigate();
 
-    const userCol = collection(db, "users");
 
     const submitHandler = async (data) => {
         try {
@@ -45,8 +43,7 @@ const Login = () => {
         try {
             await signInWithPopup(auth, provider);
             const user = auth.currentUser;
-            console.log(user);
-            const docRef = doc(userCol, `${user.uid}`);
+            const docRef = doc(db, "users", `${user.uid}`);
             const docSnap = await getDoc(docRef);
             if (!docSnap.exists()) {
                 await setDoc(docRef, {
@@ -56,10 +53,12 @@ const Login = () => {
                     role: "user",
                     cart: [],
                     wishlist: [],
-                    orders: []
+                    orders: [],
+                    isVerified: true
                 });
             }
             toast.success("Signed In successfully!");
+            navigate("/user");
         }
         catch (error) {
             toast.error(error.code);
@@ -112,7 +111,7 @@ const Login = () => {
                         </div>
                     </div>
                     <div className='form-group w-full'>
-                        <button type='submit' className='login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800'>Sign In</button>
+                        <button type='submit' disabled={isSubmitting} className='login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800'>Sign In</button>
                     </div>
                     <div className='form-group w-full mt-3'>
                         <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>

@@ -11,6 +11,7 @@ import UserAccount from "../components/user/UserAccount";
 import { useSelector } from "react-redux";
 import SignUp from "../components/user/SignUp";
 import User from "../components/user/User";
+import Verify from "../components/auth/Verify";
 
 const Router = () => {
   const user = useSelector(state => state.loggedInUser.user);
@@ -18,8 +19,9 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/product/:id" element={<Product />} />
-      <Route path="/login" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : <Navigate to="/user"/> : <Login />} />
-      <Route path="/signup" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : <Navigate to="/user"/> : <SignUp />} />
+      <Route path="/login" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : user.isVerifed ? <Navigate to="/user"/> : <Navigate to="/verify"/> : <Login />} />
+      <Route path="/signup" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : user.isVerifed ? <Navigate to="/user"/> : <Navigate to="/verify"/> : <SignUp />} />
+      <Route path="/verify" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : user.isVerified ? <Navigate to="/user"/> : <Verify /> : <Navigate to="#" />} />
       <Route path="/user" element={<User />}>
         <Route index element={<UserAccount />} />
       </Route>

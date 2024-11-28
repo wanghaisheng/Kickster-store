@@ -6,12 +6,13 @@ const User = () => {
     const user = useSelector(state => state.loggedInUser.user)
 
     return (
-        user ? user.role === 'user' ?
+        user ? user.role === 'user' ? user.isVerified ?
             <section className="user-section">
                 {
                     <Outlet />
                 }
-            </section>
+            </section> :
+            <Navigate to="/verify" />
             :
             <Navigate to="/login" /> : <Navigate to="/login" />
     )

@@ -3,17 +3,19 @@ import Navbar from './components/navbar/Navbar'
 import { useEffect, useCallback } from 'react'
 import gsap from 'gsap'
 import Footer from './components/footer/Footer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from './store/features/productsSlice'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore'
 import { setUser } from './store/features/loggedInSlice'
 import { auth, db } from './utils/firebaseConfigures'
 
 const App = () => {
 
   const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.loggedInUser.user);
+
   //Initializing the MOUSE FOLLOWER
   const mouseFollower = useCallback((e) => {
     gsap.to(".mouseFollower", {
@@ -38,20 +40,30 @@ const App = () => {
     dispatch(getProducts())
   }, [dispatch])
 
+
+  //FETCHING USER DATA
   useEffect(() => {
     if(localStorage.getItem("user")){
       dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
     }
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if(user){
         const docRef = doc(db, "users", `${user.uid}`);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          localStorage.setItem("user", JSON.stringify(docSnap.data()))
-          dispatch(setUser(docSnap.data()))
-        }
+        onSnapshot(docRef, async (doc)=>{
+          if (doc.exists()) {
+            if(doc.data().role !== "admin" && user.emailVerified && doc.data().isVerified !== true){
+              await setDoc(docRef, {
+                ...docSnap.data(),
+                isVerified: true
+              });
+            }
+            localStorage.setItem("user", JSON.stringify({...doc.data(), isVerified : user.emailVerified ? true : false}));
+            dispatch(setUser({...doc.data(), isVerified : user.emailVerified ? true : false}));
+          }
+        })
       }
       else{
+        localStorage.getItem("user") &&
         localStorage.removeItem("user");
         dispatch(setUser(null));
       }
