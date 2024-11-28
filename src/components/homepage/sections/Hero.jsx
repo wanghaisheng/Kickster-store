@@ -45,7 +45,7 @@ const Hero = () => {
                         }
                     </h1>
                 </div>
-                <img className='shoeImg absolute bottom-[9vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px] z-10' src={shoe} alt="Nike Shoe Img" fetchPriority='highest' />
+                <img className='shoeImg absolute bottom-[9vh] lg:bottom-[3vh] left-[50%] -translate-x-[50%] h-[30vh] lg:h-[95vh] max-h-[750px] z-10' src={shoe} alt="Nike Shoe Img" />
             </div>
         </header>
     )

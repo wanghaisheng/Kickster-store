@@ -2,19 +2,10 @@ import React, { useState } from 'react'
 import Logo from '../logo/Logo'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import {
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider
-} from "firebase/auth";
-import { auth, db } from '../../utils/firebaseConfigures';
-import {
-    setDoc,
-    doc,
-    getDoc
-} from 'firebase/firestore';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../utils/firebaseConfigures';
 import { toast } from 'react-toastify';
-import googleLogo from '../../../assets/logo/google.png';
+import GoogleSignInBtn from '../auth/GoogleSignInBtn';
 
 const Login = () => {
     const [passwordFlag, showPasswordFlag] = useState(false);
@@ -38,32 +29,6 @@ const Login = () => {
         }
     }
 
-    const loginWithGoogle = async () => {
-        const provider = new GoogleAuthProvider();
-        try {
-            await signInWithPopup(auth, provider);
-            const user = auth.currentUser;
-            const docRef = doc(db, "users", `${user.uid}`);
-            const docSnap = await getDoc(docRef);
-            if (!docSnap.exists()) {
-                await setDoc(docRef, {
-                    name: user.displayName,
-                    phone: user.phoneNumber && user.phoneNumber,
-                    email: user.email,
-                    role: "user",
-                    cart: [],
-                    wishlist: [],
-                    orders: [],
-                    isVerified: true
-                });
-            }
-            toast.success("Signed In successfully!");
-            navigate("/user");
-        }
-        catch (error) {
-            toast.error(error.code);
-        }
-    }
 
     return (
         <div className='login-page h-fit rounded-2xl lg:mt-8 py-20 lg:py-10 flex flex-col justify-center items-center'>
@@ -103,7 +68,7 @@ const Login = () => {
                                 className='login-inp placeholder:text-[0.85rem]'
                                 placeholder='Enter your password'
                             />
-                            <span onClick={() => showPasswordFlag(prev => !prev)} className='flex justify-center items-center absolute top-[50%] -translate-y-[50%] right-0 h-[30px] w-[30px] rounded bg-zinc-400 text-white opacity-80'>?</span>
+                            <span onClick={() => showPasswordFlag(prev => !prev)} className={`flex justify-center items-center absolute top-[50%] -translate-y-[50%] right-0 h-[30px] w-[30px] rounded text-white ${passwordFlag ? "bg-zinc-800  opacity-100" : "bg-[#888888] opacity-80"} hover:opacity-100 duration-300 transition-all`}>?</span>
                         </div>
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                         <div className='form-group w-full text-right mt-3'>
@@ -114,10 +79,8 @@ const Login = () => {
                         <button type='submit' disabled={isSubmitting} className='login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800'>Sign In</button>
                     </div>
                     <div className='form-group w-full mt-3'>
-                        <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
-                            <span className='inline-block'>Sign in with</span>
-                            <img className='h-[20px]' src={googleLogo} alt="" />
-                        </button>
+                        {/* Sign in with GOOGLE button */}
+                        <GoogleSignInBtn />
                     </div>
                     <div className='form-group w-full mt-3'>
                         Don't have an account? <Link to="/signup" className='underline text-[0.95rem] font-bold lg:font-semibold'> Sign Up</Link>

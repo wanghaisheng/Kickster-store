@@ -4,71 +4,43 @@ import { useForm } from 'react-hook-form';
 import Logo from '../logo/Logo';
 import { toast } from 'react-toastify';
 import { auth, db } from '../../utils/firebaseConfigures';
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { GoogleAuthProvider } from 'firebase/auth/web-extension';
-import googleLogo from '../../../assets/logo/google.png';
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import GoogleSignInBtn from '../auth/GoogleSignInBtn';
 
 
 const SignUp = () => {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm()
-  const [passwordFlag, showPasswordFlag] = useState(false)
-  const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm()
+    const [passwordFlag, showPasswordFlag] = useState(false)
+    const navigate = useNavigate();
 
 
-  const submitHandler = async (data) => {
-    try {
-        await createUserWithEmailAndPassword(auth, data.email, data.password);
-        const user = auth.currentUser;
-        console.log(user);
-        await setDoc(doc(db, "users", `${user.uid}`), {
-            name: data.name,
-            phone: parseInt(data.phone),
-            email: data.email,
-            role: "user",
-            cart: [],
-            wishlist: [],
-            orders: [],
-            isVerified : false
-        });
-        await sendEmailVerification(user);
-        await signInWithEmailAndPassword(auth, data.email, data.password);
-        navigate("/verify");
-    }
-    catch (error) {
-        toast.error(error.code);
-    }
-  }
-
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-        await signInWithPopup(auth, provider)
-        const user = auth.currentUser;
-        const docRef = doc(db, "users", `${user.uid}`);
-        const docSnap = await getDoc(docRef);
-        if (!docSnap.exists()) {
-            await setDoc(docRef, {
-                name: user.displayName,
-                phone: user.phoneNumber && user.phoneNumber,
-                email: user.email,
+    const submitHandler = async (data) => {
+        try {
+            await createUserWithEmailAndPassword(auth, data.email, data.password);
+            const user = auth.currentUser;
+            await setDoc(doc(db, "users", `${user.uid}`), {
+                name: data.name,
+                phone: parseInt(data.phone),
+                email: data.email,
                 role: "user",
                 cart: [],
                 wishlist: [],
                 orders: [],
-                isVerified: true
+                isVerified: false
             });
+            await sendEmailVerification(user);
+            await signInWithEmailAndPassword(auth, data.email, data.password);
+            navigate("/verify");
         }
-        toast.success("Signed In successfully!");
-        navigate("/user");
+        catch (error) {
+            toast.error(error.code);
+        }
     }
-    catch (error) {
-        toast.error(error.code);
-    }
-}
 
-  return (
-    <div className='login-page h-fit rounded-2xl lg:mt-8 py-10 flex flex-col justify-center items-center'>
+
+    return (
+        <div className='login-page h-fit rounded-2xl lg:mt-8 py-10 flex flex-col justify-center items-center'>
             <div className="form-container w-full lg:w-1/3 h-full px-5 lg:p-0">
                 <div className='logo mx-auto w-fit'>
                     <Logo />
@@ -133,7 +105,7 @@ const SignUp = () => {
                                 className='login-inp placeholder:text-[0.85rem]'
                                 placeholder='Enter your password'
                             />
-                            <span onClick={() => showPasswordFlag(prev => !prev)} className='flex justify-center items-center absolute top-[50%] -translate-y-[50%] right-0 h-[30px] w-[30px] rounded bg-zinc-400 text-white opacity-80'>?</span>
+                            <span onClick={() => showPasswordFlag(prev => !prev)} className={`flex justify-center items-center absolute top-[50%] -translate-y-[50%] right-0 h-[30px] w-[30px] rounded text-white ${passwordFlag ? "bg-zinc-800  opacity-100" : "bg-[#888888] opacity-80"} hover:opacity-100 duration-300 transition-all`}>?</span>
                         </div>
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                     </div>
@@ -141,17 +113,16 @@ const SignUp = () => {
                         <button type='submit' className={`login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800 ${isSubmitting ? 'cursor-not-allowed' : ''}`} disabled={isSubmitting}>Sign Up</button>
                     </div>
                 </form>
-            <div className='form-group grid grid-cols-2 gap-3 sign-in-btn-container w-full mt-5'>
-            <span className='col-span-2'>Already have an account?</span>
-            <Link to="/login" className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'> Sign In</Link>
-                <button onClick={loginWithGoogle} type='button' className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'>
-                    <span className='inline-block'>Sign in with</span>
-                    <img className='h-[20px]' src={googleLogo} alt="" />
-                </button>
-            </div>
+                <div className='form-group grid grid-cols-2 gap-3 sign-in-btn-container w-full mt-5'>
+                    <span className='col-span-2'>Already have an account?</span>
+                    <Link to="/login" className='w-full flex justify-center items-center bg-zinc-100 py-2 gap-1 rounded-md'> Sign In</Link>
+                    
+                    {/* Sign in with GOOGLE button */}
+                    <GoogleSignInBtn />
+                </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default SignUp
