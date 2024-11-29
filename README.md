@@ -50,8 +50,10 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
   - Brands (🏷️ Nike, Adidas, Puma, etc.).  
   - Collections (🏋️ Training, ⚽ Football, 🏀 Basketball, etc.).
  
+
 ### 2. 🛒 **Cart & Wishlist Management**  
 - Add your favorite products to the **Wishlist 💖** or **Cart 🛒** for later purchase.  
+
 
 ### 3. 🔒 Authentication
 - Powered by **🔥 Firebase Auth** for secure login.  
@@ -64,6 +66,7 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
   - **Users**: Access cart 🛒, wishlist ❤️, and purchase 🛍️ options.  
   - **Admins**: Manage the app 📱 via the admin panel 📊.  
 
+
 ### 4. 🛠️ Admin Panel
 - **Admin Capabilities**:
   - Review app metrics 📈, products 🛒, users 👥, and orders 📦.
@@ -71,12 +74,14 @@ Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that 
   - Delete 🗑️ or disable 🚫 users.
 - **Role-Based Access**: Admin panel is protected and accessible only to logged-in admin accounts.
 
+
 ### 5. 🚪 Protected Routes
 - Ensures secure navigation based on roles:  
   - 👣 Visitors: Can browse only.  
   - 👤 Users: Access cart, wishlist, and purchases.  
   - 🔑 Admins: Access admin functionalities.  
 - **Outlet-based navigation** ensures flexible routing. 
+
 
 ### 6. 💳 Payment Gateway
 - **Razorpay Integration**: Users can proceed with payments 💳 seamlessly after finalizing their cart items 🛒.

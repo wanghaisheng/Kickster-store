@@ -28,7 +28,6 @@ const AdminContentProducts = () => {
       Category: item.category,
       Rating: item.rating,
       Sales: item.sales,
-      Sizes: item.sizes.join(", ")
     }));
 
     // Create worksheet
