@@ -13,7 +13,7 @@ const Verify = () => {
         if (user) {
             try {
                 await deleteDoc(doc(db, "users", user.uid));
-                await user.delete()
+                await user.delete();
                 toast("Please provide an authentic email!");
                 window.location.assign("/signup");
             }
@@ -26,19 +26,19 @@ const Verify = () => {
 
 
     return (
-        <div className='h-[80vh] w-full flex justify-center items-center'>
+        <div className='h-[80vh] w-full flex justify-center items-center px-5'>
             <p className='w-[45ch]'>
                 <h1 className='text-[2.3rem] leading-none mb-3'>Please verify your <span className='underline'>email</span> to continue</h1>
                 <span className='text-zinc-800'>Verify your email address to continue. Check your inbox for the verification link. If you haven't received it, please check your spam folder.</span>
                 <br />
                 <br />
                 <span className='text-zinc-950'>
-                    If verified please continue <span onClick={reloader} className='text-blue-600 underline txt-medium'>here</span> and wait for few seconds for verification on our end.
+                    <span className='txt-medium'>If verified</span> please continue <span onClick={reloader} className='text-blue-600 underline txt-medium'>here</span> and wait for few seconds for verification on our end.
                 </span>
 
                 <br />
                 <br />
-                <span className='text-zinc-950'>
+                <span className='text-zinc-950 txt-medium'>
                     Entered wrong email? <span onClick={signCancellation} className='text-blue-600 underline'>Click here</span>
                 </span>
             </p>

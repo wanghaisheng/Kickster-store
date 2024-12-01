@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 
 //Icons
 import { IoIosMale } from "react-icons/io";
@@ -18,6 +18,8 @@ import signOut from "../../signOut";
 
 const MobileNavMenu = ({ reveal, setReveal }) => {
   const user = useSelector((state) => state.loggedInUser.user);
+  const adminId = useSelector(state => state.loggedInUser.admin);
+  const menuRef = useRef(null);
 
   const navs = [
     {
@@ -73,8 +75,21 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
         icon: LiaUserShieldSolid,
       },
   ];
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setReveal(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef, setReveal]);
+
   return (
     <div
+      ref={menuRef}
       className={`hamburger-menu absolute w-[95vw] p-5 ${
         reveal ? "h-[27vh] top-[-27vh] opacity-100" : "h-0 top-[10vh] opacity-0"
       } left-[50%] -translate-x-[50%] lg:hidden bg-[#fff] rounded-[10px_10px_0px_0px] border-zinc-100 border-x-2 border-t-2 grid grid-cols-3 gap-5 overflow-hidden transition-all duration-300`}
@@ -85,7 +100,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
             onClick={()=> setReveal(prev => !prev)}
             key={label + "MobileNav"}
             to={path}
-            className={`${user ? user.role === "admin" ? "hidden" :  "flex" : "flex"} flex-col justify-center items-center text-zinc-800`}
+            className={`${user ? user.id === adminId ? "hidden" :  "flex" : "flex"} flex-col justify-center items-center text-zinc-800`}
             >
             <IconBase className="text-[1.5rem] mb-1" />
             <span className="text-[0.9rem]">{label}</span>
@@ -93,7 +108,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
         ))
       }
       {
-        user && user.role === "admin" &&
+        user && user.id === adminId &&
         adminNavs.map(({ icon: IconBase, label, path }) => (
             <NavLink
             onClick={()=> setReveal(prev => !prev)}
@@ -107,7 +122,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
         ))
       }
       {
-        user && user.role === "admin" &&
+        user && user.id === adminId &&
         <div
             onClick={()=> {
               signOut();
