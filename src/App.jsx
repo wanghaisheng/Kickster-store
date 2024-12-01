@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from './store/features/productsSlice'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { setUser } from './store/features/loggedInSlice'
 import { auth, db } from './utils/firebaseConfigures'
 
@@ -57,8 +57,8 @@ const App = () => {
                 isVerified: true
               });
             }
-            localStorage.setItem("user", JSON.stringify({...doc.data(), isVerified : user.emailVerified ? true : user.uid !== adminId && false}));
-            dispatch(setUser({...doc.data(), isVerified : user.emailVerified ? true : user.uid !== adminId && false}));
+            localStorage.setItem("user", JSON.stringify({...doc.data(), isVerified : user.emailVerified ? true : false}));
+            dispatch(setUser({...doc.data(), isVerified : user.emailVerified ? true : false}));
           }
         })
       }
