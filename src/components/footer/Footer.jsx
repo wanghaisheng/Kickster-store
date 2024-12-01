@@ -27,9 +27,7 @@ const Footer = () => {
     {
       heading: "project",
       links: [
-        { label: "tech stack", path: "/techstack" },
-        { label: "github repository", path: "/https://github.com/falguni-mondal/Kickstep" },
-        { label: "story", path: "/story" }
+        { label: "github repository", path: "/https://github.com/falguni-mondal/Kickster" }
       ]
     }
   ]

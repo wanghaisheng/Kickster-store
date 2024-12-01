@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../utils/firebaseConfigures';
 import { toast } from 'react-toastify';
-import GoogleSignInBtn from '../auth/GoogleSignInBtn';
+import GoogleSignInBtn from './GoogleSignInBtn';
 
 const Login = () => {
     const [passwordFlag, showPasswordFlag] = useState(false);

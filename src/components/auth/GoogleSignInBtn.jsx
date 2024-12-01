@@ -25,11 +25,8 @@ const GoogleSignInBtn = () => {
                     name: user.displayName,
                     phone: user.phoneNumber && user.phoneNumber,
                     email: user.email,
-                    role: "user",
-                    cart: [],
-                    wishlist: [],
-                    orders: [],
-                    isVerified: true
+                    isVerified: true,
+                    id: user.uid
                 });
             }
             toast.success("Signed In successfully!");

@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
 import ProductBtns from './ProductBtns';
 import ProductReviews from './ProductReviews';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../../../utils/firebaseConfigures';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const ProductDescription = ({ product }) => {
+    const user = auth.currentUser();
+    const navigate = useNavigate()
     const sizeChart = [
         "2.5",
         "3",
@@ -26,6 +32,64 @@ const ProductDescription = ({ product }) => {
     const sizeAdder = (size) => {
         product.sizes.includes(size) && setProductSize(size)
     }
+
+    // const addToCartWishlist = async (action) => {
+    //     if (user) {
+    //         if (productSize) {
+    //             const cart = JSON.parse(localStorage.getItem(("cart")));
+    //             const wishlist = JSON.parse(localStorage.getItem(("wishlist")));
+    //             if (cart || wishlist) {
+    //                 localStorage.setItem(JSON.stringify(`${action === "cart" ? "cart" : "wishlist"}`, action === "cart" ? [...cart, {
+    //                     title: product.title,
+    //                     price: product.price,
+    //                     totalPrice: product.price,
+    //                     size: productSize,
+    //                     quantity: 1,
+    //                     image: product.images[0],
+    //                     user: user.id,
+    //                     id: product.id
+    //                 }]
+    //                 :
+
+    //             ));
+    //             }
+    //             else {
+    //                 localStorage.setItem(JSON.stringify("cart", [{
+    //                     title: product.title,
+    //                     price: product.price,
+    //                     totalPrice: product.price,
+    //                     size: productSize,
+    //                     quantity: 1,
+    //                     image: product.images[0],
+    //                     user: user.id,
+    //                     id: product.id
+    //                 }]));
+    //             }
+    //             const uid = user.uid;
+    //             const userRef = doc(db, 'user', uid);
+    //             setDoc(userRef, {
+    //                 cart: [...cart, {
+    //                     title: product.title,
+    //                     price: product.price,
+    //                     totalPrice: product.price,
+    //                     size: productSize,
+    //                     quantity: 1,
+    //                     image: product.images[0],
+    //                     user: user.id,
+    //                     id: product.id
+    //                 }]
+    //             }, { merge: true });
+    //         }
+    //         else{
+    //             toast("Please select a size");
+    //         }
+    //     }
+    //     else {
+    //         navigate("/login")
+    //         toast("Please login with your account.");
+    //     }
+    // }
+
     return (
         product &&
         <section className='product-description w-full lg:w-[52%] lg:pl-14'>
@@ -38,7 +102,7 @@ const ProductDescription = ({ product }) => {
                 <div className="sizes grid grid-cols-4 w-full lg:w-[80%] gap-3">
                     {
                         sizeChart.map((size) => (
-                            <span onClick={()=> sizeAdder(size)} key={`size-${size}`} className={`size ${product.sizes.includes(size)? 'opacity-100' : 'opacity-60 bg-zinc-200 border-zinc-300'} ${productSize === size ? "border-zinc-900" : "border-zinc-300"} py-2 border rounded uppercase font-medium text-center`}>uk {size}</span>
+                            <span onClick={() => sizeAdder(size)} key={`size-${size}`} className={`size ${product.sizes.includes(size) ? 'opacity-100' : 'opacity-60 bg-zinc-200 border-zinc-300'} ${productSize === size ? "border-zinc-900" : "border-zinc-300"} py-2 border rounded uppercase font-medium text-center`}>uk {size}</span>
                         ))
                     }
                 </div>
@@ -50,7 +114,7 @@ const ProductDescription = ({ product }) => {
             <p className="product-story w-full lg:w-[80%] mt-[10vh] font-medium">
                 {product.description}
             </p>
-            <img className='w-full lg:w-[80%] object-cover mt-[5vh]' src={product.images[product.images.length-1]} alt="" />
+            <img className='w-full lg:w-[80%] object-cover mt-[5vh]' src={product.images[product.images.length - 1]} alt="" />
             <ProductReviews reviews={product.reviews} />
         </section>
     )

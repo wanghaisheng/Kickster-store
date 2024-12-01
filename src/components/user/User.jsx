@@ -3,10 +3,12 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 const User = () => {
 
-    const user = useSelector(state => state.loggedInUser.user)
+    const user = useSelector(state => state.loggedInUser.user);
+    const adminId = useSelector(state => state.loggedInUser.admin);
+
 
     return (
-        user ? user.role === 'user' ? user.isVerified ?
+        user ? user.id !== adminId ? user.isVerified ?
             <section className="user-section">
                 {
                     <Outlet />

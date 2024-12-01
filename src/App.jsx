@@ -14,7 +14,7 @@ import { auth, db } from './utils/firebaseConfigures'
 const App = () => {
 
   const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.loggedInUser.user);
+  const adminId = useSelector(state => state.loggedInUser.admin);
 
   //Initializing the MOUSE FOLLOWER
   const mouseFollower = useCallback((e) => {
@@ -51,14 +51,14 @@ const App = () => {
         const docRef = doc(db, "users", `${user.uid}`);
         onSnapshot(docRef, async (doc)=>{
           if (doc.exists()) {
-            if(doc.data().role !== "admin" && user.emailVerified && doc.data().isVerified !== true){
+            if(doc.data().id !== adminId && user.emailVerified && doc.data().isVerified !== true){
               await setDoc(docRef, {
                 ...docSnap.data(),
                 isVerified: true
               });
             }
-            localStorage.setItem("user", JSON.stringify({...doc.data(), isVerified : user.emailVerified ? true : false}));
-            dispatch(setUser({...doc.data(), isVerified : user.emailVerified ? true : false}));
+            localStorage.setItem("user", JSON.stringify({...doc.data(), isVerified : user.emailVerified ? true : user.uid !== adminId && false}));
+            dispatch(setUser({...doc.data(), isVerified : user.emailVerified ? true : user.uid !== adminId && false}));
           }
         })
       }

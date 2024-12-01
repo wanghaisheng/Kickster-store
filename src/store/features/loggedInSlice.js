@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const loggedInSlice = createSlice({
     name: "loggedInUser",
     initialState: {
-        user: null
+        user: null,
+        admin: import.meta.env.VITE_ADMIN_ID,
     },
     reducers: {
         setUser: (state, action) => {

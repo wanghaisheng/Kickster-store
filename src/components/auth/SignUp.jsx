@@ -23,11 +23,8 @@ const SignUp = () => {
                 name: data.name,
                 phone: parseInt(data.phone),
                 email: data.email,
-                role: "user",
-                cart: [],
-                wishlist: [],
-                orders: [],
-                isVerified: false
+                isVerified: false,
+                id: user.uid
             });
             await sendEmailVerification(user);
             await signInWithEmailAndPassword(auth, data.email, data.password);

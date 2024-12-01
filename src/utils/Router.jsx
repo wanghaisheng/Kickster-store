@@ -2,26 +2,30 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Homepage from "../components/homepage/Homepage";
 import Product from "../components/product/Product";
+import ProductList from "../components/productList/ProductList";
 import AdminPanel from "../components/admin/AdminPanel";
 import Dashboard from "../components/admin/Dashboard";
 import AdminContent from "../components/admin/adminContents/AdminContent";
 import AddUpdateProduct from "../components/admin/adminContents/products/AddUpdateProduct";
-import Login from "../components/user/Login";
 import UserAccount from "../components/user/UserAccount";
-import { useSelector } from "react-redux";
-import SignUp from "../components/user/SignUp";
 import User from "../components/user/User";
+import Login from "../components/auth/Login";
+import SignUp from "../components/auth/SignUp";
 import Verify from "../components/auth/Verify";
+import { useSelector } from "react-redux";
 
 const Router = () => {
   const user = useSelector(state => state.loggedInUser.user);
+  const adminId = useSelector(state => state.loggedInUser.admin);
+
   return (
     <Routes>
       <Route path="/" element={<Homepage />} />
       <Route path="/product/:id" element={<Product />} />
-      <Route path="/login" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : user.isVerifed ? <Navigate to="/user"/> : <Navigate to="/verify"/> : <Login />} />
-      <Route path="/signup" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : user.isVerifed ? <Navigate to="/user"/> : <Navigate to="/verify"/> : <SignUp />} />
-      <Route path="/verify" element={user ? user.role === "admin" ? <Navigate to="/admin"/> : user.isVerified ? <Navigate to="/user"/> : <Verify /> : <Navigate to="#" />} />
+      <Route path="/shop/:filter" element={<ProductList />} />
+      <Route path="/login" element={user ? user.id === adminId ? <Navigate to="/admin"/> : user.isVerifed ? <Navigate to="/user"/> : <Navigate to="/verify"/> : <Login />} />
+      <Route path="/signup" element={user ? user.id === adminId ? <Navigate to="/admin"/> : user.isVerifed ? <Navigate to="/user"/> : <Navigate to="/verify"/> : <SignUp />} />
+      <Route path="/verify" element={user ? user.id === adminId ? <Navigate to="/admin"/> : user.isVerified ? <Navigate to="/user"/> : <Verify /> : <Navigate to="#" />} />
       <Route path="/user" element={<User />}>
         <Route index element={<UserAccount />} />
       </Route>

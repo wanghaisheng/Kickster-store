@@ -14,7 +14,7 @@ const Verify = () => {
             try {
                 await deleteDoc(doc(db, "users", user.uid));
                 await user.delete()
-                toast.warn("Please provide an authentic email!");
+                toast("Please provide an authentic email!");
                 window.location.assign("/signup");
             }
             catch (error) {
