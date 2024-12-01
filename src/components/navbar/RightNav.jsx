@@ -27,7 +27,7 @@ const RightNav = () => {
                 <TfiSearch className='absolute top-[50%] -translate-y-[50%] right-0 text-[1.1rem] text-[#383838] mr-[0.5rem]' />
             </div>
             <nav className='flex gap-[1rem]'>
-                <NavLink to={user ? user.role === "admin" ? "/admin" : "/user" : "/login"} className="hover:text-[#464646] duration-300">
+                <NavLink to={user ? user.role === "admin" ? "/admin" : "/user" : "/login"} className="hover:text-[#525252] duration-300">
                     {
                         user ?
                         user.role === "admin" ?
@@ -40,7 +40,7 @@ const RightNav = () => {
                         <NavLink
                         key={name + "nav"}
                         to={path}
-                        className={`hover:text-[#464646] duration-300 ${user ? user.role === 'admin' ? "hidden" : "block" : "block"}`}
+                        className={`hover:text-[#525252] duration-300 ${user ? user.role === 'admin' ? "hidden" : "block" : "block"}`}
                         >
                             <Icon className='text-[1.45rem]' />
                         </NavLink>

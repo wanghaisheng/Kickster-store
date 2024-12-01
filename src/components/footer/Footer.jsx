@@ -57,7 +57,7 @@ const Footer = () => {
         {
           footerLinks.map(item => (
             <div key={item.heading} className="footer-heading">
-              <h2 className='font-semibold capitalize text-[1.1rem] lg:text-[0.95rem]'>{item.heading}</h2>
+              <h2 className='txt-medium capitalize text-[1.1rem] lg:text-[0.95rem]'>{item.heading}</h2>
               <ul className="flex flex-col gap-1 lg:gap-3 mt-1 lg:mt-3">
                 {
                   item.links.map(({ label, path }) => (

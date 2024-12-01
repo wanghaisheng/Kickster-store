@@ -76,14 +76,14 @@ const Login = () => {
                         </div>
                     </div>
                     <div className='form-group w-full'>
-                        <button type='submit' disabled={isSubmitting} className='login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800'>Sign In</button>
+                        <button type='submit' disabled={isSubmitting} className='login-btn w-full bg-zinc-100 rounded-md py-2 txt-medium text-zinc-800'>Sign In</button>
                     </div>
                     <div className='form-group w-full mt-3'>
                         {/* Sign in with GOOGLE button */}
                         <GoogleSignInBtn />
                     </div>
                     <div className='form-group w-full mt-3'>
-                        Don't have an account? <Link to="/signup" className='underline text-[0.95rem] font-bold lg:font-semibold'> Sign Up</Link>
+                        Don't have an account? <Link to="/signup" className='underline text-[0.95rem] txt-medium'> Sign Up</Link>
                     </div>
                 </form>
             </div>

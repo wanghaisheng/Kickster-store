@@ -9,12 +9,20 @@
   src: url("../assets/fonts/Tanklager-Kompakt.woff2");
 }
 
+@font-face{
+  font-family: "regular";
+  src: url("../assets/fonts/HelviticaNowText/HelveticaNowText-Regular.woff2");
+}
+@font-face{
+  font-family: "medium";
+  src: url("../assets/fonts/HelviticaNowText/HelveticaNowText-Medium.woff2");
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "regular";
   user-select: none;
   cursor: none;
 }
@@ -23,6 +31,12 @@ html,
 body {
   height: 100vh;
   width: 100%;
+}
+.txt-normal {
+  font-family: "regular";
+}
+.txt-medium {
+  font-family: "medium";
 }
 .main-heading {
   background-image: url("../assets/images/shoefullblur.jpg");
@@ -109,6 +123,13 @@ body {
 }
 .form-container #login-password{
   padding-right: 3.5ch;
+}
+.product-filter-section::-webkit-scrollbar{
+  width: 5px;
+}
+.product-filter-section::-webkit-scrollbar-thumb{
+  background-color: #686868;
+  border-radius: 50px;
 }
 
 @media (min-width: 640px) {

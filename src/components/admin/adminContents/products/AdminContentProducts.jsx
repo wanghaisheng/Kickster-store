@@ -74,14 +74,14 @@ const AdminContentProducts = () => {
             Export as Excel
           </button>
         </div>
-        <div className="table-headings grid grid-cols-[1fr_2.5fr_1fr_1fr_1fr_1fr_1fr] place-items-center border-b border-b-zinc-400 py-1 font-semibold">
+        <div className="table-headings grid grid-cols-[1fr_2.5fr_1fr_1fr_1fr_1fr_1fr] place-items-center border-b border-b-zinc-400 py-1 text-[1.05rem]">
           <span className="col-heading"></span>
-          <span className="col-heading">Name</span>
-          <span className="col-heading">Brand</span>
-          <span className="col-heading">Stock</span>
-          <span className="col-heading">Price</span>
-          <span className="col-heading">Edit</span>
-          <span className="col-heading">Delete</span>
+          <span className="col-heading txt-medium">Name</span>
+          <span className="col-heading txt-medium">Brand</span>
+          <span className="col-heading txt-medium">Stock</span>
+          <span className="col-heading txt-medium">Price</span>
+          <span className="col-heading txt-medium">Edit</span>
+          <span className="col-heading txt-medium">Delete</span>
         </div>
         <div className="table-content-container w-full">
           {products.map((item) => (

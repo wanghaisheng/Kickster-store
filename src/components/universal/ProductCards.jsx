@@ -17,7 +17,7 @@ const ProductCards = ({ heading, cards }) => {
 
     return (
         <>
-            <h2 className="text-[1.6rem] font-medium text-zinc-900 mb-[5vh] border-b-[2px] border-zinc-700 w-fit leading-none capitalize">{heading}</h2>
+            <h2 className="text-[1.6rem] txt-medium text-zinc-800 mb-[5vh] border-b-[2px] border-zinc-700 w-fit leading-none capitalize">{heading}</h2>
             <Swiper
                 modules={[Navigation, Autoplay]}
                 spaceBetween={`${screenX < 640 ? "10" : "30"}`}
@@ -41,9 +41,9 @@ const ProductCards = ({ heading, cards }) => {
                                 <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
                                     <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
                                 </div>
-                                <span className="block mt-3 text-[1.1rem] font-semibold text-zinc-800">{item.title}</span>
-                                <span className="block text-[0.95rem] font-medium text-zinc-500">{item.category}</span>
-                                <span className="block text-[1.1rem] font-semibold text-zinc-800">{`${item.price} ₹`}</span>
+                                <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800">{item.title}</span>
+                                <span className="block text-[0.95rem] txt-medium text-zinc-500">{item.category}</span>
+                                <span className="block text-[1.1rem] txt-medium text-zinc-800">{`${item.price} ₹`}</span>
                             </Link>
                         </SwiperSlide>
                     ))

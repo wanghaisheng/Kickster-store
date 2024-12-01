@@ -27,7 +27,7 @@ const LeftNav = () => {
                     <NavLink
                         to={item.path}
                         key={item.label + "nav"}
-                        className="hover:text-[#464646] duration-300"
+                        className="hover:text-[#555555] duration-300"
                     >
                         {item.label}
                     </NavLink>

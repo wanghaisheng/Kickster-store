@@ -284,7 +284,7 @@ const Product = () => {
         <ProductDescription product={product} />
       </div>
       <section className="product-wearing-section w-full mt-10 lg:mt-5 px-5 lg:px-10">
-        <h2 className='product-wearing-heading capitalize font-semibold text-[1.45rem]'>How others are wearing it</h2>
+        <h2 className='product-wearing-heading capitalize txt-medium text-[1.45rem]'>How others are wearing it</h2>
         <p className='text-[0.95rem] mt-2'>Upload your photo or mension @kickster on instagram for a chance to be featured</p>
         <button className='rounded-full bg-[#fff] px-6 lg:px-4 py-2 lg:py-1 mt-4 border border-zinc-600'>Upload Your Photo</button>
       </section>

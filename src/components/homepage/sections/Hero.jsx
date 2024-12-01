@@ -29,9 +29,9 @@ const Hero = () => {
 
     return (
         <header className='hero-section relative h-fit lg:h-screen max-h-[768px] w-full pt-[20vh] lg:py-[10vh] flex lg:flex-col flex-col-reverse gap-10 items-center justify-center lg:justify-between'>
-            <div className=" w-full relative z-[10] px-5 flex lg:flex-row flex-row-reverse justify-between bg-[#fff]">
-                <NavLink to="/shoes/sale"><span className="inline-block w-[5px] h-[5px] rounded-full bg-[#34ff22] shadow-[0px_0px_10px_1px_#20f70c] mb-1"></span> On sale</NavLink>
-                <p className='w-[25ch]'>Discover branded footwear to kickstart your wardrobe, one step at a time —</p>
+            <div className="w-full relative z-[10] px-5 flex lg:flex-row flex-row-reverse justify-between bg-[#fff]">
+                <NavLink className="font-normal" to="/shoes/sale"><span className="inline-block w-[5px] h-[5px] rounded-full bg-[#34ff22] shadow-[0px_0px_10px_1px_#20f70c] mb-1"></span> On sale</NavLink>
+                <p className='w-[25ch] font-normal'>Discover branded footwear to kickstart your wardrobe, one step at a time —</p>
             </div>
             <div className="heading-container w-full h-fit lg:overflow-hidden pb-[1.5vh]">
                 <div className="main-heading flex-shrink-0 w-full">

@@ -174,7 +174,7 @@ const AddUpdateProduct = () => {
          />
       <div className="form-container w-full lg:w-1/2 rounded-md p-5">
         {/* Form Header */}
-        <h2 className="font-semibold text-[24px] pb-[2vmax] border-b-2 border-b-zinc-400">
+        <h2 className="txt-medium text-[24px] pb-[2vmax] border-b-2 border-b-zinc-400">
           {
             id ? "Update Product" : "Add Product"
           }
@@ -280,7 +280,7 @@ const AddUpdateProduct = () => {
                   <span
                     key={category}
                     onClick={() => productCategorySetter(category)}
-                    className="block px-3 py-2 font-medium hover:bg-white duration-300 transition-all"
+                    className="block px-3 py-2 txt-medium hover:bg-white duration-300 transition-all"
                   >
                     {
                       category === "Men's Shoes" ? "Men's" : category === "Women's Shoes" ? "Women's" : "Unisex"

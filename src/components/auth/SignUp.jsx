@@ -107,7 +107,7 @@ const SignUp = () => {
                         {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                     </div>
                     <div className='form-group w-full'>
-                        <button type='submit' className={`login-btn w-full bg-zinc-100 rounded-md py-2 font-semibold text-zinc-800 ${isSubmitting ? 'cursor-not-allowed' : ''}`} disabled={isSubmitting}>Sign Up</button>
+                        <button type='submit' className={`login-btn w-full bg-zinc-100 rounded-md py-2 txt-medium text-zinc-800 ${isSubmitting ? 'cursor-not-allowed' : ''}`} disabled={isSubmitting}>Sign Up</button>
                     </div>
                 </form>
                 <div className='form-group grid grid-cols-2 gap-3 sign-in-btn-container w-full mt-5'>

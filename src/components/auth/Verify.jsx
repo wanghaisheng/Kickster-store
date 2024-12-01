@@ -33,7 +33,7 @@ const Verify = () => {
                 <br />
                 <br />
                 <span className='text-zinc-950'>
-                    If verified please continue <span onClick={reloader} className='text-blue-600 underline font-semibold'>here</span> and wait for few seconds for verification on our end.
+                    If verified please continue <span onClick={reloader} className='text-blue-600 underline txt-medium'>here</span> and wait for few seconds for verification on our end.
                 </span>
 
                 <br />
