@@ -27,7 +27,7 @@ const Footer = () => {
     {
       heading: "project",
       links: [
-        { label: "github repository", path: "/https://github.com/falguni-mondal/Kickster" }
+        { label: "github repository", path: "https://github.com/falguni-mondal/Kickster" }
       ]
     }
   ]
@@ -61,7 +61,14 @@ const Footer = () => {
               <ul className="flex flex-col gap-1 lg:gap-3 mt-1 lg:mt-3">
                 {
                   item.links.map(({ label, path }) => (
-                    <li key={label}><Link className='capitalize text-zinc-500 lg:text-zinc-700 text-[0.9rem] lg:text-[0.95rem]' to={path}>{label}</Link></li>
+                    <li key={label}>
+                      {
+                        label === "github repository" ?
+                          <Link key={`${label}_footerlink`} to={path} target="_blank" className='capitalize text-zinc-500 lg:text-zinc-700 text-[0.9rem] lg:text-[0.95rem]'>{label}</Link>
+                          :
+                          <Link key={`${label}_footerlink`} className='capitalize text-zinc-500 lg:text-zinc-700 text-[0.9rem] lg:text-[0.95rem]' to={path}>{label}</Link>
+                      }
+                    </li>
                   ))
                 }
               </ul>

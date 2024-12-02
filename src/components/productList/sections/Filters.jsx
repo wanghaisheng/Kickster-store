@@ -46,7 +46,7 @@ const Filters = (filterAdder) => {
     }));
   }
   return (
-    <section className='product-filter-section w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[-1vh]'>
+    <section className='product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[-1vh]'>
       {
         options.map((option) => (
           <div key={`${option.label}Filter`} className='product-filter-option w-full border-b-zinc-200 border-b capitalize text-[1.05rem] text-zinc-800'>

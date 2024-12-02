@@ -25,7 +25,7 @@ const AdminContentProducts = () => {
       Stock: item.stock,
       Price: item.price,
       Discount: item.discount,
-      Category: item.category,
+      Gender: item.gender,
       Rating: item.rating,
       Sales: item.sales,
     }));

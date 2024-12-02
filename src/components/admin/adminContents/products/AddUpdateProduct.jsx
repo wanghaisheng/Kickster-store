@@ -12,13 +12,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddUpdateProduct = () => {
   const [reveal, setReveal] = useState(false);
-  const [productCategory, setProductCategory] = useState("Select");
+  const [gender, setGender] = useState("Select");
+  const [genderError, setGenderError] = useState("");
+  const genderRef = useRef(null);
+  const [sportReveal, setSportReveal] = useState(false);
+  const [sport, setSport] = useState("Select Sport");
+  const [sportError, setSportError] = useState("");
+  const sportRef = useRef(null);
   const [newProduct, setNewProduct] = useState(false);
   const [imgReveal, setImgReveal] = useState(false);
   const [uid, setUid] = useState(uuid());
-  const categoryRef = useRef(null);
   const imageRef = useRef(null);
-  const [categoryError, setCategoryError] = useState("");
   const { id } = useParams();
   // Product data for updating
   const [product, setProduct] = useState(null);
@@ -34,10 +38,15 @@ const AddUpdateProduct = () => {
     },
   });
 
-  const productCategorySetter = (option) => {
-    setProductCategory(option);
-    setCategoryError("");
+  const genderSetter = (option) => {
+    setGender(option);
+    setGenderError("");
     setReveal(false);
+  };
+  const sportSetter = (option) => {
+    setSport(option);
+    setSportError("");
+    setSportReveal(false);
   };
 
   // Reference to the Firestore Data Collection
@@ -59,8 +68,12 @@ const AddUpdateProduct = () => {
 
   //  FORM HANDLER
   const formHandler = async (data) => {
-    if (productCategory === "Select") {
-      setCategoryError("Please select a category");
+    if (gender === "Select") {
+      setGenderError("Please select a gender");
+      return;
+    }
+    if (sport === "Select Sport") {
+      setSportError("Please select a sport");
       return;
     }
     const price = priceCorrection(data.price);
@@ -71,7 +84,8 @@ const AddUpdateProduct = () => {
         ...product,
         title: data.title,
         images: [...data.images],
-        category: productCategory,
+        gender,
+        sport,
         description: data.description,
         stock: parseInt(data.stock),
         discount: parseInt(data.discount),
@@ -88,7 +102,8 @@ const AddUpdateProduct = () => {
         id: uid,
         title: data.title,
         images: [...data.images],
-        category: productCategory,
+        gender,
+        sport,
         description: data.description,
         stock: parseInt(data.stock),
         discount: parseInt(data.discount),
@@ -101,7 +116,8 @@ const AddUpdateProduct = () => {
         sizes: data.sizes.split(",").map((size) => size.trim()),
       });
       setUid(uuid());
-      setProductCategory("Select");
+      setGender("Select");
+      setSport("Select Sport");
       setNewProduct(false);
       reset();
       toast.success("Added successfully!");
@@ -120,7 +136,8 @@ const AddUpdateProduct = () => {
       productData.images.forEach((url, index) => {
         setValue(`images.${index}`, url);
       });
-      setProductCategory(productData.category);
+      setGender(productData.gender);
+      setSport(productData.sport);
       setNewProduct(productData.new);
       setValue("title", productData.title);
       setValue("description", productData.description);
@@ -139,11 +156,14 @@ const AddUpdateProduct = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+      if (genderRef.current && !genderRef.current.contains(event.target)) {
         setReveal(false);
       }
       if (imageRef.current && !imageRef.current.contains(event.target)) {
         setImgReveal(false);
+      }
+      if (sportRef.current && !sportRef.current.contains(event.target)) {
+        setSportReveal(false);
       }
     };
 
@@ -261,36 +281,36 @@ const AddUpdateProduct = () => {
             )}
           </div>
 
-          {/* Category */}
+          {/* Gender */}
           <div className="col-span-4 lg:col-span-2">
-            <label>Category</label>
-            <div className="category relative w-full" ref={categoryRef}>
+            <label>Gender</label>
+            <div className="gender relative w-full" ref={genderRef}>
               <span
                 onClick={() => setReveal((prev) => !prev)}
                 className="flex justify-between items-center w-full border border-zinc-400  rounded py-1 px-3"
               >
-                {productCategory}
+                {gender === "men" ? "Men's" : gender === "women" ? "Women's" : gender === "unisex" ? "Unisex" : gender}
                 <RiArrowDownSLine className="text-[1.2rem]" />
               </span>
               <div
-                className={`category-options ${!reveal && "hidden"
+                className={`gender-options ${!reveal && "hidden"
                   } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10`}
               >
-                {["Men's Shoes", "Women's Shoes", "Unisex Shoes"].map((category) => (
+                {["men", "women", "unisex"].map((gender) => (
                   <span
-                    key={category}
-                    onClick={() => productCategorySetter(category)}
-                    className="block px-3 py-2 txt-medium hover:bg-white duration-300 transition-all"
+                    key={gender}
+                    onClick={() => genderSetter(gender)}
+                    className={`block px-3 py-2 txt-medium ${gender === "unisex" ? "" : "border-b border-b-zinc-300"} hover:bg-white duration-300 transition-all`}
                   >
                     {
-                      category === "Men's Shoes" ? "Men's" : category === "Women's Shoes" ? "Women's" : "Unisex"
+                      gender === "men" ? "Men's" : gender === "women" ? "Women's" : "Unisex"
                     }
                   </span>
                 ))}
               </div>
             </div>
-            {categoryError && (
-              <p className="text-red-500 text-sm">{categoryError}</p>
+            {genderError && (
+              <p className="text-red-500 text-sm">{genderError}</p>
             )}
           </div>
 
@@ -367,8 +387,41 @@ const AddUpdateProduct = () => {
             )}
           </div>
 
+            {/* SPORT */}
+          <div className="col-span-4 lg:col-span-3">
+            <label>Sport</label>
+            <div className="sport relative w-full" ref={sportRef}>
+              <span
+                onClick={() => setSportReveal((prev) => !prev)}
+                className="flex justify-between items-center w-full border border-zinc-400  rounded py-1 px-3 capitalize"
+              >
+                {sport}
+                <RiArrowDownSLine className="text-[1.2rem]" />
+              </span>
+              <div
+                className={`sport-options ${!sportReveal && "hidden"
+                  } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10 h-[8rem] overflow-y-auto custom-scroller`}
+              >
+                {["running", "football", "basketball", "training & gym", "sneakers", "lifestyle"].map((sport, index) => (
+                  <span
+                    key={`${sport}_option`}
+                    onClick={() => sportSetter(sport)}
+                    className={`block px-3 py-2 txt-medium ${index === sport.length -1 ? "" : "border-b border-b-zinc-300"} hover:bg-white duration-300 transition-all capitalize`}
+                  >
+                    {
+                      sport
+                    }
+                  </span>
+                ))}
+              </div>
+            </div>
+            {sportError && (
+              <p className="text-red-500 text-sm">{sportError}</p>
+            )}
+          </div>
+
           {/* Product Images */}
-          <div className="col-span-4">
+          <div className="col-span-8 lg:col-span-5">
             <label>Images</label>
             <div className="productImg relative w-full" ref={imageRef}>
               <span
@@ -411,7 +464,7 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* Shoe Sizes */}
-          <div className="input-container col-span-8 lg:col-span-4">
+          <div className="input-container col-span-8">
             <label htmlFor="#product-sizes">
               Shoe Sizes "2 - 10" (comma-separated)
             </label>

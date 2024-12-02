@@ -12,8 +12,8 @@ const LeftNav = () => {
             path: "/shop/women"
         },
         {
-            label: "Collectons",
-            path: "/collections"
+            label: "Sports",
+            path: "/sports"
         },
         {
             label: "Brands",

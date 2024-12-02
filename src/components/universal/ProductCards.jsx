@@ -42,7 +42,7 @@ const ProductCards = ({ heading, cards }) => {
                                     <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
                                 </div>
                                 <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800">{item.title}</span>
-                                <span className="block text-[0.95rem] txt-medium text-zinc-500">{item.category}</span>
+                                <span className="block text-[0.95rem] txt-medium text-[#6d6d79]">{item.gender === "men" ? "Men's Shoes" : item.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
                                 <span className="block text-[1.1rem] txt-medium text-zinc-800">{`${item.price} ₹`}</span>
                             </Link>
                         </SwiperSlide>

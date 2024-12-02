@@ -124,10 +124,10 @@ body {
 .form-container #login-password{
   padding-right: 3.5ch;
 }
-.product-filter-section::-webkit-scrollbar{
+.custom-scroller::-webkit-scrollbar{
   width: 5px;
 }
-.product-filter-section::-webkit-scrollbar-thumb{
+.custom-scroller::-webkit-scrollbar-thumb{
   background-color: #686868;
   border-radius: 50px;
 }
