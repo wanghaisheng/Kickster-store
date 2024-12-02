@@ -21,8 +21,10 @@ const AddUpdateProduct = () => {
   const sportRef = useRef(null);
   const [newProduct, setNewProduct] = useState(false);
   const [imgReveal, setImgReveal] = useState(false);
-  const [uid, setUid] = useState(uuid());
   const imageRef = useRef(null);
+  const [ sizes, setSizes] = useState([]);
+  const [ sizesError, setSizesError] = useState([]);
+  const [uid, setUid] = useState(uuid());
   const { id } = useParams();
   // Product data for updating
   const [product, setProduct] = useState(null);
@@ -48,6 +50,15 @@ const AddUpdateProduct = () => {
     setSportError("");
     setSportReveal(false);
   };
+  const shoeSizeSetter = (size) => {
+    if (!sizes.includes(size)) {
+      setSizes([...sizes, size]);
+      setSizesError("");
+    } else {
+      const updatedSizes = sizes.filter((s) => s!== size);
+      setSizes(updatedSizes);
+    }
+  }
 
   // Reference to the Firestore Data Collection
   const colRef = collection(db, "products");
@@ -76,6 +87,10 @@ const AddUpdateProduct = () => {
       setSportError("Please select a sport");
       return;
     }
+    if (sizes.length === 0) {
+      setSizesError("Please select sizes");
+      return;
+    }
     const price = priceCorrection(data.price);
 
     if (id) {
@@ -92,7 +107,7 @@ const AddUpdateProduct = () => {
         new: newProduct,
         brand: data.brand,
         price,
-        sizes: data.sizes.split(",").map((size) => size.trim()),
+        sizes,
       });
       toast("✔️ Updated successfully!");
     }
@@ -113,11 +128,12 @@ const AddUpdateProduct = () => {
         reviews: [],
         rating : 0,
         sales: 0,
-        sizes: data.sizes.split(",").map((size) => size.trim()),
+        sizes,
       });
       setUid(uuid());
       setGender("Select");
       setSport("Select Sport");
+      setSizes([]);
       setNewProduct(false);
       reset();
       toast.success("Added successfully!");
@@ -138,6 +154,7 @@ const AddUpdateProduct = () => {
       });
       setGender(productData.gender);
       setSport(productData.sport);
+      setSizes(productData.sizes);
       setNewProduct(productData.new);
       setValue("title", productData.title);
       setValue("description", productData.description);
@@ -220,7 +237,6 @@ const AddUpdateProduct = () => {
               })}
               type="text"
               id="#product-title"
-              autoFocus
             />
             {errors.title && (
               <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -247,7 +263,7 @@ const AddUpdateProduct = () => {
                 type="number"
                 id="#product-price"
               />
-              <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
+              <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200 rounded">
                 <LiaRupeeSignSolid />
               </span>
             </div>
@@ -287,7 +303,7 @@ const AddUpdateProduct = () => {
             <div className="gender relative w-full" ref={genderRef}>
               <span
                 onClick={() => setReveal((prev) => !prev)}
-                className="flex justify-between items-center w-full border border-zinc-400  rounded py-1 px-3"
+                className="flex justify-between items-center w-full border border-zinc-400  rounded py-1.5 px-3"
               >
                 {gender === "men" ? "Men's" : gender === "women" ? "Women's" : gender === "unisex" ? "Unisex" : gender}
                 <RiArrowDownSLine className="text-[1.2rem]" />
@@ -355,7 +371,7 @@ const AddUpdateProduct = () => {
                 type="number"
                 id="#product-dis"
               />
-              <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200">
+              <span className="rupee-icon w-[30px] h-full flex justify-center items-center absolute top-[50%] -translate-y-[50%] bg-zinc-200 rounded">
                 %
               </span>
             </div>
@@ -393,7 +409,7 @@ const AddUpdateProduct = () => {
             <div className="sport relative w-full" ref={sportRef}>
               <span
                 onClick={() => setSportReveal((prev) => !prev)}
-                className="flex justify-between items-center w-full border border-zinc-400  rounded py-1 px-3 capitalize"
+                className="flex justify-between items-center w-full border border-zinc-400  rounded py-1.5 px-3 capitalize"
               >
                 {sport}
                 <RiArrowDownSLine className="text-[1.2rem]" />
@@ -426,14 +442,14 @@ const AddUpdateProduct = () => {
             <div className="productImg relative w-full" ref={imageRef}>
               <span
                 onClick={() => setImgReveal((prev) => !prev)}
-                className="flex justify-between items-center w-full border border-zinc-400 rounded py-1 px-3"
+                className="flex justify-between items-center w-full border border-zinc-400 rounded py-1.5 px-3"
               >
                 <span>Select Images</span>
                 <RiArrowDownSLine className="text-[1.2rem]" />
               </span>
               <div
                 className={`image-url-inputs ${!imgReveal && "hidden"
-                  } w-full border-2 p-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md absolute left-0 top-[40px] flex flex-col gap-1 rounded`}
+                  } w-full border-2 p-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md absolute left-0 top-[40px] flex flex-col gap-1 rounded z-[2]`}
               >
                 {["", "", "", "", ""].map((item, index) => (
                   <input
@@ -466,23 +482,17 @@ const AddUpdateProduct = () => {
           {/* Shoe Sizes */}
           <div className="input-container col-span-8">
             <label htmlFor="#product-sizes">
-              Shoe Sizes "2 - 10" (comma-separated)
+              Shoe Sizes
             </label>
-            <input
-              {...register("sizes", {
-                required: "Sizes are required",
-                pattern: {
-                  value: /^(\d+(\.\d+)?\s*,\s*)*\d+(\.\d+)?$/,
-                  message: "Please enter valid comma-separated numbers",
-                },
-                validate: (value) =>
-                  value.trim() !== "" || "Sizes cannot be only spaces",
-              })}
-              type="text"
-              id="#product-sizes"
-            />
-            {errors.sizes && (
-              <p className="text-red-500 text-sm">{errors.sizes.message}</p>
+            <ul className="sizes-list-container grid grid-cols-4 lg:grid-cols-6 gap-2 place-items-center">
+              {
+                ["2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"].map(size => (
+                  <li onClick={() => shoeSizeSetter(size)} className={`w-full flex justify-center items-center ${sizes.filter(item => item === size)[0] ? "opacity-100 border-[1.5px]" : "opacity-50 border"} rounded py-1.5 border-zinc-800`}>{`UK ${size}`}</li>
+                ))
+              }
+            </ul>
+            {sizesError && (
+              <p className="text-red-500 text-sm">{sizesError}</p>
             )}
           </div>
 
@@ -503,13 +513,13 @@ const AddUpdateProduct = () => {
           <div className="add-product-btns col-span-8">
             <button
               onClick={cancellationHandler}
-              className="w-[10vw] min-w-[150px] py-[5px] rounded border border-zinc-800 mr-[24px]"
+              className="w-[10vw] min-w-[145px] py-[7px] rounded border border-zinc-800 mr-[24px]"
               type="button"
             >
               Cancel
             </button>
             <button
-              className="w-[10vw] min-w-[150px] py-[5px] bg-zinc-800 rounded text-zinc-100 disabled:bg-zinc-400"
+              className="w-[10vw] min-w-[145px] py-[7px] bg-zinc-800 rounded text-zinc-100 disabled:bg-zinc-400"
               type="submit"
               disabled={isSubmitting}
             >

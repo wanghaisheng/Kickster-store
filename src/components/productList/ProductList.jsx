@@ -10,7 +10,7 @@ const ProductList = () => {
 
     }
     return (
-        <section className='product-list-page min-h-[88lvh] flex gap-[3vw] pt-[5vh]'>
+        <section className='product-list-page min-h-[88lvh] flex gap-[3vw] pt-[5vh] px-5'>
             <Filters />
             <List filter={filter} />
         </section>

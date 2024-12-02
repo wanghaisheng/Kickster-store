@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 //Icons
 import { IoIosMale } from "react-icons/io";
 import { IoIosFemale } from "react-icons/io";
-import { HiOutlineRectangleGroup } from "react-icons/hi2";
+import { IoFootballOutline } from "react-icons/io5";
 import { TbLetterB } from "react-icons/tb";
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 import { PiPackage } from "react-icons/pi";
@@ -33,9 +33,9 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
       path: "/shop/women",
     },
     {
-      icon: HiOutlineRectangleGroup,
-      label: "Collections",
-      path: "/collections",
+      icon: IoFootballOutline,
+      label: "Sports",
+      path: "/sports",
     },
     {
       icon: TbLetterB,
