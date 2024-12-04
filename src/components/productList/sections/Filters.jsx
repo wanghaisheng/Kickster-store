@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
+import { MdDone } from "react-icons/md";
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterData } from '../../../store/features/filterSlice';
 
-const Filters = (filterAdder) => {
+
+const Filters = () => {
+
+  const dispatch = useDispatch();
+  const filterData = useSelector(state => state.filters.filterData);
 
   const [expand, setExpand] = useState({
     gender: true,
@@ -10,12 +17,38 @@ const Filters = (filterAdder) => {
     size: true,
     price: true,
     brand: true,
-    collection: true
+    sport: true
   });
 
-  const [filter, setFilter] = useState();
+  const handleFilterChange = (option, value) => {
+    filterData &&
+    filterData[option].includes(value) ?
+    dispatch(setFilterData({
+     ...filterData,
+      [option]: filterData[option].filter(item => item!== value)
+    }))
+    :
+    dispatch(setFilterData({
+     ...filterData,
+      [option]: [...filterData[option], value]
+    }));
+  }
+
+  useMemo(()=> {
+    localStorage.setItem("filters", JSON.stringify(filterData));
+  }, [filterData]);
+
+  useEffect(()=> {
+    if (localStorage.getItem("filters")) {
+      dispatch(setFilterData(JSON.parse(localStorage.getItem("filters"))));
+    }
+  }, [])
 
   const options = [
+    {
+      label: "sneaker",
+      value: false
+    },
     {
       label: "gender",
       values: ["men", "women", "unisex"]
@@ -36,11 +69,6 @@ const Filters = (filterAdder) => {
       label: "sport",
       values: ["running", "lifestyle", "basketball", "football", "training & gym",]
     },
-    {
-      label: "sneaker",
-      value: true 
-    }
-
   ];
 
   const toggleExpand = (label) => {
@@ -50,24 +78,60 @@ const Filters = (filterAdder) => {
     }));
   }
   return (
+    filterData &&
     <section className='product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[-1vh]'>
       {
         options.map((option) => (
-          <div key={`${option.label}Filter`} className='product-filter-option w-full border-b-zinc-200 border-b capitalize text-[1.05rem] text-zinc-800'>
-            <span onClick={() => toggleExpand(option.label)} className='option-label flex justify-between items-center h-[8vh]'>
-              <h2 className='txt-medium'>{option.label}</h2>
+          option.label === "sneaker" ?
+            //! SNEAKER OPTION
+            <div key='sneakerFilter' className='product-filter-option w-full border-b-zinc-200 border-b capitalize text-[1.05rem] text-zinc-800'>
+              <span onClick={() => dispatch(setFilterData({...filterData, sneaker : !filterData.sneaker}))} className='w-fit flex gap-[1rem] items-center'>
+                <span className='flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded'>
+                  <MdDone className={`${filterData && filterData.sneaker ? "" : "hidden"}`} />
+                </span>
+                <h2 className='option-label flex justify-between items-center h-[8vh] txt-medium'>{option.label}</h2>
+              </span>
+            </div>
+            :
+            <div key={`${option.label}Filter`} className='product-filter-option w-full border-b-zinc-200 border-b capitalize text-[1.05rem] text-zinc-800'>
+              <span onClick={() => toggleExpand(option.label)} className='option-label flex justify-between items-center h-[8vh]'>
+                <h2 className='txt-medium'>{option.label}</h2>
+                {
+                  expand[option.label] ? <IoIosArrowUp className='text-[1.2rem]' /> : <IoIosArrowDown className='text-[1.2rem]' />
+                }
+              </span>
               {
-                expand[option.label]? <IoIosArrowUp className='text-[1.2rem]' /> : <IoIosArrowDown className='text-[1.2rem]' />
+                option.label === "size" ?
+                  //! SIZE OPTIONS
+                  <ul className={`m-0 p-0 ${expand[option.label] ? "h-fit pb-3" : "h-0 py-0"} grid grid-cols-3 place-items-center gap-2 overflow-hidden transition-all duration-500`}>
+                    {
+                      option.values.map((value) => (
+                        <li onClick={() => handleFilterChange(option.label, value)} className={` ${filterData.size.includes(value) ? "border-zinc-800" : "border-zinc-400"} text-[0.95rem] rounded border-[1.5px] w-full flex justify-center py-1`} key={`${option.label} ${value}`}>
+                          <span className={`flex gap-[1rem] items-center ${filterData.size.includes(value) ? "text-zinc-800" : "text-zinc-400"}`}>
+                            {`UK ${value}`}
+                          </span>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                  :
+                  //! REGULAR OPTIONS
+                  <ul className={`m-0 p-0 ${expand[option.label] ? "h-fit pb-3" : "h-0 py-0"} overflow-hidden transition-all duration-500`}>
+                    {
+                      option.values.map((value) => (
+                        <li className="py-1" key={`${option.label} ${value}`}>
+                          <span onClick={() => handleFilterChange(option.label, value)} className='w-fit flex gap-[1rem] items-center'>
+                            <span className="flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded">
+                              <MdDone className={`${filterData[option.label].includes(value) ? "" : "hidden"}`} />
+                            </span>
+                            <span>{value}</span>
+                          </span>
+                        </li>
+                      ))
+                    }
+                  </ul>
               }
-            </span>
-            <ul className={`m-0 p-0 ${expand[option.label] ? "h-fit pb-3" : "h-0 py-0"} ${option.label === "size" && "grid grid-cols-3 place-items-center gap-2"} overflow-hidden transition-all duration-500`}>
-              {
-                option.values.map((value) => (
-                  <li className={`${option.label === "size" && "text-[0.95rem] rounded border border-zinc-500 w-full flex justify-center"} py-1 font-normal`} key={`${option.label} ${value}`}>{`${option.label === "size" ? "UK" : ""}${value}`}</li>
-                ))
-              }
-            </ul>
-          </div>
+            </div>
         ))
       }
     </section>
