@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { setUser } from './store/features/loggedInSlice'
 import { auth, db } from './utils/firebaseConfigures'
+import ScrollTop from './utils/ScrollTop'
 
 const App = () => {
 
@@ -43,28 +44,28 @@ const App = () => {
 
   //FETCHING USER DATA
   useEffect(() => {
-    if(localStorage.getItem("user")){
+    if (localStorage.getItem("user")) {
       dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
     }
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if(user){
+      if (user) {
         const docRef = doc(db, "users", `${user.uid}`);
-        onSnapshot(docRef, async (doc)=>{
+        onSnapshot(docRef, async (doc) => {
           if (doc.exists()) {
-            if(doc.data().id !== adminId && user.emailVerified && doc.data().isVerified !== true){
+            if (doc.data().id !== adminId && user.emailVerified && doc.data().isVerified !== true) {
               await setDoc(docRef, {
                 ...docSnap.data(),
                 isVerified: true
               });
             }
-            localStorage.setItem("user", JSON.stringify({...doc.data(), isVerified : user.emailVerified ? true : false}));
-            dispatch(setUser({...doc.data(), isVerified : user.emailVerified ? true : false}));
+            localStorage.setItem("user", JSON.stringify({ ...doc.data(), isVerified: user.emailVerified ? true : false }));
+            dispatch(setUser({ ...doc.data(), isVerified: user.emailVerified ? true : false }));
           }
         })
       }
-      else{
+      else {
         localStorage.getItem("user") &&
-        localStorage.removeItem("user");
+          localStorage.removeItem("user");
         dispatch(setUser(null));
       }
     })
@@ -73,9 +74,10 @@ const App = () => {
   }, [])
 
   return (
-    <div className='w-screen h-[100svh] relative overflow-hidden'>
+    <div className='w-screen h-[100dvh] relative overflow-hidden'>
       <span className="mouseFollower hidden absolute lg:block opacity-0 w-[12px] h-[12px] rounded-full bg-[#3d3d3d] top-0 left-0 z-[100] pointer-events-none"></span>
       <div className="outer-container w-full h-full overflow-y-auto flex flex-col items-center bg-[#fff]">
+        <ScrollTop />
         <Navbar />
         <div className='container w-full pb-[5vh]'>
           <main>

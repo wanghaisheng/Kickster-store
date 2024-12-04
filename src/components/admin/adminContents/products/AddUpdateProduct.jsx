@@ -497,7 +497,7 @@ const AddUpdateProduct = () => {
             <ul className="sizes-list-container grid grid-cols-4 lg:grid-cols-6 gap-2 place-items-center">
               {
                 ["2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10"].map(size => (
-                  <li onClick={() => shoeSizeSetter(size)} className={`w-full flex justify-center items-center ${sizes.filter(item => item === size)[0] ? "opacity-100" : "opacity-40"} border-[1.5px] rounded py-1.5 border-zinc-800`}>{`UK ${size}`}</li>
+                  <li key={`${size}size`} onClick={() => shoeSizeSetter(size)} className={`w-full flex justify-center items-center ${sizes.filter(item => item === size)[0] ? "opacity-100" : "opacity-40"} border-[1.5px] rounded py-1.5 border-zinc-800`}>{`UK ${size}`}</li>
                 ))
               }
             </ul>

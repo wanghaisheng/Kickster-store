@@ -77,7 +77,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
   ];
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (menuRef.current && !menuRef.current.contains(event.target) && event.target.id !=="mobile_menu_icon") {
         setReveal(false);
       }
     };
