@@ -83,12 +83,13 @@ body {
   display: flex;
   flex-direction: column;
 }
-.form-container .product-new-input {
+.form-container .product-checkbox {
   flex-direction: row;
   align-items: center;
   gap: 1rem;
 }
-.form-container .product-new-input label {
+
+.form-container .product-checkbox label {
   margin-bottom: 0;
 }
 .form-container input {

@@ -63,13 +63,13 @@ const AdminContentProducts = () => {
   return (
     !products ? <Loader /> :
       <>
-        <div className="table-btns w-full flex justify-end gap-[24px] py-4">
-          <Link to="/admin/products/add" className="min-w-[150px] w-[10vw] flex justify-center items-center bg-zinc-800 text-white py-2 rounded-md text-[0.9rem]">
+        <div className="table-btns w-full flex justify-center gap-[24px] py-4">
+          <Link to="/admin/products/add" className="flex-1 lg:min-w-[150px] lg:w-[10vw] flex justify-center items-center bg-zinc-800 text-white py-3 lg:py-2 rounded-md text-[0.9rem]">
             Add Product
           </Link>
           <button
             onClick={products && exportToExcel}
-            className="min-w-[150px] w-[10vw] flex justify-center items-center bg-white py-2 rounded-md text-[0.9rem] border border-zinc-800"
+            className="lg:min-w-[150px] lg:w-[10vw] flex-1 flex justify-center items-center bg-white py-3 lg:py-2 rounded-md text-[0.9rem] border border-zinc-800"
           >
             Export as Excel
           </button>

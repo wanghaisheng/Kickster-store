@@ -12,12 +12,12 @@ const LeftNav = () => {
             path: "/shop/women"
         },
         {
-            label: "Sports",
-            path: "/sports"
-        },
-        {
             label: "Brands",
             path: "/brands"
+        },
+        {
+            label: "SNKRS",
+            path: "/shop/sneaker"
         }
     ]
     return (

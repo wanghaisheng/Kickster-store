@@ -7,7 +7,7 @@ import { db } from "../../../../utils/firebaseConfigures";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { uuid } from "../../../../utils/uuid";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddUpdateProduct = () => {
@@ -17,13 +17,14 @@ const AddUpdateProduct = () => {
   const genderRef = useRef(null);
   const [sportReveal, setSportReveal] = useState(false);
   const [sport, setSport] = useState("Select Sport");
-  const [sportError, setSportError] = useState("");
   const sportRef = useRef(null);
-  const [newProduct, setNewProduct] = useState(false);
+  const [sneaker, setSneaker] = useState(false);
+  const [sportSneakerError, setSportSneakerError] = useState("");
   const [imgReveal, setImgReveal] = useState(false);
   const imageRef = useRef(null);
-  const [ sizes, setSizes] = useState([]);
-  const [ sizesError, setSizesError] = useState([]);
+  const [sizes, setSizes] = useState([]);
+  const [sizesError, setSizesError] = useState("");
+  const [newProduct, setNewProduct] = useState(false);
   const [uid, setUid] = useState(uuid());
   const { id } = useParams();
   // Product data for updating
@@ -47,7 +48,7 @@ const AddUpdateProduct = () => {
   };
   const sportSetter = (option) => {
     setSport(option);
-    setSportError("");
+    setSportSneakerError("");
     setSportReveal(false);
   };
   const shoeSizeSetter = (size) => {
@@ -55,7 +56,7 @@ const AddUpdateProduct = () => {
       setSizes([...sizes, size]);
       setSizesError("");
     } else {
-      const updatedSizes = sizes.filter((s) => s!== size);
+      const updatedSizes = sizes.filter((s) => s !== size);
       setSizes(updatedSizes);
     }
   }
@@ -83,12 +84,12 @@ const AddUpdateProduct = () => {
       setGenderError("Please select a gender");
       return;
     }
-    if (sport === "Select Sport") {
-      setSportError("Please select a sport");
-      return;
-    }
     if (sizes.length === 0) {
       setSizesError("Please select sizes");
+      return;
+    }
+    if (sport === "Select Sport" && !sneaker) {
+      setSportSneakerError("Please select eighter Sport or Sneaker");
       return;
     }
     const price = priceCorrection(data.price);
@@ -100,7 +101,8 @@ const AddUpdateProduct = () => {
         title: data.title,
         images: [...data.images],
         gender,
-        sport,
+        sport: sport !== "Select Sport" ? sport : null,
+        sneaker,
         description: data.description,
         stock: parseInt(data.stock),
         discount: parseInt(data.discount),
@@ -118,7 +120,8 @@ const AddUpdateProduct = () => {
         title: data.title,
         images: [...data.images],
         gender,
-        sport,
+        sport: sport !== "Select Sport" ? sport : null,
+        sneaker,
         description: data.description,
         stock: parseInt(data.stock),
         discount: parseInt(data.discount),
@@ -126,7 +129,7 @@ const AddUpdateProduct = () => {
         brand: data.brand,
         price,
         reviews: [],
-        rating : 0,
+        rating: 0,
         sales: 0,
         sizes,
       });
@@ -134,6 +137,7 @@ const AddUpdateProduct = () => {
       setGender("Select");
       setSport("Select Sport");
       setSizes([]);
+      setSneaker(false);
       setNewProduct(false);
       reset();
       toast.success("Added successfully!");
@@ -146,14 +150,15 @@ const AddUpdateProduct = () => {
     const docSnap = await getDoc(docRef);
     const productData = docSnap.data();
     setProduct(productData);
-    
+
     // Set form values when product data is fetched
     if (productData) {
       productData.images.forEach((url, index) => {
         setValue(`images.${index}`, url);
       });
       setGender(productData.gender);
-      setSport(productData.sport);
+      setSport(productData.sport ? productData.sport : "Select Sport");
+      setSneaker(productData.sneaker);
       setSizes(productData.sizes);
       setNewProduct(productData.new);
       setValue("title", productData.title);
@@ -197,18 +202,6 @@ const AddUpdateProduct = () => {
 
   return (
     <div className="w-full min-h-[84vh] bg-white flex justify-center py-5">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-         />
       <div className="form-container w-full lg:w-1/2 rounded-md p-5">
         {/* Form Header */}
         <h2 className="txt-medium text-[24px] pb-[2vmax] border-b-2 border-b-zinc-400">
@@ -403,46 +396,63 @@ const AddUpdateProduct = () => {
             )}
           </div>
 
-            {/* SPORT */}
-          <div className="col-span-4 lg:col-span-3">
-            <label>Sport</label>
-            <div className="sport relative w-full" ref={sportRef}>
-              <span
-                onClick={() => setSportReveal((prev) => !prev)}
-                className="flex justify-between items-center w-full border border-zinc-400  rounded py-1.5 px-3 capitalize"
-              >
-                {sport}
-                <RiArrowDownSLine className="text-[1.2rem]" />
-              </span>
-              <div
-                className={`sport-options ${!sportReveal && "hidden"
-                  } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10 h-[8rem] overflow-y-auto custom-scroller`}
-              >
-                {["running", "football", "basketball", "training & gym", "sneakers", "lifestyle"].map((sport, index) => (
+          <div className="sports_sneaker_container col-span-8">
+            <div className="sports_sneaker flex items-end gap-[16px]">
+              {/* SPORT */}
+              <div className="flex-[2] lg:flex-1">
+                <label>Sport</label>
+                <div className="sport relative w-full" ref={sportRef}>
                   <span
-                    key={`${sport}_option`}
-                    onClick={() => sportSetter(sport)}
-                    className={`block px-3 py-2 txt-medium ${index === sport.length -1 ? "" : "border-b border-b-zinc-300"} hover:bg-white duration-300 transition-all capitalize`}
+                    onClick={() => setSportReveal((prev) => !prev)}
+                    className="flex justify-between items-center w-full border border-zinc-400 rounded-md py-[7px] px-3 capitalize"
                   >
-                    {
-                      sport
-                    }
+                    {sport}
+                    <RiArrowDownSLine className="text-[1.2rem]" />
                   </span>
-                ))}
+                  <div
+                    className={`sport-options ${!sportReveal && "hidden"
+                      } w-full border-2 border-zinc-200 bg-[#dadada9c] backdrop-blur-md rounded absolute left-0 top-[40px] z-10 h-[8rem] overflow-y-auto custom-scroller`}
+                  >
+                    {["running", "football", "basketball", "training & gym", "lifestyle"].map((sport, index) => (
+                      <span
+                        key={`${sport}_option`}
+                        onClick={() => sportSetter(sport)}
+                        className={`block px-3 py-2 txt-medium ${index === sport.length - 1 ? "" : "border-b border-b-zinc-300"} hover:bg-white duration-300 transition-all capitalize`}
+                      >
+                        {
+                          sport
+                        }
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Sneaker Checkbox */}
+              <div className="input-container product-checkbox pt-7 flex-1">
+                <label>Sneaker</label>
+                <div
+                  onClick={() => setSneaker((prev) => !prev)}
+                  className="check_sneaker"
+                >
+                  <span className="check w-[38px] h-[38px] flex justify-center items-center border border-zinc-400 rounded-md text-green-600 text-[1.2rem]">
+                    {sneaker && <MdDone className="text-[1.5rem]" />}
+                  </span>
+                </div>
               </div>
             </div>
-            {sportError && (
-              <p className="text-red-500 text-sm">{sportError}</p>
+            {sportSneakerError && (
+              <p className="text-red-500 text-sm block">{sportSneakerError}</p>
             )}
           </div>
 
           {/* Product Images */}
-          <div className="col-span-8 lg:col-span-5">
+          <div className="col-span-8">
             <label>Images</label>
             <div className="productImg relative w-full" ref={imageRef}>
               <span
                 onClick={() => setImgReveal((prev) => !prev)}
-                className="flex justify-between items-center w-full border border-zinc-400 rounded py-1.5 px-3"
+                className="flex justify-between items-center w-full border border-zinc-400 rounded-md py-[7px] px-3"
               >
                 <span>Select Images</span>
                 <RiArrowDownSLine className="text-[1.2rem]" />
@@ -486,8 +496,8 @@ const AddUpdateProduct = () => {
             </label>
             <ul className="sizes-list-container grid grid-cols-4 lg:grid-cols-6 gap-2 place-items-center">
               {
-                ["2.5","3","3.5","4","4.5","5","5.5","6","6.5","7","7.5","8","8.5","9","9.5","10"].map(size => (
-                  <li onClick={() => shoeSizeSetter(size)} className={`w-full flex justify-center items-center ${sizes.filter(item => item === size)[0] ? "opacity-100 border-[1.5px]" : "opacity-50 border"} rounded py-1.5 border-zinc-800`}>{`UK ${size}`}</li>
+                ["2.5", "3", "3.5", "4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10"].map(size => (
+                  <li onClick={() => shoeSizeSetter(size)} className={`w-full flex justify-center items-center ${sizes.filter(item => item === size)[0] ? "opacity-100" : "opacity-40"} border-[1.5px] rounded py-1.5 border-zinc-800`}>{`UK ${size}`}</li>
                 ))
               }
             </ul>
@@ -497,11 +507,11 @@ const AddUpdateProduct = () => {
           </div>
 
           {/* New Checkbox */}
-          <div className="input-container product-new-input col-span-2 lg:col-span-1 mt-[18px]">
-            <label htmlFor="#product-brand inline-block">New</label>
+          <div className="input-container product-checkbox col-span-2 lg:col-span-1 my-[10px]">
+            <label>New</label>
             <div
               onClick={() => setNewProduct((prev) => !prev)}
-              className="check"
+              className="check_new"
             >
               <span className="check w-[25px] h-[25px] flex justify-center items-center border border-zinc-400 rounded text-green-600 text-[1.2rem]">
                 {newProduct && <MdDone />}

@@ -34,7 +34,11 @@ const Filters = (filterAdder) => {
     },
     {
       label: "sport",
-      values: ["running", "lifestyle", "basketball", "football", "training & gym", "sneakers"]
+      values: ["running", "lifestyle", "basketball", "football", "training & gym",]
+    },
+    {
+      label: "sneaker",
+      value: true 
     }
 
   ];

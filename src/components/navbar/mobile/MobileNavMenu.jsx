@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from "react";
 //Icons
 import { IoIosMale } from "react-icons/io";
 import { IoIosFemale } from "react-icons/io";
-import { IoFootballOutline } from "react-icons/io5";
+import { PiSneakerLight } from "react-icons/pi";
 import { TbLetterB } from "react-icons/tb";
 import { CiUser, CiShoppingCart } from "react-icons/ci";
 import { PiPackage } from "react-icons/pi";
@@ -14,7 +14,7 @@ import { LiaUserShieldSolid } from "react-icons/lia";
 
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import signOut from "../../signOut";
+import signOut from "../../auth/signOut";
 
 const MobileNavMenu = ({ reveal, setReveal }) => {
   const user = useSelector((state) => state.loggedInUser.user);
@@ -33,14 +33,14 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
       path: "/shop/women",
     },
     {
-      icon: IoFootballOutline,
-      label: "Sports",
-      path: "/sports",
-    },
-    {
       icon: TbLetterB,
       label: "Brands",
       path: "/brands",
+    },
+    {
+      icon: PiSneakerLight,
+      label: "SNKRS",
+      path: "/shop/sneaker",
     },
     {
       icon: CiUser,

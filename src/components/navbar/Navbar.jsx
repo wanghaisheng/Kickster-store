@@ -10,8 +10,6 @@ const Header = () => {
   const [ reveal, setReveal ] = useState(false)
   const mobileNavRevealer = () =>{
     setReveal(prev => !prev)
-    console.log("hello");
-    
   }
   return (
     <section className="bg-[#fff] navbar-section w-full max-w-screen-2xl fixed bottom-0 lg:sticky lg:flex justify-center backdrop-blur-3xl z-[99] lg:top-0 left-0 shadow-lg lg:shadow-none lg:border-b-[1.5px] lg:border-zinc-200 shadow-black">

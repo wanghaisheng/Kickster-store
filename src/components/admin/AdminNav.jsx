@@ -6,7 +6,7 @@ import { PiShoppingBag } from "react-icons/pi";
 import { LiaPowerOffSolid } from "react-icons/lia";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
-import signOut from "../signOut";
+import signOut from "../auth/signOut";
 
 const AdminNav = () => {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import signOut from '../signOut';
+import signOut from '../auth/signOut';
 
 const UserAccount = () => {
 
