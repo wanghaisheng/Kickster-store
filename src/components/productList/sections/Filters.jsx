@@ -10,7 +10,7 @@ const Filters = () => {
 
   const dispatch = useDispatch();
   const filterData = useSelector(state => state.filters.filterData);
-  const [ isFiltered, setIsFiltered ] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const [expand, setExpand] = useState({
     gender: true,
@@ -43,7 +43,28 @@ const Filters = () => {
     },
     {
       label: "price",
-      values: ["under ₹2,500", "₹2,500 - ₹5,000", "₹5,000 - ₹7,500", "₹7,500 - ₹10,000", "over ₹10,000"]
+      values: [
+        {
+          label: "under ₹2,500",
+          range : [null, 2500]
+        },
+        {
+          label: "₹2,500 - ₹5,000",
+          range: [2500, 5000]
+        },
+        {
+          label: "₹5,000 - ₹7,500",
+          range: [5000, 7500]
+        },
+        {
+          label: "₹7,500 - ₹10,000",
+          range: [7500, 10000]
+        },
+        {
+          label: "over ₹10,000",
+          range: [10000, null]
+        }
+      ]
     },
     {
       label: "brand",
@@ -69,14 +90,14 @@ const Filters = () => {
         [option]: [...filterData[option], value]
       }));
 
-      setIsFiltered(prev => !prev);
+    setIsFiltered(prev => !prev);
   }
 
   useMemo(() => {
-    if(filterData.gender.length === 0 && filterData.size.length === 0 && filterData.price.length === 0 && filterData.sport.length === 0 && filterData.brand.length === 0 && filterData.sneaker === false && !isFiltered){
+    if (filterData.gender.length === 0 && filterData.size.length === 0 && filterData.price.length === 0 && filterData.sport.length === 0 && filterData.brand.length === 0 && filterData.sneaker === false && !isFiltered) {
       "";
     }
-    else{
+    else {
       localStorage.setItem("filters", JSON.stringify(filterData));
     }
   }, [filterData]);
