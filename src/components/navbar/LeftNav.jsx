@@ -1,22 +1,25 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const LeftNav = () => {
+const LeftNav = ({filterAdder}) => {
     const navItems = [
         {
-            label: 'Men',
+            label: 'men',
+            filter: "gender",
             path: '/shop/men'
         },
         {
-            label: "Women",
+            label: "women",
+            filter: "gender",
             path: "/shop/women"
         },
         {
-            label: "Brands",
+            label: "brands",
             path: "/brands"
         },
         {
             label: "SNKRS",
+            filter : "sneaker",
             path: "/shop/sneaker"
         }
     ]
@@ -25,6 +28,7 @@ const LeftNav = () => {
             {
                 navItems.map(item => (
                     <NavLink
+                        onClick={() => item.filter && filterAdder(item.filter, item.label)}
                         to={item.path}
                         key={item.label + "nav"}
                         className="hover:text-[#555555] duration-300"

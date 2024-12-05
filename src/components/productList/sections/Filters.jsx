@@ -10,6 +10,7 @@ const Filters = () => {
 
   const dispatch = useDispatch();
   const filterData = useSelector(state => state.filters.filterData);
+  const [ isFiltered, setIsFiltered ] = useState(false);
 
   const [expand, setExpand] = useState({
     gender: true,
@@ -20,29 +21,12 @@ const Filters = () => {
     sport: true
   });
 
-  const handleFilterChange = (option, value) => {
-    filterData &&
-    filterData[option].includes(value) ?
-    dispatch(setFilterData({
-     ...filterData,
-      [option]: filterData[option].filter(item => item!== value)
-    }))
-    :
-    dispatch(setFilterData({
-     ...filterData,
-      [option]: [...filterData[option], value]
+  const toggleExpand = (label) => {
+    setExpand(prev => ({
+      ...prev,
+      [label]: !prev[label]
     }));
   }
-
-  useMemo(()=> {
-    localStorage.setItem("filters", JSON.stringify(filterData));
-  }, [filterData]);
-
-  useEffect(()=> {
-    if (localStorage.getItem("filters")) {
-      dispatch(setFilterData(JSON.parse(localStorage.getItem("filters"))));
-    }
-  }, [])
 
   const options = [
     {
@@ -71,12 +55,38 @@ const Filters = () => {
     },
   ];
 
-  const toggleExpand = (label) => {
-    setExpand(prev => ({
-      ...prev,
-      [label]: !prev[label]
-    }));
+
+  const handleFilterChange = (option, value) => {
+    filterData &&
+      filterData[option].includes(value) ?
+      dispatch(setFilterData({
+        ...filterData,
+        [option]: filterData[option].filter(item => item !== value)
+      }))
+      :
+      dispatch(setFilterData({
+        ...filterData,
+        [option]: [...filterData[option], value]
+      }));
+
+      setIsFiltered(prev => !prev);
   }
+
+  useMemo(() => {
+    if(filterData.gender.length === 0 && filterData.size.length === 0 && filterData.price.length === 0 && filterData.sport.length === 0 && filterData.brand.length === 0 && filterData.sneaker === false && !isFiltered){
+      "";
+    }
+    else{
+      localStorage.setItem("filters", JSON.stringify(filterData));
+    }
+  }, [filterData]);
+
+  useEffect(() => {
+    if (localStorage.getItem("filters")) {
+      dispatch(setFilterData(JSON.parse(localStorage.getItem("filters"))));
+    }
+  }, []);
+
   return (
     filterData &&
     <section className='product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[-1vh]'>
@@ -85,7 +95,7 @@ const Filters = () => {
           option.label === "sneaker" ?
             //! SNEAKER OPTION
             <div key='sneakerFilter' className='product-filter-option w-full border-b-zinc-200 border-b capitalize text-[1.05rem] text-zinc-800'>
-              <span onClick={() => dispatch(setFilterData({...filterData, sneaker : !filterData.sneaker}))} className='w-fit flex gap-[1rem] items-center'>
+              <span onClick={() => dispatch(setFilterData({ ...filterData, sneaker: !filterData.sneaker }))} className='w-fit flex gap-[1rem] items-center'>
                 <span className='flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded'>
                   <MdDone className={`${filterData && filterData.sneaker ? "" : "hidden"}`} />
                 </span>
