@@ -159,7 +159,7 @@ const Filters = () => {
               if (section === "sport") {
                 if (product.sneaker) return true;
                 if (filterData.sport.length === 0) return true;
-                return filterData.sports.some((option) =>
+                return filterData.sport.some((option) =>
                   product.sport?.include(option)
                 );
               }
