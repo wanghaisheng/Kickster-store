@@ -125,8 +125,8 @@ const Filters = () => {
           : [...filterData.price, value],
       })
     }
-    else if (option === "sneaker"){
-      setFilterData(prev => ({...prev, sneaker: !prev.sneaker}))
+    else if (option === "sneaker") {
+      setFilterData(prev => ({ ...prev, sneaker: !prev.sneaker }))
     }
     else {
       filterData[option].includes(value)
@@ -157,40 +157,60 @@ const Filters = () => {
               }
 
               if (section === "sport") {
-                if (product.sneaker) return true;
+                // if (product.sneaker && !product.sport) return true;
                 if (filterData.sport.length === 0) return true;
                 return filterData.sport.some((option) =>
-                  product.sport?.include(option)
+                  product.sport === option
                 );
               }
 
               if (section === "price") {
                 if (filterData.price.length === 0) return true;
-                return filterData.price.some(
-                  ([min, max]) =>
-                    min === null &&
-                    product.price >= min &&
-                    max === null &&
-                    product.price <= max
+                return filterData.price.some(([min, max]) => {
+                  if(min === null){
+                    return stringToInt(product.price) < max
+                  }
+                  else if(max === null){
+                    return stringToInt(product.price) > min
+                  }
+                  else{
+                    return stringToInt(product.price) >= min && stringToInt(product.price) <= max;
+                  }
+                }
                 );
               }
+
+              if(section === "size"){
+              if (filterData.size.length === 0) return true;
+              return filterData[section].some((option) =>
+                product.sizes.includes(option)
+              );
+              }
+
               if (filterData[section].length === 0) return true;
               return filterData[section].some((option) =>
-                product[section]?.includes(option)
+                product[section] === option
               );
             })
           )
         )
       );
+      // console.log(filterData);
+      
     }
   }, [filterData])
+
+  const stringToInt = (value) => {
+    const intArray = value.split(",").map((price) => parseInt(price));
+    return intArray.join("");
+  }
 
   useMemo(() => {
     if (filterData) {
       if (filterData.gender.length === 0 && filterData.size.length === 0 && filterData.price.length === 0 && filterData.sport.length === 0 && filterData.brand.length === 0 && filterData.sneaker === false && isFiltered === false) {
         ""
       }
-      else{
+      else {
         localStorage.setItem("filters", JSON.stringify(filterData));
       }
     }

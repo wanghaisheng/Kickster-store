@@ -95,7 +95,7 @@ const AddUpdateProduct = () => {
     const price = priceCorrection(data.price);
 
     if (id) {
-      // Updating the data to Firestore Collection with the Data ID as the document ID
+      //! UPDATING...........................................................................
       await setDoc(doc(colRef, `${id}`), {
         ...product,
         title: data.title,
@@ -114,7 +114,7 @@ const AddUpdateProduct = () => {
       toast("✔️ Updated successfully!");
     }
     else {
-      // Adding the data to Firestore Collection with the Data ID as the document ID
+      //! ADDING..............................................................................
       await setDoc(doc(colRef, `${uid}`), {
         id: uid,
         title: data.title,
