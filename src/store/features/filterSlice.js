@@ -13,7 +13,7 @@ const filterSlice = createSlice({
             sneaker: false
         },
         
-        filteredProducts : [],
+        filteredProducts : null,
     },
     reducers: {
         setFilterData: (state, action) => {

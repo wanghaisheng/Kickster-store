@@ -3,13 +3,25 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { MdDone } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilterData, setFilteredProducts } from "../../../store/features/filterSlice";
+import { setFilteredProducts } from "../../../store/features/filterSlice";
 
 const Filters = () => {
   const dispatch = useDispatch();
-  const filterData = useSelector((state) => state.filters.filterData);
+  const [filterData, setFilterData] = useState({
+    gender: [],
+    size: [],
+    price: [],
+    brand: [],
+    sport: [],
+    sneaker: false
+  })
   const products = useSelector((state) => state.products.data);
+  const filteredProd = useSelector((state) => state.filters.filteredProducts);
   const [isFiltered, setIsFiltered] = useState(false);
+
+  filteredProd &&
+    console.log(filteredProd);
+
 
   const [expand, setExpand] = useState({
     gender: true,
@@ -100,94 +112,93 @@ const Filters = () => {
 
 
   const handleFilterChange = (option, value) => {
-    if (filterData) {
-      if (option === "price") {
-        const isPresent = filterData.price.some(
-          (range) => range[0] === value[0] && range[1] === value[1]
-        );
-        dispatch(
-          setFilterData({
-            ...filterData,
-            price: isPresent
-              ? filterData.price.filter(
-                (range) => !(range[0] === value[0] && range[1] === value[1])
-              )
-              : [...filterData.price, value],
-          })
-        );
-      } else {
-        filterData[option].includes(value)
-          ? dispatch(
-            setFilterData({
-              ...filterData,
-              [option]: filterData[option].filter((item) => item !== value),
-            })
+    if (option === "price") {
+      const isPresent = filterData.price.some(
+        (range) => range[0] === value[0] && range[1] === value[1]
+      );
+      setFilterData({
+        ...filterData,
+        price: isPresent
+          ? filterData.price.filter(
+            (range) => !(range[0] === value[0] && range[1] === value[1])
           )
-          : dispatch(
-            setFilterData({
-              ...filterData,
-              [option]: [...filterData[option], value],
-            })
-          );
-      }
+          : [...filterData.price, value],
+      })
+    }
+    else if (option === "sneaker"){
+      setFilterData(prev => ({...prev, sneaker: !prev.sneaker}))
+    }
+    else {
+      filterData[option].includes(value)
+        ?
+        setFilterData({
+          ...filterData,
+          [option]: filterData[option].filter((item) => item !== value),
+        })
+        :
+        setFilterData({
+          ...filterData,
+          [option]: [...filterData[option], value],
+        })
     }
 
     setIsFiltered(true);
   };
 
   useEffect(() => {
-    filterData &&
+    if (filterData && products) {
       dispatch(
         setFilteredProducts(
-          products &&
-          [
-            ...products.filter((product) =>
-              Object.keys(filterData).every((section) => {
-                if (section === "sneaker") {
-                  if (filterData.sneaker === false) return true;
-                  return product.sneaker === filterData.sneaker;
-                }
+          products.filter((product) =>
+            Object.keys(filterData).every((section) => {
+              if (section === "sneaker") {
+                if (filterData.sneaker === false) return true;
+                return product.sneaker === filterData.sneaker;
+              }
 
-                if (section === "sport") {
-                  if (product.sneaker) return true;
-                  if (filterData.sport.length === 0) return true;
-                  return filterData.sports.some((option) =>
-                    product.sport?.include(option)
-                  );
-                }
-
-                if (section === "price") {
-                  if (filterData.price.length === 0) return true;
-                  return filterData.price.some(
-                    ([min, max]) =>
-                      min === null &&
-                      product.price >= min &&
-                      max === null &&
-                      product.price <= max
-                  );
-                }
-                if (filterData[section].length === 0) return true;
-                return filterData[section].some((option) =>
-                  product[section]?.includes(option)
+              if (section === "sport") {
+                if (product.sneaker) return true;
+                if (filterData.sport.length === 0) return true;
+                return filterData.sports.some((option) =>
+                  product.sport?.include(option)
                 );
-              })
-            )
-          ]
+              }
+
+              if (section === "price") {
+                if (filterData.price.length === 0) return true;
+                return filterData.price.some(
+                  ([min, max]) =>
+                    min === null &&
+                    product.price >= min &&
+                    max === null &&
+                    product.price <= max
+                );
+              }
+              if (filterData[section].length === 0) return true;
+              return filterData[section].some((option) =>
+                product[section]?.includes(option)
+              );
+            })
+          )
         )
       );
+    }
   }, [filterData])
 
   useMemo(() => {
-    if (!isFiltered) {
-      ""
-    } else {
-      localStorage.setItem("filters", JSON.stringify(filterData));
+    if (filterData) {
+      if (filterData.gender.length === 0 && filterData.size.length === 0 && filterData.price.length === 0 && filterData.sport.length === 0 && filterData.brand.length === 0 && filterData.sneaker === false && isFiltered === false) {
+        ""
+      }
+      else{
+        localStorage.setItem("filters", JSON.stringify(filterData));
+      }
     }
   }, [filterData]);
 
   useEffect(() => {
     if (localStorage.getItem("filters")) {
-      dispatch(setFilterData(JSON.parse(localStorage.getItem("filters"))));
+      setFilterData(JSON.parse(localStorage.getItem("filters")));
     }
   }, []);
 
@@ -203,18 +214,13 @@ const Filters = () => {
             >
               <span
                 onClick={() =>
-                  dispatch(
-                    setFilterData({
-                      ...filterData,
-                      sneaker: !filterData.sneaker,
-                    })
-                  )
+                  handleFilterChange("sneaker", "")
                 }
                 className="w-fit flex gap-[1rem] items-center"
               >
                 <span className="flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded">
                   <MdDone
-                    className={`${filterData && filterData.sneaker ? "" : "hidden"
+                    className={`${filterData.sneaker ? "" : "hidden"
                       }`}
                   />
                 </span>
@@ -249,15 +255,15 @@ const Filters = () => {
                     <li
                       onClick={() => handleFilterChange(option.label, value)}
                       className={` ${filterData.size.includes(value)
-                          ? "border-zinc-800"
-                          : "border-zinc-400"
+                        ? "border-zinc-800"
+                        : "border-zinc-400"
                         } text-[0.95rem] rounded border-[1.5px] w-full flex justify-center py-1`}
                       key={`${option.label} ${value}`}
                     >
                       <span
                         className={`flex gap-[1rem] items-center ${filterData.size.includes(value)
-                            ? "text-zinc-800"
-                            : "text-zinc-400"
+                          ? "text-zinc-800"
+                          : "text-zinc-400"
                           }`}
                       >
                         {`UK ${value}`}
@@ -280,14 +286,14 @@ const Filters = () => {
                         <span className="flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded">
                           <MdDone
                             className={`${filterData.price.length > 0
-                                ? filterData.price.some(
-                                  (priceRange) =>
-                                    priceRange[0] === range[0] &&
-                                    priceRange[1] === range[1]
-                                )
-                                  ? ""
-                                  : "hidden"
+                              ? filterData.price.some(
+                                (priceRange) =>
+                                  priceRange[0] === range[0] &&
+                                  priceRange[1] === range[1]
+                              )
+                                ? ""
                                 : "hidden"
+                              : "hidden"
                               }`}
                           />
                         </span>
@@ -311,8 +317,8 @@ const Filters = () => {
                         <span className="flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded">
                           <MdDone
                             className={`${filterData[option.label].includes(value)
-                                ? ""
-                                : "hidden"
+                              ? ""
+                              : "hidden"
                               }`}
                           />
                         </span>
