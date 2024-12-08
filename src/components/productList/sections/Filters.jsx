@@ -145,7 +145,7 @@ const Filters = () => {
     setIsFiltered(true);
   };
 
-  useEffect(() => {
+  const filteredProductsAdder = () => {
     if (filterData && products) {
       dispatch(
         setFilteredProducts(
@@ -167,24 +167,40 @@ const Filters = () => {
               if (section === "price") {
                 if (filterData.price.length === 0) return true;
                 return filterData.price.some(([min, max]) => {
-                  if(min === null){
-                    return stringToInt(product.price) < max
+                  if (min === null) {
+                    return priceStringToInt(product.price) < max
                   }
-                  else if(max === null){
-                    return stringToInt(product.price) > min
+                  else if (max === null) {
+                    return priceStringToInt(product.price) > min
                   }
-                  else{
-                    return stringToInt(product.price) >= min && stringToInt(product.price) <= max;
+                  else {
+                    return priceStringToInt(product.price) >= min && priceStringToInt(product.price) <= max;
                   }
                 }
                 );
               }
 
-              if(section === "size"){
-              if (filterData.size.length === 0) return true;
-              return filterData[section].some((option) =>
-                product.sizes.includes(option)
-              );
+              if (section === "size") {
+                if (filterData.size.length === 0) return true;
+                return filterData[section].some((option) =>
+                  product.sizes.includes(option)
+                );
+              }
+
+              if (section === "gender") {
+                if (filterData.gender.length === 0) return true;
+                return filterData[section].some((option) => {
+                  if (option === "men") {
+                    return product.gender === "men" || product.gender === "unisex";
+                  }
+                  else if (option === "women") {
+                    return product.gender === "women" || product.gender === "unisex";
+                  }
+                  else {
+                    return product.gender === "unisex";
+                  }
+                }
+                );
               }
 
               if (filterData[section].length === 0) return true;
@@ -195,12 +211,14 @@ const Filters = () => {
           )
         )
       );
-      // console.log(filterData);
-      
     }
-  }, [filterData])
+  }
 
-  const stringToInt = (value) => {
+  useEffect(() => {
+    filteredProductsAdder();
+  }, [filterData, products])
+
+  const priceStringToInt = (value) => {
     const intArray = value.split(",").map((price) => parseInt(price));
     return intArray.join("");
   }
@@ -224,7 +242,7 @@ const Filters = () => {
 
   return (
     filterData && (
-      <section className="product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[-1vh]">
+      <section className="product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[10vh]">
         {options.map((option) =>
           option.label === "sneaker" ? (
             //! SNEAKER OPTION
@@ -244,7 +262,7 @@ const Filters = () => {
                       }`}
                   />
                 </span>
-                <h2 className="option-label flex justify-between items-center h-[8vh] txt-medium">
+                <h2 className="option-label flex justify-between items-center h-[8vh] txt-medium hover:text-zinc-500 transition-all duration-500">
                   {option.label}
                 </h2>
               </span>
@@ -317,7 +335,7 @@ const Filters = () => {
                               }`}
                           />
                         </span>
-                        <span>{label}</span>
+                        <span className="hover:text-zinc-500 transition-all duration-500">{label}</span>
                       </span>
                     </li>
                   ))}
@@ -342,7 +360,7 @@ const Filters = () => {
                               }`}
                           />
                         </span>
-                        <span>{value}</span>
+                        <span className="hover:text-zinc-500 transition-all duration-500">{value}</span>
                       </span>
                     </li>
                   ))}

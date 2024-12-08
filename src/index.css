@@ -126,7 +126,7 @@ body {
   padding-right: 3.5ch;
 }
 .custom-scroller::-webkit-scrollbar{
-  width: 5px;
+  width: 8px;
 }
 .custom-scroller::-webkit-scrollbar-thumb{
   background-color: #686868;

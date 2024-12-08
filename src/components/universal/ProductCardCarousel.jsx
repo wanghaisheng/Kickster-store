@@ -10,6 +10,8 @@ import 'swiper/css/autoplay';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { priceCorrection, priceStringToInt } from './priceCorrection';
+import Loader from '../loader/Loader';
 
 const ProductCards = ({ heading, cards }) => {
 
@@ -35,18 +37,22 @@ const ProductCards = ({ heading, cards }) => {
                 grabCursor={true}
             >
                 {
+                    cards ?
                     cards.map(item => (
                         <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "min-h-[380px]" : "min-h-[480px] 2xl:min-h-[600px]"}`}>
                             <Link to={`/product/${item.id}`} className="w-full h-full">
                                 <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
                                     <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
                                 </div>
-                                <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800">{item.title}</span>
-                                <span className="block text-[0.95rem] txt-medium text-[#6d6d79]">{item.gender === "men" ? "Men's Shoes" : item.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
-                                <span className="block text-[1.1rem] txt-medium text-zinc-800">{`${item.price} ₹`}</span>
+                                <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800 whitespace-nowrap">{item.title}</span>
+                                <span className="block txt-medium text-[#6d6d79]">{item.gender === "men" ? "Men's Shoes" : item.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
+                                <p className='capitalize text-[0.9rem] text-[#6d6d79] txt-medium'>{`${item.sport ? item.sport : "sneaker"}`}</p>
+                                <p className="product-price mt-3 text-[1.1rem] txt-medium flex gap-[1ch] items-center">{`₹ ${priceCorrection(Math.round(priceStringToInt(item.price) - (priceStringToInt(item.price) * item.discount) / 100))}.00`} <span className='text-zinc-500 text-[0.95rem]'>{`MRP : ₹ ${item.price}.00`}</span> <span className='text-orange-800 text-[0.95rem]'>{`-${item.discount}%`}</span></p>
                             </Link>
                         </SwiperSlide>
                     ))
+                    :
+                    <Loader />
                 }
             </Swiper>
             {/* <div className="navigations px-8 flex gap-5 lg:gap-0 absolute bottom-[-7vh] lg:bottom-[50%] lg:-translate-y-[50%] lg:w-full lg:justify-between left-[50%] lg:left-0 -translate-x-[50%] lg:-translate-x-0 z-10">

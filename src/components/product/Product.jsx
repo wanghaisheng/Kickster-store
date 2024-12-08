@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ProductImage from './sections/ProductImage'
 import ProductDescription from './sections/productDescription/ProductDescription'
-import ProductCards from '../universal/ProductCards'
+import ProductCardCarousel from '../universal/ProductCardCarousel'
 import { useParams } from 'react-router-dom'
 import { collection, doc, getDoc } from 'firebase/firestore'
 import { db } from '../../utils/firebaseConfigures'
@@ -289,7 +289,7 @@ const Product = () => {
         <button className='rounded-full bg-[#fff] px-6 lg:px-4 py-2 lg:py-1 mt-4 border border-zinc-600'>Upload Your Photo</button>
       </section>
       <section className="recommendation-section w-full py-5 px-5 relative mt-[10vh]">
-        <ProductCards heading={"you might also like"} cards={recommendations} />
+        <ProductCardCarousel heading={"you might also like"} cards={recommendations} />
       </section>
     </section>
   )

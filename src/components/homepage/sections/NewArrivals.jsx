@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProductCards from "../../universal/ProductCards";
+import ProductCardCarousel from "../../universal/ProductCardCarousel";
 import { useSelector } from "react-redux";
 
 const NewArrivals = () => {
@@ -15,7 +15,7 @@ const NewArrivals = () => {
     <section className='new-arrivals-section w-full mt-[5vh] py-10 px-5 relative z-10 bg-[#fff]'>
       {
         newProducts &&
-        <ProductCards heading={"New Arrivals"} cards={newProducts} />
+        <ProductCardCarousel heading={"New Arrivals"} cards={newProducts} />
       }
     </section>
   )

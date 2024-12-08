@@ -5,6 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../../utils/firebaseConfigures';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { priceCorrection, priceStringToInt } from '../../../universal/priceCorrection';
 
 const ProductDescription = ({ product }) => {
     const user = auth.currentUser;
@@ -94,9 +95,10 @@ const ProductDescription = ({ product }) => {
         product &&
         <section className='product-description w-full lg:w-[52%] lg:pl-14'>
             <h1 className='product-title text-[1.3rem] text-zinc-900 txt-medium'>{product.title}</h1>
-            <span className="product-category block text-[1rem] text-[#6d6d79] txt-medium">{product.gender === "men" ? "Men's Shoes" : product.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
-            <span className="product-price block mt-3 text-[1.1rem] txt-medium">{`MRP : ₹ ${product.price}`}</span>
-            <p className='text-[#6d6d79] text-[0.9rem] mt-3 txt-medium'>Inclusive of all taxes<br />(Also includes all applicable duties)</p>
+            <span className="product-category block text-zinc-500 txt-medium">{product.gender === "men" ? "Men's Shoes" : product.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
+            <p className="text-zinc-500 txt-medium capitalize">{`${product.sport ? product.sport : "sneaker"}`}</p>
+            <p className="product-price mt-3 text-[1.1rem] txt-medium flex gap-[1ch] items-center">{`₹ ${priceCorrection(Math.round(priceStringToInt(product.price) - (priceStringToInt(product.price) * product.discount) / 100))}.00`} <span className='text-zinc-500 text-[0.95rem]'>{`MRP : ₹ ${product.price}.00`}</span> <span className='text-orange-800 text-[0.95rem]'>{`-${product.discount}%`}</span></p>
+            <p className='text-zinc-500 text-[0.9rem] mt-3 txt-medium'>Inclusive of all taxes<br />(Also includes all applicable duties)</p>
             <div className="size-chart mt-5 w-full">
                 <h2 className='text-[1.2rem] mb-2 txt-medium'>Select Size</h2>
                 <div className="sizes grid grid-cols-4 w-full lg:w-[80%] gap-3">
