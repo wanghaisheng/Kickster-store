@@ -16,12 +16,7 @@ const Filters = () => {
     sneaker: false
   })
   const products = useSelector((state) => state.products.data);
-  const filteredProd = useSelector((state) => state.filters.filteredProducts);
   const [isFiltered, setIsFiltered] = useState(false);
-
-  filteredProd &&
-    console.log(filteredProd);
-
 
   const [expand, setExpand] = useState({
     gender: true,
@@ -242,7 +237,7 @@ const Filters = () => {
 
   return (
     filterData && (
-      <section className="product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[10vh]">
+      <section className="product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[18vh] hidden lg:block">
         {options.map((option) =>
           option.label === "sneaker" ? (
             //! SNEAKER OPTION
@@ -254,7 +249,7 @@ const Filters = () => {
                 onClick={() =>
                   handleFilterChange("sneaker", "")
                 }
-                className="w-fit flex gap-[1rem] items-center"
+                className="w-fit flex gap-[1rem] items-top"
               >
                 <span className="flex justify-center items-center w-[22px] h-[22px] border border-zinc-400 rounded">
                   <MdDone
@@ -262,7 +257,7 @@ const Filters = () => {
                       }`}
                   />
                 </span>
-                <h2 className="option-label flex justify-between items-center h-[8vh] txt-medium hover:text-zinc-500 transition-all duration-500">
+                <h2 className="option-label flex justify-between items-top h-[8vh] txt-medium hover:text-zinc-500 transition-all duration-500">
                   {option.label}
                 </h2>
               </span>

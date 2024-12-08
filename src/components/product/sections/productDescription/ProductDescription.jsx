@@ -104,7 +104,7 @@ const ProductDescription = ({ product }) => {
                 <div className="sizes grid grid-cols-4 w-full lg:w-[80%] gap-3">
                     {
                         sizeChart.map((size) => (
-                            <span onClick={() => sizeAdder(size)} key={`size-${size}`} className={`size ${product.sizes.includes(size) ? 'opacity-100' : 'opacity-60 bg-zinc-200 border-zinc-300'} ${productSize === size ? "border-zinc-900 border-[1.5px]" : "border-zinc-300"} py-2 border rounded uppercase text-center`}>uk {size}</span>
+                            <span onClick={() => sizeAdder(size)} key={`size-${size}`} className={`size ${product.sizes.includes(size) ? 'opacity-100' : 'opacity-60 bg-zinc-200 border-zinc-300'} ${productSize === size ? "border-zinc-900" : "border-zinc-300"} py-2 border-[1.5px] rounded uppercase text-center`}>uk {size}</span>
                         ))
                     }
                 </div>

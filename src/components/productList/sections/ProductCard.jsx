@@ -6,8 +6,8 @@ const ProductCard = ({ product }) => {
 
     return (
         product &&
-        <NavLink to={`/product/${product.id}`} className=' flex-shrink-0 w-[31.6%] h-[480px] overflow-hidden'>
-            <div className="product-img w-full h-[68%] overflow-hidden">
+        <NavLink to={`/product/${product.id}`} className='w-full overflow-hidden rounded'>
+            <div className="product-img w-full h-[380px] lg:h-[330px] rounded overflow-hidden">
                 <img className='w-full h-full object-cover' src={product.images[0]} alt={product.title} />
             </div>
             <div className="product-details w-full mt-1 leading-tight">
