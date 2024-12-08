@@ -46,8 +46,7 @@ const ProductCards = ({ heading, cards }) => {
                                 </div>
                                 <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800 whitespace-nowrap">{item.title}</span>
                                 <span className="block txt-medium text-[#6d6d79]">{item.gender === "men" ? "Men's Shoes" : item.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
-                                <p className='capitalize text-[0.9rem] text-[#6d6d79] txt-medium'>{`${item.sport ? item.sport : "sneaker"}`}</p>
-                                <p className="product-price mt-3 text-[1.1rem] txt-medium flex gap-[1ch] items-center">{`₹ ${priceCorrection(Math.round(priceStringToInt(item.price) - (priceStringToInt(item.price) * item.discount) / 100))}.00`} <span className='text-zinc-500 text-[0.95rem]'>{`MRP : ₹ ${item.price}.00`}</span> <span className='text-orange-800 text-[0.95rem]'>{`-${item.discount}%`}</span></p>
+                                <p className="product-price mt-3 text-[1.1rem] txt-medium flex gap-[1ch] items-center">{`₹ ${priceCorrection(Math.round(priceStringToInt(item.price) - (priceStringToInt(item.price) * item.discount) / 100))}.00`}</p>
                             </Link>
                         </SwiperSlide>
                     ))
