@@ -110,7 +110,7 @@ const ProductDescription = ({ product }) => {
                 </div>
             </div>
             <div className="product-btns w-full lg:w-[80%] mt-14">
-                <ProductBtns btn={"cart"} />
+                <ProductBtns btn={"cart"} product={product} />
                 <ProductBtns />
             </div>
             <p className="product-story w-full lg:w-[80%] mt-[10vh]">

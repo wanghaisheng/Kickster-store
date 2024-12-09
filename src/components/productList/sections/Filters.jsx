@@ -237,7 +237,7 @@ const Filters = ({filter, reveal}) => {
 
   return (
     filterData &&
-      <section className={`product-filter-section custom-scroller lg:w-[20%] h-[88dvh] overflow-y-auto pb-10 pr-5 lg:sticky lg:top-[19vh] bg-white ${reveal.filter ? "block w-full fixed left-0 top-[7vh] pt-5 pl-5 z-20 border-t border-zinc-300 bg-[#ffffffdc] backdrop-blur-md" : "hidden lg:block"}`}>
+      <section className={`product-filter-section custom-scroller lg:w-[20%] h-[88dvh] overflow-y-auto pb-10 pr-5 lg:sticky lg:top-[19vh] bg-white ${reveal.filter ? "block w-full fixed left-0 top-[7vh] pt-5 pl-5 z-20 border-t border-zinc-300 bg-[#ffffffd3] backdrop-blur-lg" : "hidden lg:block"}`}>
         {options.map((option) =>
           option.label === "sneaker" ? (
             //! SNEAKER OPTION
