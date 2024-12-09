@@ -5,7 +5,7 @@ import { MdDone } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilteredProducts } from "../../../store/features/filterSlice";
 
-const Filters = () => {
+const Filters = ({filter, reveal}) => {
   const dispatch = useDispatch();
   const [filterData, setFilterData] = useState({
     gender: [],
@@ -236,8 +236,8 @@ const Filters = () => {
   }, []);
 
   return (
-    filterData && (
-      <section className="product-filter-section custom-scroller w-[20%] h-[88vh] overflow-y-auto pb-10 pr-5 sticky top-[18vh] hidden lg:block">
+    filterData &&
+      <section className={`product-filter-section custom-scroller lg:w-[20%] h-[88dvh] overflow-y-auto pb-10 pr-5 lg:sticky lg:top-[19vh] bg-white ${reveal.filter ? "block w-full fixed left-0 top-[7vh] pt-5 pl-5 z-20 border-t border-zinc-300 bg-[#ffffffdc] backdrop-blur-md" : "hidden lg:block"}`}>
         {options.map((option) =>
           option.label === "sneaker" ? (
             //! SNEAKER OPTION
@@ -365,7 +365,6 @@ const Filters = () => {
           )
         )}
       </section>
-    )
   );
 };
 

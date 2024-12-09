@@ -11,3 +11,7 @@ export const priceCorrection = (orgPrice) => {
     priceArray.splice(commaPos, 0, ",");
     return priceArray.join("");
 };
+
+export const discountCalculator = (price, discount) => {
+    return Math.round(priceStringToInt(price) - (priceStringToInt(price) * discount) / 100)
+}
