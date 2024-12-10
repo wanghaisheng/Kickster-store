@@ -8,8 +8,8 @@ const cartSlice = createSlice({
     },
     reducers: {
         setCartItems : (state, action) => {
-            state.items = action.payload;
-            state.totalPrice = state.items.reduce((acc, item) => acc + item.totalPrice, 0);
+            state.cartItems = action.payload;
+            state.totalPrice = state.cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
         }
     }
 })

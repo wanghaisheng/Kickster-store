@@ -1,6 +1,6 @@
 export const priceStringToInt = (value) => {
     const intArray = value.split(",").map((price) => parseInt(price));
-    return intArray.join("");
+    return parseInt(intArray.join(""));
 }
 
 export const priceCorrection = (orgPrice) => {
