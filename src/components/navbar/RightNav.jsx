@@ -1,9 +1,11 @@
 import React from "react";
 import { TfiSearch } from "react-icons/tfi";
-import { CiUser, CiHeart, CiShoppingCart } from "react-icons/ci";
+import { CiUser, CiHeart } from "react-icons/ci";
 import { LiaUserShieldSolid } from "react-icons/lia";
+import { PiBagLight } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 
 const RightNav = () => {
   const user = useSelector((state) => state.loggedInUser.user);
@@ -17,7 +19,7 @@ const RightNav = () => {
     },
     {
       name: "cart",
-      icon: CiShoppingCart,
+      icon: PiBagLight,
       path: "/user/cart",
     },
   ];

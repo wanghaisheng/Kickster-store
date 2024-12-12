@@ -6,6 +6,7 @@ import { IoIosFemale } from "react-icons/io";
 import { PiSneakerLight } from "react-icons/pi";
 import { TbLetterB } from "react-icons/tb";
 import { CiUser, CiShoppingCart } from "react-icons/ci";
+import { PiBagLight } from "react-icons/pi";
 import { PiPackage } from "react-icons/pi";
 import { PiUsers } from "react-icons/pi";
 import { PiShoppingBag } from "react-icons/pi";
@@ -48,8 +49,8 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
       path: "/login",
     },
     {
-      icon: CiShoppingCart,
-      label: "Cart",
+      icon: PiBagLight,
+      label: "Bag",
       path: "/user/cart",
     }
   ];
