@@ -38,7 +38,7 @@ const ProductList = () => {
 
     const sortMethodHandler = (value) => {
         setSorting(value);
-        localStorage.setItem("sorting", JSON.stringify(value));
+        localStorage.setItem("sorting", value);
     };
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const ProductList = () => {
 
     useEffect(() => {
         if (localStorage.getItem("sorting")) {
-            setSorting(JSON.parse(localStorage.getItem("sorting")));
+            setSorting(localStorage.getItem("sorting"));
         }
     }, []);
 

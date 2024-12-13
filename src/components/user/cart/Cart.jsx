@@ -8,6 +8,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { setCartItems } from '../../../store/features/cartSlice';
 import { toast } from 'react-toastify';
 import { LuHeart } from "react-icons/lu";
+import shopping from "../../../../assets/images/shopping.png"
 
 
 
@@ -64,7 +65,7 @@ const Cart = () => {
         if(cart){
             let total = cart.reduce((acc, curr) => acc + curr.totalPrice, 0);
             setSubtotal(total);
-            if(total <= 5000){
+            if(total > 0 && total <= 5000){
                 setExtra(80)
             }
             else if(total > 5000 && total <= 10000){
@@ -76,20 +77,33 @@ const Cart = () => {
             else if(total > 15000 && total <= 25000){
                 setExtra(300);
             }
-            else{
+            else if(total > 25000 && total <= 30000){
                 setExtra(450);
+            }
+            else if(total > 30000){
+                setExtra(Math.round((total * 5) / 100));
+            }
+            else{
+                setExtra(0);
             }
         }
     }, [cart])
 
     return (
-        <section className='cart-section w-full lg:w-[90%] min-h-[80vh] lg:min-h-[60vh] mx-auto flex flex-col lg:flex-row px-5 gap-10 pt-14 relative'>
-            <div className={`overlay ${processing ? "block" : "hidden"} w-full h-full opacity-30 absolute top-0 left-0 z-10 bg-zinc-100`}></div>
+        <section className='cart-section w-full lg:w-[90%] min-h-[80vh] lg:min-h-[70vh] mx-auto flex flex-col lg:flex-row px-5 gap-10 pt-14 relative'>
+            <div className={`overlay ${processing ? "block" : "hidden"} w-full h-full opacity-30 absolute top-0 left-0 z-10 bg-white`}></div>
             <div className="cart-items w-full lg:w-[67%]">
                 <h1 className='text-zinc-950 text-[1.55rem] font-medium'>Bag</h1>
                 {
                     !cart ?
                         <Loader />
+                        :
+                        cart.length === 0 ?
+                        <div className="empty-cart flex flex-col items-center">
+                            <img className='h-[45vh] object-cover' src={shopping} alt="" />
+                            <h2 className='text-[1.6rem] text-zinc-500 mt-3'>Your Bag Seems Empty!</h2>
+                            <button className="w-[200px] h-[50px] rounded-full bg-zinc-900 hover:bg-zinc-800 transition-all duration-500 text-white font-medium text-[1.06rem] text-center mt-3" onClick={() => window.location.href = "/shop"}>Start Shopping</button>
+                        </div>
                         :
                         cart.map(item => (
                             <div key={item.id} className="flex items-start gap-4 mt-5 pb-[3rem] border-b border-zinc-300">
@@ -119,7 +133,7 @@ const Cart = () => {
                         ))
                 }
             </div>
-            <div className="cart-summary w-full lg:w-[33%] h-fit sticky top-[12vh]">
+            <div className={`${cart.length === 0 && "opacity-60"} cart-summary w-full lg:w-[33%] h-fit sticky top-[12vh]`}>
                 <h2 className='text-[1.55rem] text-zinc-950 mb-6 tracking-tight font-medium'>Summary</h2>
                 <div className="cart-summary-details">
                     <div className="cart-sub-total flex justify-between text-[1.05rem] text-zinc-950 mb-[0.65rem] font-medium">
@@ -135,7 +149,7 @@ const Cart = () => {
                     <p>{`₹ ${priceCorrection(subtotal + extra)}.00`}</p>
                     </div>
                 </div>
-                <button className="cart-checkout-button w-full py-[1.13rem] rounded-full bg-zinc-950 text-white text-[1.05rem] txt-medium tracking-tight hover:bg-zinc-800 transition-all duration-500">Checkout</button>
+                <button className="cart-checkout-button w-full py-[1.13rem] rounded-full bg-zinc-950 text-white text-[1.05rem] txt-medium tracking-tight hover:bg-zinc-800 transition-all duration-500" disabled={cart.length === 0}>Checkout</button>
             </div>
         </section>
     )
