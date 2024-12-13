@@ -64,17 +64,20 @@ const Cart = () => {
         if(cart){
             let total = cart.reduce((acc, curr) => acc + curr.totalPrice, 0);
             setSubtotal(total);
-            if(total < 10000){
-                setExtra(80);
+            if(total <= 5000){
+                setExtra(80)
             }
-            else if(total >= 10000 && total <= 15000){
+            else if(total > 5000 && total <= 10000){
                 setExtra(140);
             }
-            else if(total > 15000 && total <= 20000){
+            else if(total > 10000 && total <= 15000){
                 setExtra(210);
             }
-            else{
+            else if(total > 15000 && total <= 25000){
                 setExtra(300);
+            }
+            else{
+                setExtra(450);
             }
         }
     }, [cart])
