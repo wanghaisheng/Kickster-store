@@ -10,19 +10,9 @@ import { useSelector } from "react-redux";
 const RightNav = () => {
   const user = useSelector((state) => state.loggedInUser.user);
   const adminId = useSelector((state) => state.loggedInUser.admin);
+  const cartItems = useSelector(state => state.cart.cartItems);
 
-  const navItems = [
-    {
-      name: "wishlist",
-      icon: CiHeart,
-      path: "/user/wishlist",
-    },
-    {
-      name: "cart",
-      icon: PiBagLight,
-      path: "/user/cart",
-    },
-  ];
+
   return (
     <div className="w-[40%] hidden lg:flex gap-[1rem] items-center justify-end">
       <div className="searchbar relative">
@@ -48,17 +38,21 @@ const RightNav = () => {
             <CiUser className="text-[1.45rem]" />
           )}
         </NavLink>
-        {navItems.map(({ path, icon: Icon, name }) => (
-          <NavLink
-            key={name + "nav"}
-            to={path}
-            className={`hover:text-[#525252] duration-300 ${
-              user ? (user.id === adminId ? "hidden" : "block") : "block"
+        <NavLink
+          to="/user/wishlist"
+          className={`hover:text-[#525252] duration-300 ${user ? (user.id === adminId ? "hidden" : "block") : "block"
             }`}
-          >
-            <Icon className="text-[1.45rem]" />
-          </NavLink>
-        ))}
+        >
+          <CiHeart className="text-[1.45rem]" />
+        </NavLink>
+        <NavLink
+          to="/user/bag"
+          className={`hover:text-[#525252] duration-300 relative ${user ? (user.id === adminId ? "hidden" : "block") : "block"
+            }`}
+        >
+          <PiBagLight className="text-[1.45rem]" />
+          <span className={`${cartItems && cartItems.length === 0 && "hidden"} absolute bottom-0 right-[-5px] flex justify-center items-center text-[0.55rem] w-[16px] h-[16px] rounded-full bg-zinc-800 text-zinc-100 txt-medium`}>{cartItems && cartItems.length}</span>
+        </NavLink>
       </nav>
     </div>
   );

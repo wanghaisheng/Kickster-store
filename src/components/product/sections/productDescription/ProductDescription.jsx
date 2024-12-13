@@ -1,15 +1,9 @@
 import React, { useState } from 'react'
 import ProductBtns from './ProductBtns';
 import ProductReviews from './ProductReviews';
-import { doc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../../../../utils/firebaseConfigures';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { priceCorrection, priceStringToInt } from '../../../universal/priceCorrection';
 
 const ProductDescription = ({ product }) => {
-    const user = auth.currentUser;
-    const navigate = useNavigate()
     const sizeChart = [
         "2.5",
         "3",
@@ -28,7 +22,7 @@ const ProductDescription = ({ product }) => {
         "9.5",
         "10"
     ]
-    const [productSize, setProductSize] = useState('');
+    const [productSize, setProductSize] = useState(null);
 
     const sizeAdder = (size) => {
         product.sizes.includes(size) && setProductSize(size)
@@ -110,7 +104,7 @@ const ProductDescription = ({ product }) => {
                 </div>
             </div>
             <div className="product-btns w-full lg:w-[80%] mt-14">
-                <ProductBtns btn={"cart"} product={product} />
+                <ProductBtns btn={"cart"} product={product} size={productSize}/>
                 <ProductBtns />
             </div>
             <p className="product-story w-full lg:w-[80%] mt-[10vh]">

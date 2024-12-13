@@ -27,6 +27,10 @@
   cursor: none;
 }
 
+button{
+  cursor: none;
+}
+
 html,
 body {
   height: 100vh;

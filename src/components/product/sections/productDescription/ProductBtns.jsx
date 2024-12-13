@@ -7,14 +7,10 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../../../utils/firebaseConfigures';
 import { useNavigate } from 'react-router-dom';
 
-const ProductBtns = ({ btn, product }) => {
+const ProductBtns = ({ btn, product, size }) => {
   const cartItems = useSelector(state => state.cart.cartItems);
   const adminId = useSelector(state => state.loggedInUser.admin);
   const dispatch = useDispatch();
-  const [present, setPresent] = useState({
-    cart: false,
-    wishlist: false
-  })
   const [isDisabled, setIsDisabled] = useState({
     cart: false,
     wishlist: false
@@ -41,7 +37,11 @@ const ProductBtns = ({ btn, product }) => {
               return;
             }
             //ADDING CART ITEM
-            const updatedCart = [...docSnap.data().cart, { ...product, quantity: 1, price: discountCalculator(product.price, product.discount), totalPrice: discountCalculator(product.price, product.discount) }]
+            if(!size){
+              toast.error("Please select a size!");
+              return;
+            }
+            const updatedCart = [...docSnap.data().cart, { ...product, quantity: 1, price: discountCalculator(product.price, product.discount), totalPrice: discountCalculator(product.price, product.discount), selectedSize : size }]
             await setDoc(doc(db, "carts", `${user.uid}`), {
               cart: updatedCart
             });
@@ -50,8 +50,12 @@ const ProductBtns = ({ btn, product }) => {
             toast.success("Product added to bag!");
           }
           else {
+            if(!size){
+              toast.error("Please select a size!");
+              return;
+            }
             //ADDING FIRST CART ITEM
-            const updatedCart = [{ ...product, quantity: 1, price: discountCalculator(product.price, product.discount), totalPrice: discountCalculator(product.price, product.discount) }]
+            const updatedCart = [{ ...product, quantity: 1, price: discountCalculator(product.price, product.discount), totalPrice: discountCalculator(product.price, product.discount), selectedSize : size }]
             await setDoc(doc(db, "carts", `${user.uid}`), {
               cart: updatedCart
             });
@@ -79,12 +83,7 @@ const ProductBtns = ({ btn, product }) => {
     if (user && adminId && user.uid === adminId) {
       setIsDisabled({ cart: true, wishlist: true });
     }
-    if (cartItems) {
-      if (product && cartItems.length > 0 && cartItems.some(item => item.id === product.id)) {
-        setPresent(prev => ({ ...prev, cart: true }));
-      }
-    }
-  }, [user, adminId, cartItems, product]);
+  }, [user, adminId]);
 
 
   return (

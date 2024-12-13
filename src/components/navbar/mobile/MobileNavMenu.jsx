@@ -51,7 +51,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
     {
       icon: PiBagLight,
       label: "Bag",
-      path: "/user/cart",
+      path: "/user/bag",
     }
   ];
   const adminNavs = [
