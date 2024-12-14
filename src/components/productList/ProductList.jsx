@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { IoIosArrowDown } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import { discountCalculator } from '../universal/priceCorrection';
-import { IoCloseOutline } from "react-icons/io5";
 
 
 
@@ -20,7 +19,7 @@ const ProductList = () => {
         sort: false
     });
 
-    const { filter } = useParams();
+    const { filter = "none" } = useParams();
     const sortOptions = [
         {
             label: "None",
@@ -99,7 +98,7 @@ const ProductList = () => {
                 </div>
             </div>
             <section className='filter-list-content w-full min-h-[88lvh] flex gap-[3vw] px-5 relative bg-white'>
-                <Filters reveal={reveal}/>
+                <Filters reveal={reveal} filter={filter}/>
                 <List filteredProducts={filtered} />
             </section>
         </section>

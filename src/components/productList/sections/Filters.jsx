@@ -4,6 +4,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { MdDone } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilteredProducts } from "../../../store/features/filterSlice";
+import { priceStringToInt } from "../../universal/priceCorrection";
 
 const Filters = ({filter, reveal}) => {
   const dispatch = useDispatch();
@@ -213,11 +214,6 @@ const Filters = ({filter, reveal}) => {
     filteredProductsAdder();
   }, [filterData, products])
 
-  const priceStringToInt = (value) => {
-    const intArray = value.split(",").map((price) => parseInt(price));
-    return intArray.join("");
-  }
-
   useMemo(() => {
     if (filterData) {
       if (filterData.gender.length === 0 && filterData.size.length === 0 && filterData.price.length === 0 && filterData.sport.length === 0 && filterData.brand.length === 0 && filterData.sneaker === false && isFiltered === false) {
@@ -234,6 +230,21 @@ const Filters = ({filter, reveal}) => {
       setFilterData(JSON.parse(localStorage.getItem("filters")));
     }
   }, []);
+
+  useEffect(() => {
+    if(filter === "none"){
+      ""
+    }
+    else if(filter === "sneaker"){
+      setFilterData(prev => ({...prev, sneaker: true}));
+    }
+    else if (filter === "men" || filter === "women"){
+      setFilterData(prev => ({...prev, gender: [...prev.gender, filter]}));
+    }
+    else{
+      setFilterData(prev => ({...prev, sport: [...prev.sport, filter]}));
+    }
+  }, [])
 
   return (
     filterData &&

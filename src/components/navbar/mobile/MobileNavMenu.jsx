@@ -5,7 +5,7 @@ import { IoIosMale } from "react-icons/io";
 import { IoIosFemale } from "react-icons/io";
 import { PiSneakerLight } from "react-icons/pi";
 import { TbLetterB } from "react-icons/tb";
-import { CiUser, CiShoppingCart } from "react-icons/ci";
+import { CiUser } from "react-icons/ci";
 import { PiBagLight } from "react-icons/pi";
 import { PiPackage } from "react-icons/pi";
 import { PiUsers } from "react-icons/pi";
@@ -78,7 +78,7 @@ const MobileNavMenu = ({ reveal, setReveal }) => {
   ];
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target) && event.target.id !=="mobile_menu_icon") {
+      if (menuRef.current && !menuRef.current.contains(event.target) && event.target.id !=="mobile_menu_icon" && event.target.id !=="menu_icon_container") {
         setReveal(false);
       }
     };

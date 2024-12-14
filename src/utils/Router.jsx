@@ -24,6 +24,7 @@ const Router = () => {
       <Route path="/" element={<Homepage />} />
       <Route path="/product/:id" element={<Product />} />
       <Route path="/shop" element={<ProductList />} />
+      <Route path="/shop/:filter" element={<ProductList />} />
       <Route path="/login" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.isVerifed ? <Navigate to="/user" /> : <Navigate to="/verify" /> : <Login />} />
       <Route path="/signup" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.isVerifed ? <Navigate to="/user" /> : <Navigate to="/verify" /> : <SignUp />} />
       <Route path="/verify" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.isVerified ? <Navigate to="/user" /> : <Verify /> : <Navigate to="#" />} />

@@ -81,7 +81,10 @@ const App = () => {
           }
           
         } else {
-          console.log("User is not authenticated.");
+          localStorage.getItem("cart") && localStorage.removeItem("cart");
+          localStorage.getItem("wishlist") && localStorage.removeItem("wishlist");
+          dispatch(setCartItems([]));
+          dispatch(setWishlist([]));
         }
       })
   }, [dispatch]);
