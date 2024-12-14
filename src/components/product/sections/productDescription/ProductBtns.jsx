@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { auth, db } from '../../../../utils/firebaseConfigures';
+import { auth } from '../../../../utils/firebaseConfigures';
 import { useNavigate } from 'react-router-dom';
 import { cartHandler, wishlistHandler } from '../../../user/cart/CartAndWishlist';
 
