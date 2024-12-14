@@ -12,6 +12,7 @@ import { setUser } from './store/features/loggedInSlice'
 import { auth, db } from './utils/firebaseConfigures'
 import ScrollTop from './utils/ScrollTop'
 import { setCartItems } from './store/features/cartSlice'
+import { setWishlist } from './store/features/wishlistSlice'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -41,26 +42,44 @@ const App = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  //FETCHING USER CART
+  // FETCHING USER CART & WISHLIST
   useEffect(() => {
       auth.onAuthStateChanged(async (user) =>{
         if (user) {
           const localCart = localStorage.getItem("cart");
+          const localWishlist = localStorage.getItem("wishlist");
+
           if (localCart) {
             dispatch(setCartItems(JSON.parse(localCart)));
           }
+          if (localWishlist) {
+            dispatch(setWishlist(JSON.parse(localWishlist)));
+          }
+
+          // GETTING CART
           try {
             const docSnap = await getDoc(doc(db, "carts", `${user.uid}`));
             if (docSnap.exists()) {
               const cartData = docSnap.data().cart;
               localStorage.setItem("cart", JSON.stringify(cartData));
               dispatch(setCartItems(cartData));
-            } else {
-              console.log("No cart data found for user.");
             }
           } catch (error) {
             console.error("Error fetching cart data:", error);
           }
+
+          // GETTING WISHLIST
+          try {
+            const docSnap = await getDoc(doc(db, "wishlists", `${user.uid}`));
+            if (docSnap.exists()) {
+              const wishlistItems = docSnap.data().wishlist;
+              localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+              dispatch(setWishlist(wishlistItems));
+            }
+          } catch (error) {
+            console.error("Error fetching wishlist data:", error);
+          }
+          
         } else {
           console.log("User is not authenticated.");
         }
