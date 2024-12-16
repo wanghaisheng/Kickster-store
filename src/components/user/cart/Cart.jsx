@@ -9,7 +9,7 @@ import { setCartItems } from '../../../store/features/cartSlice';
 import { toast } from 'react-toastify';
 import { RiHeartLine } from "react-icons/ri";
 import { RiHeartFill } from "react-icons/ri";
-import shopping from "../../../../assets/images/shopping.png"
+import shopping from "../../../../assets/images/shopping.png";
 import { useNavigate } from 'react-router-dom';
 import { wishlistHandler } from './CartAndWishlist';
 
@@ -63,48 +63,6 @@ const Cart = () => {
         }
     }
 
-    // const wishlistHandler = async (product) => {
-    //     setProcessing(true);
-    //     const user = auth.currentUser;
-    //     if (user) {
-    //         let updatedWishlist;
-    //         let action = "";
-    //         try {
-    //             const docSnap = await getDoc(doc(db, "wishlists", `${user.uid}`));
-    //             if (docSnap.exists()) {
-    //                 const wishlistItems = docSnap.data().wishlist;
-    //                 //Checking if the product is in the wishlist already
-    //                 if (wishlistItems.some(item => item.id === product.id)) {
-    //                     //REMOVING WISHLIST ITEM
-    //                     updatedWishlist = wishlistItems.filter(item => item.id !== product.id);
-    //                     action = "remove"
-    //                 }
-    //                 else {
-    //                     //ADDING WISHLIST ITEM
-    //                     updatedWishlist = [...wishlistItems, { ...product }];
-    //                 }
-    //             }
-    //             else {
-    //                 //ADDING FIRST WISHLIST ITEM
-    //                 updatedWishlist = [{ ...product }]
-    //             }
-    //             await setDoc(doc(db, "wishlists", `${user.uid}`), { wishlist: updatedWishlist });
-    //             dispatch(setWishlist(updatedWishlist));
-    //             localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-    //             toast.success(action === "remove" ? "Product removed from wishlist!" : "Product added to wishlist!");
-    //         }
-    //         catch (error) {
-    //             toast.error(error.message || "An error occurred");
-    //         }
-    //         finally {
-    //             setProcessing(false);
-    //         }
-    //     }
-    //     else {
-    //         toast.error("Please sign in to add to wishlist!");
-    //         navigate("/login");
-    //     }
-    // }
 
     useEffect(() => {
         if (cart) {
@@ -167,7 +125,7 @@ const Cart = () => {
                                                 <button className="cart-quantity-button flex justify-center items-center flex-shrink-0 text-[1.22rem] text-zinc-800 w-[40px] h-[40px] rounded-full hover:bg-zinc-300 transition-all duration-300" onClick={() => quantityHandler("inc", item.id)}>+</button>
                                             </div>
                                             <div className="cart-product-wishlist">
-                                                <button className="cart-product-wishlist-button flex justify-center items-center text-zinc-900 w-[40px] h-[40px] rounded-full hover:bg-zinc-300 transition-all duration-300 border border-zinc-300" onClick={() => wishlistHandler(item, setProcessing, dispatch, navigate)}>{wishlist.filter(prod => prod.id === item.id).length > 0 ? <RiHeartFill className='text-[1.2rem] text-zinc-800' /> : <RiHeartLine className='text-[1.2rem] text-zinc-800' />}</button>
+                                                <button className="cart-product-wishlist-button flex justify-center items-center text-zinc-900 w-[40px] h-[40px] rounded-full hover:bg-zinc-300 transition-all duration-300 border border-zinc-300" onClick={() => wishlistHandler(item.id, setProcessing, dispatch, navigate)}>{wishlist.filter(prod => prod.id === item.id).length > 0 ? <RiHeartFill className='text-[1.2rem] text-zinc-800' /> : <RiHeartLine className='text-[1.2rem] text-zinc-800' />}</button>
                                             </div>
                                         </div>
                                     </div>

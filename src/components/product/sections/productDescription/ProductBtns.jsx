@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { auth } from '../../../../utils/firebaseConfigures';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { cartHandler, wishlistHandler } from '../../../user/cart/CartAndWishlist';
+import { auth } from '../../../../utils/firebaseConfigures';
 
 const ProductBtns = ({ btn, product, size }) => {
   const cartItems = useSelector(state => state.cart.cartItems);
-  const wishlist = useSelector(state => state.wishlist.wishlist)
+  const wishlist = useSelector(state => state.wishlist.wishlist);
   const adminId = useSelector(state => state.loggedInUser.admin);
   const dispatch = useDispatch();
   const [processing, setProcessing] = useState(false);
   const navigate = useNavigate();
-  const user = auth.currentUser;
 
   const CartWishlistHandler = async () => {
     if (btn === "cart") {
-      cartHandler(product, size, setProcessing, dispatch, navigate)
+      cartHandler(product, size, setProcessing, dispatch, navigate);
     }
     else {
-      wishlistHandler(product, setProcessing, dispatch, navigate);
+      wishlistHandler(product.id, setProcessing, dispatch, navigate);
     }
   }
 
 
   useEffect(() => {
+    const user = auth.currentUser;
     if (user && adminId && user.uid === adminId) {
       setProcessing({ cart: true, wishlist: true });
     }
-  }, [user, adminId]);
+  }, [adminId]);
 
 
   return (
