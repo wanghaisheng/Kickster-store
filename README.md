@@ -1,3 +1,5 @@
+2024-12-16
+
 # 🥾 Kickster
 Kickster is a modern 🌐 web app built using ⚡️ Vite and ⚛️ React that allows users to explore a variety of 👟 shoe brands. Users can browse, filter, and sort through a diverse collection of shoes, and enjoy seamless shopping 🛒 features. The app integrates 🔒 authentication, protected 🚪 routes, and an admin 🧑‍💻 panel for enhanced user experience and management.
 
