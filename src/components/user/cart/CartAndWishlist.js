@@ -59,30 +59,31 @@ export const cartHandler = async (product, size, processing, dispatch, navigate)
 }
 
 
-export const wishlistHandler = async (product, processing, dispatch, navigate) => {
+export const wishlistHandler = async (productId, processing, dispatch, navigate) => {
     processing(true);
     const user = auth.currentUser;
     if (user) {
         let updatedWishlist;
         let action = "";
         try {
+            const product = await getDoc(doc(db, "products", `${productId}`))
             const docSnap = await getDoc(doc(db, "wishlists", `${user.uid}`));
-            if (docSnap.exists()) {
+            if (docSnap.exists() && product) {
                 const wishlistItems = docSnap.data().wishlist;
                 //Checking if the product is in the wishlist already
-                if (wishlistItems.some(item => item.id === product.id)) {
+                if (wishlistItems.some(item => item.id === product.data().id)) {
                     //REMOVING WISHLIST ITEM
-                    updatedWishlist = wishlistItems.filter(item => item.id !== product.id);
+                    updatedWishlist = wishlistItems.filter(item => item.id !== product.data().id);
                     action = "remove"
                 }
                 else {
                     //ADDING WISHLIST ITEM
-                    updatedWishlist = [...wishlistItems, { ...product }];
+                    updatedWishlist = [...wishlistItems, product.data()];
                 }
             }
             else {
                 //ADDING FIRST WISHLIST ITEM
-                updatedWishlist = [{...product}]
+                updatedWishlist = [product.data()]
             }
             await setDoc(doc(db, "wishlists", `${user.uid}`), { wishlist: updatedWishlist });
             dispatch(setWishlist(updatedWishlist));

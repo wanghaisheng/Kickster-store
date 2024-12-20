@@ -14,6 +14,7 @@ import SignUp from "../components/auth/SignUp";
 import Verify from "../components/auth/Verify";
 import { useSelector } from "react-redux";
 import Cart from "../components/user/cart/Cart";
+import Wishlist from "../components/user/wishlist/Wishlist";
 
 const Router = () => {
   const user = useSelector(state => state.loggedInUser.user);
@@ -32,6 +33,7 @@ const Router = () => {
         <Route index element={<UserAccount />} />
       </Route>
       <Route path="/user/bag" element={<Cart />} />
+      <Route path="/user/wishlist" element={<Wishlist />} />
       <Route path="/admin" element={<AdminPanel />}>
         <Route index element={<Dashboard />} />
         <Route path="/admin/:section" element={<AdminContent />} />
