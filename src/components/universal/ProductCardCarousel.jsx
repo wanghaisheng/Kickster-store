@@ -14,8 +14,10 @@ import { priceCorrection, priceStringToInt } from './priceCorrection';
 import Loader from '../loader/Loader';
 
 const ProductCards = ({ heading, cards }) => {
-
-    const screenX = screen.width;
+    const [screenX, setScreenX] = React.useState(window.innerWidth);
+    window.onresize = () => {
+        setScreenX(window.innerWidth);
+    };
 
     return (
         <>
@@ -38,26 +40,22 @@ const ProductCards = ({ heading, cards }) => {
             >
                 {
                     cards ?
-                    cards.map(item => (
-                        <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "min-h-[380px]" : "min-h-[480px] 2xl:min-h-[600px]"}`}>
-                            <Link to={`/product/${item.id}`} className="w-full h-full">
-                                <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
-                                    <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
-                                </div>
-                                <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800 whitespace-nowrap">{item.title}</span>
-                                <span className="block txt-medium text-[#6d6d79]">{item.gender === "men" ? "Men's Shoes" : item.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
-                                <p className="product-price mt-3 text-[1.1rem] txt-medium flex gap-[1ch] items-center">{`₹ ${priceCorrection(Math.round(priceStringToInt(item.price) - (priceStringToInt(item.price) * item.discount) / 100))}.00`}</p>
-                            </Link>
-                        </SwiperSlide>
-                    ))
-                    :
-                    <Loader />
+                        cards.map(item => (
+                            <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "min-h-[380px]" : "min-h-[480px] 2xl:min-h-[600px]"}`}>
+                                <Link to={`/product/${item.id}`} className="w-full h-full">
+                                    <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
+                                        <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
+                                    </div>
+                                    <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800 whitespace-nowrap">{item.title}</span>
+                                    <span className="block txt-medium text-[#6d6d79]">{item.gender === "men" ? "Men's Shoes" : item.gender === "women" ? "Women's Shoes" : "Unisex Shoes"}</span>
+                                    <p className="product-price mt-3 text-[1.1rem] txt-medium flex gap-[1ch] items-center">{`₹ ${priceCorrection(Math.round(priceStringToInt(item.price) - (priceStringToInt(item.price) * item.discount) / 100))}.00`}</p>
+                                </Link>
+                            </SwiperSlide>
+                        ))
+                        :
+                        <Loader />
                 }
             </Swiper>
-            {/* <div className="navigations px-8 flex gap-5 lg:gap-0 absolute bottom-[-7vh] lg:bottom-[50%] lg:-translate-y-[50%] lg:w-full lg:justify-between left-[50%] lg:left-0 -translate-x-[50%] lg:-translate-x-0 z-10">
-                <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
-                <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
-            </div> */}
             <div className="navigations px-8 flex justify-center gap-5 mt-3">
                 <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
                 <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>

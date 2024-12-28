@@ -21,8 +21,8 @@ const Header = () => {
   }
 
   return (
-    <section className="bg-[#fff] navbar-section w-full max-w-screen-2xl fixed bottom-0 lg:sticky lg:flex justify-center backdrop-blur-3xl z-[99] lg:top-0 left-0 shadow-lg lg:shadow-none lg:border-b-[1.5px] lg:border-zinc-200 shadow-black">
-      <div className="navigation-container h-[6.5vh] relative lg:h-fit container w-full flex justify-between items-center px-5 py-2">
+    <section className="bg-[#fff] navbar-section w-full fixed bottom-0 lg:sticky lg:flex justify-center z-[99] lg:top-0 left-0 shadow-lg  shadow-black lg:shadow-none">
+      <div className="navigation-container h-[55px] relative w-full flex justify-between items-center px-5 lg:px-10 py-2">
         <LeftNav filterAdder={filterAdder} />
         <MobileLeftNav />
         <div className="logo uppercase text-[1.2rem] font-medium lg:text-[1.5rem] text-zinc-800">
