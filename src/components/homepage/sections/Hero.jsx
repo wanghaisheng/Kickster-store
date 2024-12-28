@@ -31,7 +31,7 @@ const Hero = () => {
 
     return (
         // <header className='hero-section relative h-fit xl:h-screen max-h-[768px] w-full xl:px-5 xl:py-[5vh] flex xl:flex-col flex-col-reverse gap-10 items-center justify-center xl:justify-between'>
-        <header className='hero-section relative h-fit xl:h-screen w-full px-5 py-5 xl:py-[5vh]'>
+        <header className='hero-section relative h-fit xl:h-screen w-full px-3 py-5 xl:py-[5vh]'>
             {/* <div className="w-full relative z-[10] flex xl:flex-row flex-row-reverse justify-between bg-[#fff]">
                 <NavLink className="font-normal" to="/shoes/sale"><span className="inline-block w-[5px] h-[5px] rounded-full bg-[#34ff22] shadow-[0px_0px_10px_1px_#20f70c] mb-1"></span> On sale</NavLink>
                 <p className='w-[25ch] font-normal'>Discover branded footwear to kickstart your wardrobe, one step at a time —</p>
@@ -52,17 +52,18 @@ const Hero = () => {
             </div> */}
             <div className="w-full h-fit xl:h-[calc(100vh-90px)] flex flex-col xl:flex-row gap-3 xl:gap-5">
                 <div className="left-hero hero-gradient w-full xl:w-[73%] h-[500px] md:h-[700px] xl:h-full flex justify-center items-center overflow-hidden rounded-xl relative">
-                    <h1 className='heading-txt text-[7rem] md:text-[28vw] lg:text-[20vw] xl:text-[13vw] 2xl:text-[13.5vw] text-center text-white tracking-tight leading-none w-[4.1ch] xl:w-fit break-words font-semibold relative z-[1]'>KICKSTER</h1>
-                    <h1 className='upper-hero-txt text-[7rem] md:text-[28vw] lg:text-[20vw] xl:text-[13vw] 2xl:text-[13.5vw] text-center tracking-tight leading-none w-[4.1ch] xl:w-fit break-words font-semibold'>KICKSTER</h1>
+                    <h1 className='heading-txt text-[7.5rem] md:text-[28vw] lg:text-[20vw] xl:text-[13vw] 2xl:text-[13.5vw] text-center text-white tracking-tight leading-none w-[4.1ch] xl:w-fit break-words font-semibold relative z-[1]'>KICKSTER</h1>
+                    <h1 className='upper-hero-txt text-[7.5rem] md:text-[28vw] lg:text-[20vw] xl:text-[13vw] 2xl:text-[13.5vw] text-center tracking-tight leading-none w-[4.1ch] xl:w-fit break-words font-semibold'>KICKSTER</h1>
                     <div className="shoe-img">
                         <img src={shoe} className='shoe-img absolute top-[40%] left-[50%] -translate-x-[50%] -translate-y-[50%] h-[300px] md:h-[70vw] lg:h-[55vw] xl:h-[37vw] object-cover z-[2]' alt="" />
                     </div>
                     <div className="overlay-circle absolute top-0 left-0 h-full w-full">
                         <img className='h-[4rem] md:h-[7rem] 2xl:h-[9rem] absolute top-[-2vw] left-[-1vw] object-cover opacity-80' src={circle} alt="" />
-                        <img className='h-[2.5rem] md:visible md:h-[3.5rem] 2xl:h-[6rem]  invisible absolute top-[20%] right-[30%] object-cover opacity-80 z-0' src={circle} alt="" />
+                        <img className='h-[2rem] md:invisible absolute top-[15%] right-[10%] object-cover opacity-80 z-0' src={circle} alt="" />
+                        <img className='h-[2.5rem] md:visible md:h-[3.5rem] 2xl:h-[6rem] invisible absolute top-[20%] right-[30%] object-cover opacity-80 z-0' src={circle} alt="" />
                         <img className='h-[6.5rem] md:h-[10rem] 2xl:h-[14rem] absolute top-[30%] left-[10%] object-cover opacity-80 z-0' src={circle} alt="" />
                         <img className='h-[2.8rem] md:h-[5.5rem] 2xl:h-[7.5rem] absolute bottom-[20%] right-[10%] object-cover opacity-80 z-0' src={circle} alt="" />
-                        <img className='h-[4rem] md:h-[7.5rem] 2xl:h-[10rem] absolute bottom-[-2vw] left-[15%] object-cover opacity-80 z-0' src={circle} alt="" />
+                        <img className='h-[4rem] invisible md:visible md:h-[7.5rem] 2xl:h-[10rem] absolute bottom-[-2vw] left-[15%] object-cover opacity-80 z-0' src={circle} alt="" />
                     </div>
                     <Link to="/shop" className='absolute bg-white px-5 2xl:px-7 py-1.5 2xl:py-2.5 rounded bottom-[3vmax] shadow-xl shadow-zinc-300 text-black txt-medium 2xl:text-[1.2rem]'>Shop Now ›</Link>
                 </div>

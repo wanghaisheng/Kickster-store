@@ -31,7 +31,17 @@ const Login = () => {
 
 
     return (
-        <div className='login-page gray-gradient h-fit rounded-2xl lg:mt-8 py-20 lg:py-10 flex flex-col justify-center items-center'>
+        <div className='login-page gray-gradient h-fit rounded-2xl lg:mt-8 py-20 lg:py-10 flex flex-col justify-center items-center relative'>
+            <div className="user-dets flex w-full justify-between lg:flex-col lg:w-fit lg:justify-center gap-5 absolute bottom-[20px] left-0 px-5 text-[0.7rem] lg:text-[0.8rem]">
+                <div className="custom-dets">
+                    <span className='block'>User id: user@kickster.app</span>
+                    <span className='block'>pass: User@2024</span>
+                </div>
+                <div className="admin-dets">
+                    <span className='block'>Admin id: admin@kickster.app</span>
+                    <span className='block'>pass: Admin@13042002</span>
+                </div>
+            </div>
             <div className="form-container w-full lg:w-1/3 h-full px-5 lg:p-0">
                 <div className='logo mx-auto w-fit'>
                     <Logo />

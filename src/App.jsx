@@ -17,6 +17,7 @@ import { setWishlist } from './store/features/wishlistSlice'
 const App = () => {
   const dispatch = useDispatch();
   const adminId = useSelector(state => state.loggedInUser.admin);
+  const userId = useSelector(state => state.loggedInUser.default);
   const screen = window.innerWidth;
 
   //Initializing the MOUSE FOLLOWER
@@ -106,8 +107,8 @@ const App = () => {
                 isVerified: true
               });
             }
-            localStorage.setItem("user", JSON.stringify({ ...docSnap.data(), isVerified: user.emailVerified ? true : false }));
-            dispatch(setUser({ ...docSnap.data(), isVerified: user.emailVerified ? true : false }));
+            localStorage.setItem("user", JSON.stringify({ ...docSnap.data(),  isVerified: user.id === userId ? true : user.emailVerified ? true : false }));
+            dispatch(setUser({ ...docSnap.data(), isVerified: user.id === userId ? true : user.emailVerified ? true : false }));
           }
         })
       } else {

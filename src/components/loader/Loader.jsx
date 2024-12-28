@@ -1,7 +1,7 @@
 import React from 'react'
 const Loader = () => {
   return (
-    <div className="fixed top-0 left-0 w-full h-screen flex justify-center items-center bg-[#fff]">
+    <div className="fixed top-0 left-0 w-full h-[100svh] flex justify-center items-center bg-[#fff]">
       <svg className='loader-logo' width="100" height="100" viewBox="0 0 173 173" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="86.5" cy="86.5" r="86.5" fill="#111111" />
         <path d="M87.3856 102.302C84.8761 104.758 86.34 109.465 87.3856 111.512C97.7256 121.972 118.684 143.028 119.8 143.574C121.194 144.256 127.468 149.714 131.999 145.28C135.623 141.732 133.509 136.752 131.999 134.706C122.123 124.928 101.815 104.758 99.5845 102.302C96.7961 99.2325 90.5225 99.2325 87.3856 102.302Z" fill="url(#paint0_linear_2_36)" />
