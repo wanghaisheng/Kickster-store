@@ -67,7 +67,7 @@ const Hero = () => {
                     </div>
                     <Link to="/shop" className='absolute bg-white px-5 2xl:px-7 py-1.5 2xl:py-2.5 rounded bottom-[3vmax] shadow-xl shadow-zinc-300 text-black txt-medium 2xl:text-[1.2rem]'>Shop Now ›</Link>
                 </div>
-                <div className="right-hero w-full xl:w-[27%] h-[150px] md:h-[200px] lg:h-[250px] xl:h-full flex xl:flex-col gap-3 xl:gap-5">
+                <div className="right-hero w-full xl:w-[27%] h-[150px] md:h-[250px] xl:h-full flex xl:flex-col gap-3 xl:gap-5">
                     <div className="men-link w-1/2 xl:w-full h-full xl:h-1/2 relative rounded-md overflow-hidden">
                         <Link to="/shop/men" className="w-full xl:w-full flex justify-center items-center h-[150px] xl:h-full">
                             <img className=' w-full xl:h-full object-cover object-bottom' src={menShoe} alt="" />

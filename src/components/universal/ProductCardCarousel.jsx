@@ -21,11 +21,11 @@ const ProductCards = ({ heading, cards }) => {
 
     return (
         <>
-            <h2 className="text-[1.6rem] txt-medium text-zinc-800 mb-[5vh] border-b-[2px] border-zinc-700 w-fit leading-none capitalize">{heading}</h2>
+            <h2 className="text-[1.6rem] txt-medium text-zinc-800 mb-[3vh] xl:mb-[5vh] w-fit leading-none capitalize">{heading}</h2>
             <Swiper
                 modules={[Navigation, Autoplay]}
-                spaceBetween={`${screenX < 640 ? "10" : "30"}`}
-                slidesPerView={`${screenX < 640 ? "1.3" : "3.5"}`}
+                spaceBetween={`${screenX < 768 ? "10" : screenX < 1280 ? "10" : "30"}`}
+                slidesPerView={`${screenX < 768 ? "1.3" : screenX < 1024 ? "2.3" : "3.4"}`}
                 navigation={{
                     nextEl: '.next-btn',
                     prevEl: '.prev-btn',
@@ -41,9 +41,9 @@ const ProductCards = ({ heading, cards }) => {
                 {
                     cards ?
                         cards.map(item => (
-                            <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] ${screenX < 640 ? "min-h-[380px]" : "min-h-[480px] 2xl:min-h-[600px]"}`}>
+                            <SwiperSlide key={item.id} className={`new-arrival-card w-[340px] md:w-[45%] lg:w-[32%] xl:w-[28%]`}>
                                 <Link to={`/product/${item.id}`} className="w-full h-full">
-                                    <div className={`new-arrival-img-container ${screenX < 640 ? "h-[300px]" : "h-[60vh] 2xl:h-[450px]"} w-full overflow-hidden`}>
+                                    <div className={`new-arrival-img-container h-[300px] md:h-[32vmax] lg:h-[30vmax] xl:h-[28vmax] 2xl:h-[30vmax] w-full overflow-hidden`}>
                                         <img className="new-arrival-img object-cover rounded-md h-full w-full" src={item.images[0]} alt={`${item.title} image`} />
                                     </div>
                                     <span className="block mt-3 text-[1.1rem] txt-medium text-zinc-800 whitespace-nowrap">{item.title}</span>
@@ -56,7 +56,7 @@ const ProductCards = ({ heading, cards }) => {
                         <Loader />
                 }
             </Swiper>
-            <div className="navigations px-8 flex justify-center gap-5 mt-3">
+            <div className="navigations px-8 flex justify-center gap-5 mt-3 lg:mt-5 2xl:mt-7">
                 <span className="prev-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowLeftLong /></span>
                 <span className="next-btn w-[50px] h-[50px] flex justify-center items-center bg-zinc-300 rounded text-zinc-700"><FaArrowRightLong /></span>
             </div>
