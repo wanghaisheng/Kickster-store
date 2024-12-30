@@ -71,8 +71,8 @@ const Brands = () => {
   ]
 
   return (
-    <section className='brands-section w-full px-5 mt-[18vh]'>
-      <h2 className="section-heading text-[1.6rem] txt-medium text-zinc-800 mb-[5vh] border-b-[2px] border-zinc-700 w-fit h-fit overflow-hidden leading-none">
+    <section className='brands-section w-full px-5 mt-[8vh]'>
+      <h2 className="section-heading text-[1.6rem] txt-medium text-zinc-800 mb-[3vh] xl:mb-[5vh] w-fit h-fit overflow-hidden leading-none">
         <span className='sec-heading-txt block txt-medium'>Pupular Brands</span>
       </h2>
       <div className="brand-list w-full h-[80vh] max-h-[600px] grid grid-cols-8 grid-rows-6 lg:gap-5 gap-3">

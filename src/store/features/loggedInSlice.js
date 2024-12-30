@@ -6,6 +6,7 @@ const loggedInSlice = createSlice({
     initialState: {
         user: null,
         admin: import.meta.env.VITE_ADMIN_ID,
+        default: import.meta.env.VITE_USER_ID,
     },
     reducers: {
         setUser: (state, action) => {

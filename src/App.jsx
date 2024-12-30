@@ -17,6 +17,8 @@ import { setWishlist } from './store/features/wishlistSlice'
 const App = () => {
   const dispatch = useDispatch();
   const adminId = useSelector(state => state.loggedInUser.admin);
+  const userId = useSelector(state => state.loggedInUser.default);
+  const screen = window.innerWidth;
 
   //Initializing the MOUSE FOLLOWER
   const mouseFollower = useCallback((e) => {
@@ -24,7 +26,7 @@ const App = () => {
       x: e.clientX - 5,
       y: e.clientY - 5,
       opacity: 1,
-      duration: 0.2
+      duration: 0.3
     })
   }, [])
 
@@ -44,49 +46,49 @@ const App = () => {
 
   // FETCHING USER CART & WISHLIST
   useEffect(() => {
-      auth.onAuthStateChanged(async (user) =>{
-        if (user) {
-          const localCart = localStorage.getItem("cart");
-          const localWishlist = localStorage.getItem("wishlist");
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const localCart = localStorage.getItem("cart");
+        const localWishlist = localStorage.getItem("wishlist");
 
-          if (localCart) {
-            dispatch(setCartItems(JSON.parse(localCart)));
-          }
-          if (localWishlist) {
-            dispatch(setWishlist(JSON.parse(localWishlist)));
-          }
-
-          // GETTING CART
-          try {
-            const docSnap = await getDoc(doc(db, "carts", `${user.uid}`));
-            if (docSnap.exists()) {
-              const cartData = docSnap.data().cart;
-              localStorage.setItem("cart", JSON.stringify(cartData));
-              dispatch(setCartItems(cartData));
-            }
-          } catch (error) {
-            console.error("Error fetching cart data:", error);
-          }
-
-          // GETTING WISHLIST
-          try {
-            const docSnap = await getDoc(doc(db, "wishlists", `${user.uid}`));
-            if (docSnap.exists()) {
-              const wishlistItems = docSnap.data().wishlist;
-              localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-              dispatch(setWishlist(wishlistItems));
-            }
-          } catch (error) {
-            console.error("Error fetching wishlist data:", error);
-          }
-          
-        } else {
-          localStorage.getItem("cart") && localStorage.removeItem("cart");
-          localStorage.getItem("wishlist") && localStorage.removeItem("wishlist");
-          dispatch(setCartItems([]));
-          dispatch(setWishlist([]));
+        if (localCart) {
+          dispatch(setCartItems(JSON.parse(localCart)));
         }
-      })
+        if (localWishlist) {
+          dispatch(setWishlist(JSON.parse(localWishlist)));
+        }
+
+        // GETTING CART
+        try {
+          const docSnap = await getDoc(doc(db, "carts", `${user.uid}`));
+          if (docSnap.exists()) {
+            const cartData = docSnap.data().cart;
+            localStorage.setItem("cart", JSON.stringify(cartData));
+            dispatch(setCartItems(cartData));
+          }
+        } catch (error) {
+          console.error("Error fetching cart data:", error);
+        }
+
+        // GETTING WISHLIST
+        try {
+          const docSnap = await getDoc(doc(db, "wishlists", `${user.uid}`));
+          if (docSnap.exists()) {
+            const wishlistItems = docSnap.data().wishlist;
+            localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+            dispatch(setWishlist(wishlistItems));
+          }
+        } catch (error) {
+          console.error("Error fetching wishlist data:", error);
+        }
+
+      } else {
+        localStorage.getItem("cart") && localStorage.removeItem("cart");
+        localStorage.getItem("wishlist") && localStorage.removeItem("wishlist");
+        dispatch(setCartItems([]));
+        dispatch(setWishlist([]));
+      }
+    })
   }, [dispatch]);
 
   //FETCHING USER DATA
@@ -105,8 +107,8 @@ const App = () => {
                 isVerified: true
               });
             }
-            localStorage.setItem("user", JSON.stringify({ ...docSnap.data(), isVerified: user.emailVerified ? true : false }));
-            dispatch(setUser({ ...docSnap.data(), isVerified: user.emailVerified ? true : false }));
+            localStorage.setItem("user", JSON.stringify({ ...docSnap.data(),  isVerified: user.id === userId ? true : user.emailVerified ? true : false }));
+            dispatch(setUser({ ...docSnap.data(), isVerified: user.id === userId ? true : user.emailVerified ? true : false }));
           }
         })
       } else {
@@ -121,29 +123,27 @@ const App = () => {
   }, [dispatch, adminId])
 
   return (
-    <div className='w-screen h-[100dvh] relative overflow-hidden'>
+    <div className={`w-screen h-[100vh] relative ${screen < 1024 ? "" : "overflow-hidden"}`}>
       <span className="mouseFollower hidden absolute lg:block opacity-0 w-[12px] h-[12px] rounded-full bg-[#3d3d3d] top-0 left-0 z-[100] pointer-events-none"></span>
-      <div className="outer-container w-full h-full overflow-y-auto flex flex-col items-center bg-[#fff]">
-        <ScrollTop />
+      <ScrollTop />
+      <div className={`w-full h-full pb-[5vh] ${screen < 1024 ? "" : "overflow-y-auto"}`}>
         <Navbar />
-        <div className='container w-full pb-[5vh]'>
-          <main>
-            <Router />
-            <ToastContainer
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={true}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </main>
-          <Footer />
-        </div>
+        <main className='lg:px-5'>
+          <Router />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </main>
+        <Footer />
       </div>
     </div>
   )

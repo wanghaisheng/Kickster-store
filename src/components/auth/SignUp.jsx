@@ -37,7 +37,7 @@ const SignUp = () => {
 
 
     return (
-        <div className='login-page h-fit rounded-2xl lg:mt-8 py-10 flex flex-col justify-center items-center'>
+        <div className='signup-page gray-gradient h-fit rounded-2xl lg:mt-8 py-10 flex flex-col justify-center items-center'>
             <div className="form-container w-full lg:w-1/3 h-full px-5 lg:p-0">
                 <div className='logo mx-auto w-fit'>
                     <Logo />

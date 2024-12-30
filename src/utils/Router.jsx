@@ -19,6 +19,7 @@ import Wishlist from "../components/user/wishlist/Wishlist";
 const Router = () => {
   const user = useSelector(state => state.loggedInUser.user);
   const adminId = useSelector(state => state.loggedInUser.admin);
+  const userId = useSelector(state => state.loggedInUser.default);
 
   return (
     <Routes>
@@ -26,9 +27,9 @@ const Router = () => {
       <Route path="/product/:id" element={<Product />} />
       <Route path="/shop" element={<ProductList />} />
       <Route path="/shop/:filter" element={<ProductList />} />
-      <Route path="/login" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.isVerifed ? <Navigate to="/user" /> : <Navigate to="/verify" /> : <Login />} />
-      <Route path="/signup" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.isVerifed ? <Navigate to="/user" /> : <Navigate to="/verify" /> : <SignUp />} />
-      <Route path="/verify" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.isVerified ? <Navigate to="/user" /> : <Verify /> : <Navigate to="#" />} />
+      <Route path="/login" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.id === userId ? <Navigate to="/user" /> : user.isVerifed ? <Navigate to="/user" /> : <Navigate to="/verify" /> : <Login />} />
+      <Route path="/signup" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.id === userId ? <Navigate to="/user" /> : user.isVerifed ? <Navigate to="/user" /> : <Navigate to="/verify" /> : <SignUp />} />
+      <Route path="/verify" element={user ? user.id === adminId ? <Navigate to="/admin" /> : user.id === userId ? <Navigate to="/user" /> : user.isVerified ? <Navigate to="/user" /> : <Verify /> : <Navigate to="#" />} />
       <Route path="/user" element={<User />}>
         <Route index element={<UserAccount />} />
       </Route>
